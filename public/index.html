@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<title>MClient</title>
+
+	<link href="javascripts/lib/jqtree/css/jqtree.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="javascripts/lib/css/layout-default.css" />
+	<style type="text/css">
+		/* neutralize pane formatting BEFORE loading UI Theme */
+
+		.ui-layout-pane,
+		.ui-layout-content {
+			background: none;
+			border: 0;
+			padding: 0;
+			overflow: visible;
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="javascripts/lib/css/jquery-ui.css" />
+
+	<style type="text/css">
+		.ui-menu {
+			width: 200px;
+		}
+
+		.mainmenu {
+			position: relative;
+			background: url("images/ui-bg_inset-hard_100_fcfdfd_1x100.png") repeat-x scroll 50% bottom #FCFDFD;
+			color: #000000;
+			border-bottom-right-radius: 5px;
+			border-bottom-left-radius: 5px;
+			border-top-right-radius: 5px;
+			border-top-left-radius: 5px;
+			height: 22px;
+		}
+
+		.mainmenuitem {
+			float: left;
+			font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+			font-size: 0.9em;
+			font-weight: normal;
+			padding-left: 10px;
+			padding-right: 10px;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+
+		.mainmenuhighlighted {
+			padding-left: 9px;
+			padding-right: 9px;
+		}
+
+		.submenu {
+			z-index: 9999;
+		}
+	</style>
+
+	<style type="text/css">
+		p {
+			margin: 1em 0;
+		}
+		/* use !important to override UI theme styles */
+
+		.grey {
+			background: #999 !important;
+		}
+
+		.outline {
+			/*border:		1px dashed #F00 !important;*/
+		}
+
+		.add-padding {
+			padding: 10px !important;
+		}
+
+		.no-padding {
+			padding: 0 !important;
+		}
+
+		.add-scrollbar {
+			overflow: auto;
+		}
+
+		.no-scrollbar {
+			overflow: hidden;
+		}
+
+		.allow-overflow {
+			overflow: visible;
+		}
+
+		.full-height {
+			height: 100%;
+		}
+
+		button {
+			cursor: pointer;
+		}
+	</style>
+
+	<!-- Load the css to for the toolbox -->
+	<link rel="stylesheet" href="stylesheets/index.css" />
+
+	<!-- Load the css to for the favicon -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+
+	<script src="javascripts/lib/jquery/jquery-1.11.3.min.js"></script>
+	<script src="javascripts/lib/jquery/jquery-ui.js"></script>
+	<script src="javascripts/lib/jquery.layout/jquery.layout.js"></script>
+
+	<link rel="stylesheet" href="javascripts/lib/css/themes/vader/jquery-ui.css" />
+
+	<!-- load the jsgrid component -->
+	<link type="text/css" rel="stylesheet" href="javascripts/lib/jsgrid/jsgrid.min.css" />
+	<script type="text/javascript" src="javascripts/lib/jsgrid/jsgrid.min.js"></script>
+
+	<!-- load the Tabs & Accordions callbacks so we can use them below-->
+	<script type="text/javascript" src="javascripts/lib/jquery.layout/jquery.layout.resizeTabLayout.js"></script>
+	<script type="text/javascript" src="javascripts/lib/jquery.layout/jquery.layout.resizePaneAccordions.js"></script>
+
+	<script type="text/javascript" src="javascripts/lib/jquery/themeswitchertool.js"></script>
+
+	<!-- Require -->
+	<script type="text/javascript" src="javascripts/lib/require/require.min.js"></script>
+	<!-- Underscore -->
+	<script type="text/javascript" src="javascripts/lib/underscore/underscore.js"></script>
+
+	<!-- DragNDrop Support -->
+	<script type="text/javascript" src="javascripts/source/utility/DragNDrop.js"></script>
+
+	<!-- Cron Plugin -->
+	<script type="text/javascript" src="javascripts/lib/cron/jquery-cron-min.js"></script>
+	<link type="text/css" href="javascripts/lib/cron/jquery-cron.css" rel="stylesheet" />
+
+	<!-- GentleSelect -->
+	<script type="text/javascript" src="javascripts/lib/gentleSelect/jquery-gentleSelect-min.js"></script>
+	<link type="text/css" href="javascripts/lib/gentleSelect/jquery-gentleSelect.css" rel="stylesheet" />
+
+	<script src="javascripts/lib/jqtree/tree.jquery.js"></script>
+
+	<script type="text/javascript">
+		var posleft;
+		var postop;
+		var submenu;
+
+		function MenuSelect(event) {
+			// alert(event.target) ;
+		};
+
+		function showSubmenu(left, top, submenu) {
+			var tPosX = left;
+			var tPosY = top + 28;
+			$('#' + submenu).css({ left: tPosX, top: tPosY, position: 'absolute' });
+			$('#' + submenu).show();
+		};
+
+		$(document).ready(function () {
+
+			// OUTER/PAGE LAYOUT
+			pageLayout = $("body").layout({ // DO NOT use "var pageLayout" here
+				west__size: .15
+				, east__size: .25
+				, north__initClosed: false
+				, east__initClosed: false
+				, south__initClosed: true
+				, west__initClosed: true
+				, west__onresize: $.layout.callbacks.resizePaneAccordions // west accordion a child of pane
+				, east__onresize: $.layout.callbacks.resizePaneAccordions // east accordion nested inside a tab-panel
+			});
+
+			// TABS IN CENTER-PANE
+			// create tabs before wrapper-layout so elems are correct size before creating layout
+			pageLayout.panes.center.tabs({
+				activate: $.layout.callbacks.resizeTabLayout // tab2-accordion is wrapped in a layout
+				, beforeActivate: function (event, ui) {
+					app.setActiveTabID(ui.newTab.context.hash.substring(1));
+				}
+			});
+
+			// WRAPPER-LAYOUT FOR TABS/TAB-PANELS, INSIDE OUTER-CENTER PANE
+			pageLayout.panes.center.layout({
+				closable: false
+				, resizable: false
+				, spacing_open: 0
+				, center__onresize: $.layout.callbacks.resizeTabLayout // tabs/panels are wrapped with an inner-layout
+			});
+
+			/*
+			// LAYOUT TO CONTAIN HEADER+ACCORDION, INSIDE A TAB, INSIDE OUTER-CENTER PANE
+			$("#tab-panel-center-integrate").layout({
+				center__onresize:	$.layout.callbacks.resizePaneAccordions // accordion is inside center-pane
+			,	resizeWithWindow:	false	// resizing is handled by callbacks to ensure the correct resizing sequence
+			,	triggerEventsOnLoad: true	// force resize of accordion when layout inits - ie, becomes visible 1st time
+			});
+			*/
+
+			// TABS INSIDE EAST-PANE
+			pageLayout.panes.east.tabs({
+				activate: $.layout.callbacks.resizePaneAccordions // resize tab2-accordion when tab is activated
+			});
+			pageLayout.sizeContent("east"); // resize pane-content-elements after creating east-tabs
+
+			// INIT ALL ACCORDIONS - EVEN THOSE NOT VISIBLE
+			$("#accordion-west").accordion({ heightStyle: "fill" });
+
+			$("#accordion-east").accordion({
+
+				heightStyle: "content",
+				collapsible: true,
+				beforeActivate: function (event, ui) {
+					// The accordion believes a panel is being opened
+					if (ui.newHeader[0]) {
+						var currHeader = ui.newHeader;
+						var currContent = currHeader.next('.ui-accordion-content');
+						// The accordion believes a panel is being closed
+					} else {
+						var currHeader = ui.oldHeader;
+						var currContent = currHeader.next('.ui-accordion-content');
+					}
+					// Since we've changed the default behavior, this detects the actual status
+					var isPanelSelected = currHeader.attr('aria-selected') == 'true';
+
+					// Toggle the panel's header
+					currHeader.toggleClass('ui-corner-all', isPanelSelected).toggleClass('accordion-header-active ui-state-active ui-corner-top', !isPanelSelected).attr('aria-selected', ((!isPanelSelected).toString()));
+
+					// Toggle the panel's icon
+					currHeader.children('.ui-icon').toggleClass('ui-icon-triangle-1-e', isPanelSelected).toggleClass('ui-icon-triangle-1-s', !isPanelSelected);
+
+					// Toggle the panel's content
+					currContent.toggleClass('accordion-content-active', !isPanelSelected)
+					if (isPanelSelected) { currContent.slideUp(); } else { currContent.slideDown(); }
+
+					return false; // Cancel the default action
+				}
+			});
+
+			// THEME SWITCHER
+			addThemeSwitcher('#east-toolbar', { top: '12px', right: '5px' });
+			// if a new theme is applied, it could change the height of some content,
+			// so call resizeAll to 'correct' any header/footer heights affected
+			// NOTE: this is only necessary because we are changing CSS *AFTER LOADING* using themeSwitcher
+
+			setTimeout(pageLayout.resizeAll, 2000); /* allow time for browser to re-render with new theme */
+
+			require(['javascripts/source/app/App'],
+				function (App) {
+					try {
+						app = new App();
+					}
+					catch (e) {
+						alert('index.html: app initialize ' + e.name + ' ' + e.message);
+					}
+				});
+
+
+			$('#ModelDIV').load('./html/model.html');
+			$('#SourcesDIV').load('./html/sources.html');
+			$('#ToolboxDIV').load('./html/toolbox.html');
+			$('#ObjectFormDIV').load('./html/objectForm.html');
+
+			var data = [
+				{
+					label: 'MySQL', id: 1
+				},
+				{
+					label: 'Oracle', id: 4
+				},
+				{
+					label: 'File', id: 10
+				}
+			];
+
+			$('#TreeDIV').tree({
+				data: data,
+				autoOpen: true,
+				dragAndDrop: true,
+				onDragMove: handleTreeDragMove,
+				onDragStop: handleTreeDragStop
+			});
+
+			// Menu north__initClosed
+
+			$('.menu').menu({
+				select: function (event, ui) {
+					app.menuSelect(ui.item.text());
+				}
+			});
+
+			$('.mainmenuitem').hover(
+				function () {
+					$(this).addClass('ui-state-focus');
+					$(this).addClass('ui-corner-all');
+					$(this).addClass('ui-state-hover');
+					$(this).addClass('ui-state-active');
+					$(this).addClass('mainmenuhighlighted');
+					// trigger submenu
+					var position = $(this).offset();
+					posleft = position.left;
+					postop = position.top;
+					submenu = $(this).attr('submenu');
+					timeout = showSubmenu(posleft, postop, submenu);
+				},
+				function () {
+					$(this).removeClass('ui-state-focus');
+					$(this).removeClass('ui-corner-all');
+					$(this).removeClass('ui-state-hover');
+					$(this).removeClass('ui-state-active');
+					$(this).removeClass('mainmenuhighlighted');
+					// remove submenu
+					$('.submenu').hide();
+				}
+			);
+
+			$('.submenu').hover(
+				function () {
+					$(this).show();
+				},
+				function () {
+					$(this).hide();
+				}
+			);
+
+			$('.submenu').hide();
+
+			$('.submenu a').click(function (e) {
+				MenuSelect(e, this);
+			});
+
+			$('#cronDivID').cron({
+				onChange: function () {
+					$('#cronValDivID').text($(this).cron("value"))
+				},
+				useGentleSelect: false
+			});
+		});
+	</script>
+
+</head>
+
+<body>
+
+	<div id="file" class="submenu">
+		<ul class="menu">
+			<li><a href="#">New Model</a></li>
+			<li><a href="#">New Workflow</a></li>
+			<li style="color: #FFF">
+				<hr />
+			</li>
+			<li><a href="#">Open</a></li>
+			<li style="color: #FFF">
+				<hr />
+			</li>
+			<li><a href="#">Save</a></li>
+			<li><a href="#">Save All</a></li>
+			<li style="color: #FFF">
+				<hr />
+			</li>
+			<li><a href="#">Close</a></li>
+		</ul>
+	</div>
+
+	<div id="edit" class="submenu">
+		<ul class="menu">
+			<li><a href="#">Some</a></li>
+			<li><a href="#">Other</a>
+				<ul>
+					<li><a href="#">Kinda</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Stuff</a></li>
+		</ul>
+	</div>
+
+	<div id="workflow" class="submenu">
+		<ul>
+			<li><a href="#">Some</a></li>
+			<li><a href="#">Other</a>
+				<ul>
+					<li><a href="#">Kinda</a></li>
+				</ul>
+			</li>
+			<li><a href="#">Stuff</a></li>
+		</ul>
+	</div>
+
+	<div id="dialog" title="Basic dialog">
+		<div id="myGrid">Huh?</div>
+	</div>
+
+	<div id="ObjectFormDIV" title="Edit Object Properties"></div>
+
+	<div class="ui-layout-north ui-widget-content add-padding">
+		<!-- Begin Menu -->
+		<div class="mainmenu">
+			<div class="mainmenuitem" submenu="file">
+				File
+			</div>
+			<div class="mainmenuitem" submenu="edit">
+				Edit
+			</div>
+		</div>
+		<!-- End Menu -->
+	</div>
+
+
+	<div class="ui-layout-south ui-widget-content add-padding">
+		<div id="jsGrid"></div>
+	</div>
+
+	<div class="ui-layout-west no-scrollbar add-padding grey">
+		<div id="accordion-west">
+
+			<h3><a href="#">Toolbox</a></h3>
+			<div id="ToolboxDIV"></div>
+			<h3><a href="#">Model</a></h3>
+			<div id="ModelDIV"></div>
+			<h3><a href="#">Add Source</a></h3>
+			<div id="SourcesDIV"></div>
+			<h3><a href="#">Sources</a></h3>
+			<div id="TreeDIV">huh?</div>
+		</div>
+	</div>
+
+	<div id="tabs-center" class="ui-layout-center no-scrollbar add-padding grey">
+		<!-- center Tabs layout -->
+		<ul class="ui-layout-north no-scrollbar allow-overflow">
+
+		</ul>
+		<div id="tabs-panel-center" class="ui-layout-center ui-widget-content add-scrollbar" style="border-top: 0;">
+
+		</div>
+		<!-- /center Tabs layout -->
+	</div>
+
+
+	<div id="tabs-east" class="ui-layout-east no-padding no-scrollbar">
+		<div class="ui-widget-header no-scrollbar add-padding" style="margin: 0 1px;">
+			Edit Properties
+		</div>
+		<ul class="allow-overflow">
+			<li><a href="#tab-panel-east-1">Object</a></li>
+			<li><a href="#tab-panel-east-2">Document</a></li>
+			<li><a href="#tab-panel-east-3">Environment</a></li>
+		</ul>
+		<div class="ui-layout-content ui-widget-content no-scrollbar" style="border-top: 0;">
+			<div id="tab-panel-east-1" class="full-height no-padding no-scrollbar">
+				<div id="accordion-east" class="full-height">
+
+				</div>
+			</div>
+			<div id="tab-panel-east-2" class="full-height no-padding add-scrollbar">
+				<div class="ui-tabs-panel outline">
+					<div id="cronDivID"></div>
+					<div id="cronValDivID"></div>
+				</div>
+			</div>
+			<div id="tab-panel-east-3" class="full-height no-padding add-scrollbar">
+				<div class="ui-tabs-panel outline">
+					<div id="east-toolbar" class="ui-state-highlight ui-widget-content no-scrollbar add-padding" style="position: relative; margin: 0 1px;">
+						<button onClick="pageLayout.resizeAll()" title="Resize All Layouts (after theme change)">Resize</button>
+						<button onClick="removeUITheme(); pageLayout.resizeAll()" title="Remove Custom Theme">Revert</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+</body>
+
+</html>

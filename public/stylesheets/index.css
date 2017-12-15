@@ -1,0 +1,39 @@
+#canvasId  {border:2px solid #3399FF;}
+
+.mouseOut {
+
+border-top:    10px  transparent;
+border-bottom: 10px  transparent;
+border-left:   6px   transparent;
+border-right:  10px  transparent;
+}
+.mouseOver {
+border-top:    6px   transparent;
+border-bottom: 14px  transparent;
+border-left:   10px  transparent;
+border-right:  6px   transparent;
+}
+.mouseDown {
+border-top:    13px  transparent;
+border-bottom: 7px   transparent;
+border-left:   10px  transparent;
+border-right:  6px   transparent;
+}
+.mouseUp {
+border-top:    10px  transparent;
+border-bottom: 10px  transparent;
+border-left:   10px  transparent;
+border-right:  6px   transparent;
+}
+
+.slidingDiv {
+    height:300px;
+    background-color: #99CCFF;
+    padding:20px;
+    margin-top:10px;
+    border-bottom:5px solid #3399FF;
+}
+ 
+.show_hide {
+    display:none;
+}

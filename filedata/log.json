@@ -1,0 +1,20 @@
+[
+	{
+		"CountryCode": "TCD",
+		"Language": "Tandjile",
+		"IsOfficial": "F",
+		"Percentage": 6.5
+	},
+	{
+		"CountryCode": "MNP",
+		"Language": "Korean",
+		"IsOfficial": "F",
+		"Percentage": 6.5
+	},
+	{
+		"CountryCode": "GUM",
+		"Language": "Japanese",
+		"IsOfficial": "F",
+		"Percentage": 2
+	}
+]

@@ -1,0 +1,25 @@
+<input id="AddRowBtn" type="button" value="Add Row" onclick="of.insertRow('', '');" />
+
+<input id="DeleteRowBtn" type="button" value="Delete Row" onclick="of.deleteRow();" />
+
+<input id="GetObjectButton" type="button" value="Get Object" onclick="alert(JSON.stringify(of.getOutputObject()));" />
+
+<table id="myTable">
+    <tr>
+        <td>
+            <input type="checkbox" name="chk" />
+        </td>
+        <td>
+            <input type="text" name="txt" />
+        </td>
+        <td>
+            <select name="type">
+                <option value="text">text</option>
+                <option value="number">number</option>
+                <option value="boolean">boolean</option>
+                <option value="select">select</option>
+                <option value="date">date</option>
+            </select>
+        </td>
+    </tr>
+</table>

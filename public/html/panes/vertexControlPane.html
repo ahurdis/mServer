@@ -1,0 +1,45 @@
+ Selection Color:
+<br />
+<input id="selectionColor" type="color" value="#FF0000" onchange="app.am.updateVertexControlProperty('selectionColor');" />
+<br /> Border Color:
+<br />
+<input id="borderColor" type="color" value="#00FF00" onchange="app.am.updateVertexControlProperty('borderColor');" />
+<br /> Font Family:
+<br />
+<select id="fontFamily" onchange="app.am.updateVertexControlProperty('fontFamily');">
+                            <option value="Arial, Helvetica, sans-serif">Arial</option>
+                            <option value="'Courier New', Courier, monospace">Courier</option>
+                            <option value="'Lucida Sans Unicode', 'Lucida Grande', sans-serif">Lucida</option>
+                            <option value="Tahoma, Geneva, sans-serif">Tahoma</option>
+                            <option value="'Times New Roman', Times, serif">Times</option>
+                            <option value="Verdana, Geneva, sans-serif">Verdana</option>
+                        </select>
+<br /> Font Size:
+<br />
+<select id="fontSize" onchange="app.am.updateVertexControlPropertyAsInt('fontSize');">
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                            <option value="14">14</option>
+                            <option value="16">16</option>
+                            <option value="32">20</option>
+                        </select>
+<br /> Font Color:
+<br />
+<input id="fontColor" type="color" value="#00FF00" onchange="app.am.updateVertexControlProperty('fontColor');" />
+<br /> Font Weight:
+<br />
+<select id="fontWeight" onchange="app.am.updateVertexControlProperty('fontWeight');">
+                            <option value="normal">normal</option>
+                            <option value="bold">bold</option>
+                            <option value="bolder">bolder</option>
+                            <option value="lighter">lighter</option>
+                        </select>
+<br /> Font Style:
+<br />
+<select id="fontStyle" onchange="app.am.updateVertexControlProperty('fontStyle');">
+                            <option value="normal">normal</option>
+                            <option value="italic">italic</option>
+                            <option value="oblique">oblique</option>
+                        </select>
+<br />

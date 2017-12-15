@@ -1,0 +1,24 @@
+<div id='sources'>
+    <h3><a href='#'>Input</a></h3>
+    <div>
+        <p>
+            <a href='#'>JSON</a>
+        </p>
+        <p>
+            <a id="SQLServer Data Source" onclick="app.am.refresh();" href='#'>SQLServer</a>
+        </p>
+        <p>
+            <a id="mySQL Data Source" onclick="app.openMySQLConnectionDialog();" href='#'>mySQL</a>
+        </p>
+        <p>
+
+            <a id="File Source" onclick="app.openFileUploadDialog();" href='#'>File</a>
+
+            <!--
+            <label for="csvFileInput">CSV:</label>
+            <input type="file" id="csvFileInput" onchange="app.uploadFile(this.files[0]);" accept=".csv">
+            -->
+
+        </p>
+    </div>
+</div>

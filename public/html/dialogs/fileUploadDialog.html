@@ -1,0 +1,37 @@
+<style>
+
+</style>
+
+
+    <fieldset>
+        <legend>Add File Source</legend>
+
+        <p>
+            <label for="sourceFileID">CSV:</label>
+            <br/>
+            <input type="file" id="sourceFileID" name="sourceFile" onchange="app.getHeader(this.files[0]);" accept=".csv">
+            <!-- <input type="file" id="sourceFileID" name="sourceFile" accept=".csv"> -->
+        </p>
+
+        <p>
+            <label for="sourceNameID">Source Name:</label>
+            <br/>
+            <input id="sourceNameID" type="text" value="" />
+        </p>
+
+        <p>
+            <label for="delimiterID">Delimiter:</label>
+            <br/>
+            <select size="6" id="delimiterID" width="100" style="width: 100px">
+                <option value="," selected>Comma</option>
+                <option value="|">Pipe</option>
+            </select>
+        </p>
+
+        <p>
+            <label for="hasHeaderID">Has Header Row</label>
+            <br/>
+            <input id="hasHeaderID" type="checkbox"/>
+        </p>
+        
+    </fieldset>
