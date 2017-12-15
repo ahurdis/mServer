@@ -17,7 +17,7 @@ define(['javascripts/source/utility/RestHelper',
 
                     $('body').append('<div id="FileUploadDialogDIV"/>');
 
-                    $('#FileUploadDialogDIV').load('./html/dialogs/FileUploadDialog.html',
+                    $('#FileUploadDialogDIV').load('./html/dialogs/fileUploadDialog.html',
 
                         function () {
 
