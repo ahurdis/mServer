@@ -422,6 +422,21 @@ define(['javascripts/source/control/handle/AddHandle',
                     offsetX += paddingLeft + borderLeft + htmlLeft;
                     offsetY += paddingTop + borderTop + htmlTop;
 
+/*
+                    offsetX += window.pageXOffset;
+                    offsetY += window.pageYOffset;
+
+const getScrollPosition = (el = window) => ({
+  x: el.pageXOffset !== undefined ? el.pageXOffset : el.scrollLeft,
+  y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop
+});
+*/
+
+                    // add in the effect of scrolling
+                    // alert(elm.scrollLeft);
+                    //offsetX += elm.scrollLeft;
+                    // offsetY += elm.scrollTop;
+                    
                     var ret;
 
                     if (e.touches) {

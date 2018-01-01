@@ -1,20 +1,410 @@
 [
 	{
-		"CountryCode": "TCD",
-		"Language": "Tandjile",
-		"IsOfficial": "F",
-		"Percentage": 6.5
+		"Name": "Peru",
+		"Continent": "South America",
+		"Population": 25662000,
+		"LifeExpectancy": 70,
+		"HeadOfState": "Valentin Paniagua Corazao",
+		"GovernmentForm": "Republic"
 	},
 	{
-		"CountryCode": "MNP",
-		"Language": "Korean",
-		"IsOfficial": "F",
-		"Percentage": 6.5
+		"Name": "Bulgaria",
+		"Continent": "Europe",
+		"Population": 8190900,
+		"LifeExpectancy": 70.9,
+		"HeadOfState": "Petar Stojanov",
+		"GovernmentForm": "Republic"
 	},
 	{
-		"CountryCode": "GUM",
-		"Language": "Japanese",
-		"IsOfficial": "F",
-		"Percentage": 2
+		"Name": "Togo",
+		"Continent": "Africa",
+		"Population": 4629000,
+		"LifeExpectancy": 54.7,
+		"HeadOfState": "Gnassingbé Eyadéma",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Russian Federation",
+		"Continent": "Europe",
+		"Population": 146934000,
+		"LifeExpectancy": 67.2,
+		"HeadOfState": "Vladimir Putin",
+		"GovernmentForm": "Federal Republic"
+	},
+	{
+		"Name": "Virgin Islands, British",
+		"Continent": "North America",
+		"Population": 21000,
+		"LifeExpectancy": 75.4,
+		"HeadOfState": "Elisabeth II",
+		"GovernmentForm": "Dependent Territory of the UK"
+	},
+	{
+		"Name": "Thailand",
+		"Continent": "Asia",
+		"Population": 61399000,
+		"LifeExpectancy": 68.6,
+		"HeadOfState": "Bhumibol Adulyadej",
+		"GovernmentForm": "Constitutional Monarchy"
+	},
+	{
+		"Name": "Norfolk Island",
+		"Continent": "Oceania",
+		"Population": 2000,
+		"LifeExpectancy": null,
+		"HeadOfState": "Elisabeth II",
+		"GovernmentForm": "Territory of Australia"
+	},
+	{
+		"Name": "Japan",
+		"Continent": "Asia",
+		"Population": 126714000,
+		"LifeExpectancy": 80.7,
+		"HeadOfState": "Akihito",
+		"GovernmentForm": "Constitutional Monarchy"
+	},
+	{
+		"Name": "Turkmenistan",
+		"Continent": "Asia",
+		"Population": 4459000,
+		"LifeExpectancy": 60.9,
+		"HeadOfState": "Saparmurad Nijazov",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Egypt",
+		"Continent": "Africa",
+		"Population": 68470000,
+		"LifeExpectancy": 63.3,
+		"HeadOfState": "Hosni Mubarak",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Sierra Leone",
+		"Continent": "Africa",
+		"Population": 4854000,
+		"LifeExpectancy": 45.3,
+		"HeadOfState": "Ahmed Tejan Kabbah",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Mauritania",
+		"Continent": "Africa",
+		"Population": 2670000,
+		"LifeExpectancy": 50.8,
+		"HeadOfState": "Maaouiya Ould Sid´Ahmad Taya",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "San Marino",
+		"Continent": "Europe",
+		"Population": 27000,
+		"LifeExpectancy": 81.1,
+		"HeadOfState": null,
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Paraguay",
+		"Continent": "South America",
+		"Population": 5496000,
+		"LifeExpectancy": 73.7,
+		"HeadOfState": "Luis Ángel González Macchi",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Sweden",
+		"Continent": "Europe",
+		"Population": 8861400,
+		"LifeExpectancy": 79.6,
+		"HeadOfState": "Carl XVI Gustaf",
+		"GovernmentForm": "Constitutional Monarchy"
+	},
+	{
+		"Name": "Suriname",
+		"Continent": "South America",
+		"Population": 417000,
+		"LifeExpectancy": 71.4,
+		"HeadOfState": "Ronald Venetiaan",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Niue",
+		"Continent": "Oceania",
+		"Population": 2000,
+		"LifeExpectancy": null,
+		"HeadOfState": "Elisabeth II",
+		"GovernmentForm": "Nonmetropolitan Territory of New Zealand"
+	},
+	{
+		"Name": "Angola",
+		"Continent": "Africa",
+		"Population": 12878000,
+		"LifeExpectancy": 38.3,
+		"HeadOfState": "José Eduardo dos Santos",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Jamaica",
+		"Continent": "North America",
+		"Population": 2583000,
+		"LifeExpectancy": 75.2,
+		"HeadOfState": "Elisabeth II",
+		"GovernmentForm": "Constitutional Monarchy"
+	},
+	{
+		"Name": "Uzbekistan",
+		"Continent": "Asia",
+		"Population": 24318000,
+		"LifeExpectancy": 63.7,
+		"HeadOfState": "Islam Karimov",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Philippines",
+		"Continent": "Asia",
+		"Population": 75967000,
+		"LifeExpectancy": 67.5,
+		"HeadOfState": "Gloria Macapagal-Arroyo",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Burundi",
+		"Continent": "Africa",
+		"Population": 6695000,
+		"LifeExpectancy": 46.2,
+		"HeadOfState": "Pierre Buyoya",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Guinea",
+		"Continent": "Africa",
+		"Population": 7430000,
+		"LifeExpectancy": 45.6,
+		"HeadOfState": "Lansana Conté",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "British Indian Ocean Territory",
+		"Continent": "Africa",
+		"Population": 0,
+		"LifeExpectancy": null,
+		"HeadOfState": "Elisabeth II",
+		"GovernmentForm": "Dependent Territory of the UK"
+	},
+	{
+		"Name": "Niger",
+		"Continent": "Africa",
+		"Population": 10730000,
+		"LifeExpectancy": 41.3,
+		"HeadOfState": "Mamadou Tandja",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Monaco",
+		"Continent": "Europe",
+		"Population": 34000,
+		"LifeExpectancy": 78.8,
+		"HeadOfState": "Rainier III",
+		"GovernmentForm": "Constitutional Monarchy"
+	},
+	{
+		"Name": "Vanuatu",
+		"Continent": "Oceania",
+		"Population": 190000,
+		"LifeExpectancy": 60.6,
+		"HeadOfState": "John Bani",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Iran",
+		"Continent": "Asia",
+		"Population": 67702000,
+		"LifeExpectancy": 69.7,
+		"HeadOfState": "Ali Mohammad Khatami-Ardakani",
+		"GovernmentForm": "Islamic Republic"
+	},
+	{
+		"Name": "Ireland",
+		"Continent": "Europe",
+		"Population": 3775100,
+		"LifeExpectancy": 76.8,
+		"HeadOfState": "Mary McAleese",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Argentina",
+		"Continent": "South America",
+		"Population": 37032000,
+		"LifeExpectancy": 75.1,
+		"HeadOfState": "Fernando de la Rúa",
+		"GovernmentForm": "Federal Republic"
+	},
+	{
+		"Name": "Pitcairn",
+		"Continent": "Oceania",
+		"Population": 50,
+		"LifeExpectancy": null,
+		"HeadOfState": "Elisabeth II",
+		"GovernmentForm": "Dependent Territory of the UK"
+	},
+	{
+		"Name": "Liberia",
+		"Continent": "Africa",
+		"Population": 3154000,
+		"LifeExpectancy": 51,
+		"HeadOfState": "Charles Taylor",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Bahrain",
+		"Continent": "Asia",
+		"Population": 617000,
+		"LifeExpectancy": 73,
+		"HeadOfState": "Hamad ibn Isa al-Khalifa",
+		"GovernmentForm": "Monarchy (Emirate)"
+	},
+	{
+		"Name": "Sudan",
+		"Continent": "Africa",
+		"Population": 29490000,
+		"LifeExpectancy": 56.6,
+		"HeadOfState": "Omar Hassan Ahmad al-Bashir",
+		"GovernmentForm": "Islamic Republic"
+	},
+	{
+		"Name": "Tokelau",
+		"Continent": "Oceania",
+		"Population": 2000,
+		"LifeExpectancy": null,
+		"HeadOfState": "Elisabeth II",
+		"GovernmentForm": "Nonmetropolitan Territory of New Zealand"
+	},
+	{
+		"Name": "Ghana",
+		"Continent": "Africa",
+		"Population": 20212000,
+		"LifeExpectancy": 57.4,
+		"HeadOfState": "John Kufuor",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Mongolia",
+		"Continent": "Asia",
+		"Population": 2662000,
+		"LifeExpectancy": 67.3,
+		"HeadOfState": "Natsagiin Bagabandi",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Yugoslavia",
+		"Continent": "Europe",
+		"Population": 10640000,
+		"LifeExpectancy": 72.4,
+		"HeadOfState": "Vojislav Koštunica",
+		"GovernmentForm": "Federal Republic"
+	},
+	{
+		"Name": "Haiti",
+		"Continent": "North America",
+		"Population": 8222000,
+		"LifeExpectancy": 49.2,
+		"HeadOfState": "Jean-Bertrand Aristide",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Azerbaijan",
+		"Continent": "Asia",
+		"Population": 7734000,
+		"LifeExpectancy": 62.9,
+		"HeadOfState": "Heydär Äliyev",
+		"GovernmentForm": "Federal Republic"
+	},
+	{
+		"Name": "Kyrgyzstan",
+		"Continent": "Asia",
+		"Population": 4699000,
+		"LifeExpectancy": 63.4,
+		"HeadOfState": "Askar Akajev",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Kuwait",
+		"Continent": "Asia",
+		"Population": 1972000,
+		"LifeExpectancy": 76.1,
+		"HeadOfState": "Jabir al-Ahmad al-Jabir al-Sabah",
+		"GovernmentForm": "Constitutional Monarchy (Emirate)"
+	},
+	{
+		"Name": "Sao Tome and Principe",
+		"Continent": "Africa",
+		"Population": 147000,
+		"LifeExpectancy": 65.3,
+		"HeadOfState": "Miguel Trovoada",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Panama",
+		"Continent": "North America",
+		"Population": 2856000,
+		"LifeExpectancy": 75.5,
+		"HeadOfState": "Mireya Elisa Moscoso Rodríguez",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Albania",
+		"Continent": "Europe",
+		"Population": 3401200,
+		"LifeExpectancy": 71.6,
+		"HeadOfState": "Rexhep Mejdani",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "South Korea",
+		"Continent": "Asia",
+		"Population": 46844000,
+		"LifeExpectancy": 74.4,
+		"HeadOfState": "Kim Dae-jung",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Slovakia",
+		"Continent": "Europe",
+		"Population": 5398700,
+		"LifeExpectancy": 73.7,
+		"HeadOfState": "Rudolf Schuster",
+		"GovernmentForm": "Republic"
+	},
+	{
+		"Name": "Hong Kong",
+		"Continent": "Asia",
+		"Population": 6782000,
+		"LifeExpectancy": 79.5,
+		"HeadOfState": "Jiang Zemin",
+		"GovernmentForm": "Special Administrative Region of China"
+	},
+	{
+		"Name": "Bermuda",
+		"Continent": "North America",
+		"Population": 65000,
+		"LifeExpectancy": 76.9,
+		"HeadOfState": "Elisabeth II",
+		"GovernmentForm": "Dependent Territory of the UK"
+	},
+	{
+		"Name": "Brunei",
+		"Continent": "Asia",
+		"Population": 328000,
+		"LifeExpectancy": 73.6,
+		"HeadOfState": "Haji Hassan al-Bolkiah",
+		"GovernmentForm": "Monarchy (Sultanate)"
+	},
+	{
+		"Name": "Tajikistan",
+		"Continent": "Asia",
+		"Population": 6188000,
+		"LifeExpectancy": 64.1,
+		"HeadOfState": "Emomali Rahmonov",
+		"GovernmentForm": "Republic"
 	}
 ]

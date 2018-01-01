@@ -337,6 +337,70 @@ define(['javascripts/source/control/Connector',
                 }
             };
 
+            self.Join = {
+                contracts: Contracts.FunctionControl,
+                ctor: FunctionControl,
+                inheritancePath: [],
+                typeSpecificPanes: [],
+                allAccordionPanes: [],
+                gd: {
+                    func: function (aro, aro2) {
+                        let ret = [];
+
+                        for (let i = 0; i < aro.length; i++) {
+                            ret.push(Object.assign(aro[i], aro2[i]));
+                        }
+                        return ret;
+                    },
+                    type: 'FunctionControl',
+                    instance: 'Join',
+                    inboundType: 'aro',
+                    outboundType: 'aro'
+                }
+            };
+
+            self.ToLowerCase = {
+                contracts: Contracts.FunctionControl,
+                ctor: FunctionControl,
+                inheritancePath: [],
+                typeSpecificPanes: [],
+                allAccordionPanes: [],
+                gd: {
+                    type: 'FunctionControl',
+                    instance: 'ToLowerCase', 
+                    func: (aro) => {
+                        return aro.map((x) => {
+                            let obj = {};
+                            obj[Object.keys(x)[0]] = Object.values(x)[0].toLowerCase();
+                            return obj;
+                        })
+                    },
+                    inboundType: 'aro',
+                    outboundType: 'aro'
+                }
+            };
+
+            self.ToUpperCase = {
+                contracts: Contracts.FunctionControl,
+                ctor: FunctionControl,
+                inheritancePath: [],
+                typeSpecificPanes: [],
+                allAccordionPanes: [],
+                gd: {
+                    type: 'FunctionControl',
+                    instance: 'ToUpperCase', 
+                    func: (aro) => {
+                        return aro.map((x) => {
+                            let obj = {};
+                            obj[Object.keys(x)[0]] = Object.values(x)[0].toUpperCase();
+                            return obj;
+                        })
+                    },
+                    inboundType: 'aro',
+                    outboundType: 'aro'
+                }
+            };
+
             self.LogicalEntityControl = {
                 contracts: Contracts.LogicalEntityControl,
                 ctor: LogicalEntityControl,

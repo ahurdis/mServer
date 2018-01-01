@@ -8,21 +8,19 @@
   "dependencies": {
     "body-parser": "~1.13.2",
     "cookie-parser": "~1.3.5",
-    "csv-parse": "*",
     "debug": "~2.2.0",
     "express": "~4.13.1",
-    "iconv-lite": "*",
     "jade": "~1.11.0",
     "knex": "0.11.0",
     "mkdirp": "0.5.1",
-    "mongodb": "*",
+    "mongodb": "2.2.26",
     "morgan": "~1.6.1",
     "multer": "1.3.0",
-    "mysql": "*",
-    "promise-mysql": "*",
+    "mysql": "2.13.0",
+    "promise-mysql": "3.0.1",
     "serve-favicon": "~2.3.0",
     "sqlite3": "3.1.1",
     "underscore": "*",
-    "cron": "*"
+    "cron": "1.2.1"
   }
 }
