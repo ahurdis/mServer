@@ -13,7 +13,7 @@ define(['javascripts/source/control/core/Button',
     function (Button, VertexControl, DropDown, EditBox, Label) {
         'use strict';
         try {
-            return function FormControl(options) {
+            return function EditControl(options) {
 
                 var self = this;
                 // call parent constructor
@@ -380,8 +380,8 @@ define(['javascripts/source/control/core/Button',
                 self.create();
 
                 // setup the inheritance chain
-                FormControl.prototype = VertexControl.prototype;
-                FormControl.prototype.constructor = VertexControl;
+                EditControl.prototype = VertexControl.prototype;
+                EditControl.prototype.constructor = VertexControl;
             };
         }
         catch (e) {

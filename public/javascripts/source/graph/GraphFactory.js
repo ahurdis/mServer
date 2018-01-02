@@ -94,7 +94,7 @@ define(['javascripts/source/graph/Graph'],
                 });
 
                 var vertex4 = ret.addVertex({
-                    type: 'FormControl',
+                    type: 'EditControl',
                     instance: 'EditBox',
                     x: 50,
                     y: 350,

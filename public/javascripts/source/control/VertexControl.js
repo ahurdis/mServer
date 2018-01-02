@@ -353,7 +353,7 @@ define(['javascripts/source/accordion/AccordionManager',
 
                             var filterProperties = null;
 
-                            var arTODO = ['FunctionControl', 'FormControl'];
+                            var arTODO = ['FunctionControl', 'EditControl'];
 
                             // TODO: this is a hack, and will need to be generalized
                             // once type flows are more clearly comprehended
