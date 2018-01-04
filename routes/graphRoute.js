@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-var url = require("url");
-var queryString = require("querystring");
-var Graph = require("../lib/graph/Graph.js");
+var url = require('url');
+var queryString = require('querystring');
+var Graph = require('../lib/graph/Graph.js');
 
 var GraphData = require('../lib/graph/GraphData.js');
 var Serialization = require('../lib/utility/Serialization.js');

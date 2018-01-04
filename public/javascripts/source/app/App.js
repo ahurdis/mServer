@@ -169,7 +169,7 @@ define([
 
                         case 'New Workflow':
 
-                            addNewUserDocument(GraphFactory.createSimpleIntegrateGraph(), 'Workflow');
+                            addNewUserDocument(new Graph(), 'Workflow');
 
                             break;
 
@@ -480,7 +480,7 @@ define([
                                 loadIndicationDelay: 500,
                                 loadMessage: 'Please, wait...',
                                 loadShading: true,
-
+                                noDataContent: "Not found",
                                 updateOnResize: true,
 
                                 fields: fields
@@ -491,7 +491,7 @@ define([
                                 $('#jsGrid').jsGrid('insertItem', rowData[i]);
                             }
 
-                            $('#grid').jsGrid('refresh');
+                            $('#grid').jsGrid('render');
                         }
                     }
                 };
