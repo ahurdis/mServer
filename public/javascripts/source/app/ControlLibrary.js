@@ -11,6 +11,7 @@ define(['javascripts/source/control/Connector',
     'javascripts/source/control/OutputControl',
     'javascripts/source/accordion/OutputControlPane',
     'javascripts/source/control/PhysicalEntityControl',
+    'javascripts/source/control/SplitterControl',
     'javascripts/source/accordion/VertexControlPane'],
     function (Connector,
         Contracts,
@@ -23,6 +24,7 @@ define(['javascripts/source/control/Connector',
         OutputControl,
         OutputControlPane,
         PhysicalEntityControl,
+        SplitterControl,
         VertexControlPane) {
 
         'use strict';
@@ -52,7 +54,8 @@ define(['javascripts/source/control/Connector',
                     var childGraphData = self[child.type].gd;
 
                     var parentType = null;
-                    if (typeof (childGraphData.instance) !== 'undefined') {
+                    // TODO: need to understand splitter control better
+                    if (typeof (childGraphData.instance) !== 'undefined' && childGraphData.instance !== 'SplitterControl') {
                         // if we have an instance, then the parent is the type
                         parentType = childGraphData.type;
                     } else {
@@ -424,6 +427,21 @@ define(['javascripts/source/control/Connector',
                     type: 'PhysicalEntityControl',
                     parent: 'EntityControl',
                     inboundType: 'void',
+                    outboundType: 'aro'
+                }
+            };
+
+            self.SplitterControl = {
+                contracts: Contracts.SplitterControl,
+                ctor: SplitterControl,
+                inheritancePath: [],
+                typeSpecificPanes: [],
+                allAccordionPanes: [],
+                gd: {
+                    type: 'SplitterControl',
+                    parent: 'EntityControl',
+                    instance: 'SplitterControl',
+                    inboundType: 'aro',
                     outboundType: 'aro'
                 }
             };

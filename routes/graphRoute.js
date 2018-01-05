@@ -149,7 +149,7 @@ var inflate = function (graph) {
 
         // if the source is a PhysicalEntityControl or a FileControl
         // inflate the graph to support filtering of attributes
-        if (['PhysicalEntityControl', 'FileControl'].includes(graph.getVertexById(edges[i].sourceId).type)) {
+        if (['PhysicalEntityControl', 'SplitterControl', 'FileControl'].includes(graph.getVertexById(edges[i].sourceId).type)) {
             inflateEdge(graph, edges[i], 'FilterProperties');
         }
 

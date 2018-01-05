@@ -20,6 +20,10 @@ define(['javascripts/source/utility/Contract'], function (Contract) {
             Contract.expectString(options.database, 'PhysicalEntityControl.database must be a string.');
         };
 
+        Contracts.SplitterControl = function (options) {
+        //     Contract.expectString(options.instance, 'LogicalEntityControl.database must be a string.');
+        };
+
         Contracts.LogicalEntityControl = function (options) {
             Contract.expectString(options.instance, 'LogicalEntityControl.database must be a string.');
         };

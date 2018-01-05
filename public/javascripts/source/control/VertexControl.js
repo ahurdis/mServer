@@ -379,6 +379,16 @@ define(['javascripts/source/accordion/AccordionManager',
                                 edge: edge
                             });
 
+                            if (targetControl._vertex.type === 'SplitterControl') {
+                                targetControl._values = _selectedControl._selectedProperties;
+/*
+                                if (_selectedControl._vertex.type === 'FunctionControl') {
+
+                                } else {
+                                }
+*/
+                            }
+
                         });
                     }
 
