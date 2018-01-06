@@ -491,12 +491,12 @@ define([
                                 $('#jsGrid').jsGrid('insertItem', rowData[i]);
                             }
 
-                            $('#grid').jsGrid('render');
+                            $('#jsGrid').jsGrid('render');
                         }
                     }
                 };
 
-                // now create the app                
+                 // now create the app                
                 self.create();
             }
             catch (e) {
