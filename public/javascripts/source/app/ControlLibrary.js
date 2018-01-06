@@ -4,7 +4,7 @@ define(['javascripts/source/control/Connector',
     'javascripts/source/model/Contracts',
     'javascripts/source/accordion/ControlBasePane',
     'javascripts/source/control/FileControl',
-    'javascripts/source/control/EditControl',
+    'javascripts/source/control/FormControl',
     'javascripts/source/control/FunctionControl',
     'javascripts/source/graph/Graph',
     'javascripts/source/control/LogicalEntityControl',
@@ -17,7 +17,7 @@ define(['javascripts/source/control/Connector',
         Contracts,
         ControlBasePane,
         FileControl,
-        EditControl,
+        FormControl,
         FunctionControl,
         Graph,
         LogicalEntityControl,
@@ -145,14 +145,14 @@ define(['javascripts/source/control/Connector',
                 }
             };
 
-            self.EditControl = {
-                contracts: Contracts.EditControl,
-                ctor: EditControl,
+            self.FormControl = {
+                contracts: Contracts.FormControl,
+                ctor: FormControl,
                 inheritancePath: [],
                 typeSpecificPanes: [],
                 allAccordionPanes: [],
                 gd: {
-                    type: 'EditControl',
+                    type: 'FormControl',
                     parent: 'VertexControl',
                     inboundType: 'void',
                     outboundType: 'o'
@@ -184,13 +184,13 @@ define(['javascripts/source/control/Connector',
             };
 
             self.EditBox = {
-                contracts: Contracts.EditControl,
-                ctor: EditControl,
+                contracts: Contracts.FormControl,
+                ctor: FormControl,
                 inheritancePath: [],
                 typeSpecificPanes: [],
                 allAccordionPanes: [],
                 gd: {
-                    type: 'EditControl',
+                    type: 'FormControl',
                     instance: 'EditBox',
                     inboundType: 'void',
                     outboundType: 'o'
