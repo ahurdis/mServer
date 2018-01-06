@@ -380,21 +380,41 @@ define(['javascripts/source/accordion/AccordionManager',
                             });
 
                             if (targetControl._vertex.type === 'SplitterControl') {
-                                targetControl._values = _selectedControl._selectedProperties;
-/*
-                                if (_selectedControl._vertex.type === 'FunctionControl') {
-
-                                } else {
-                                }
-*/
+                                splitterProperties = []
+                                recurseTree(targetControl._vertex);
+                                targetControl._values = splitterProperties;
                             }
-
                         });
                     }
 
                     self._parent.render();
 
                     self.click(e, self);
+                };
+
+                var splitterProperties = [];
+
+                var recurseTree = function(vertex) {
+
+                    var edges = self._parent.graph().getEdgesTo(vertex);
+                    
+                    for (var i in edges) {
+            
+                        var filterProperties = null;
+                        var child = self._parent.graph().getVertexById(edges[i].sourceId);
+                        if (!['FunctionControl', 'FormControl'].includes(child.type)) {
+                            filterProperties = edges[i].filterProperties;
+                            if (filterProperties.length === 0) {
+                                filterProperties = child.shape._values;
+                            }
+                        }
+
+                        if (filterProperties === null) {
+                            recurseTree(child);
+                        } else {
+                            splitterProperties = splitterProperties.concat(filterProperties);
+                        }
+                    }
                 };
 
                 /**
