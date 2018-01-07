@@ -380,9 +380,10 @@ define(['javascripts/source/accordion/AccordionManager',
                             });
 
                             if (targetControl._vertex.type === 'SplitterControl') {
-                                splitterProperties = []
+                                splitterProperties = [];
                                 recurseTree(targetControl._vertex);
                                 targetControl._values = splitterProperties;
+                                // targetControl._vertex.displayKeys = splitterProperties;
                             }
                         });
                     }

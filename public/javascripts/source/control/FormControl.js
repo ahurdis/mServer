@@ -66,8 +66,8 @@ define(['javascripts/source/control/core/Button',
                         fontFamily: 'Verdana',
                         fontColor: '#212121',
                         fontWeight: 'bold',
-                        width: 300,
-                        placeHolderText: 'Your value here',
+                        width: 120,
+                        placeHolderText: 'Enter value.',
                         onblur: function (parent) {
                             if (typeof self._vertex.value === 'undefined') {
                                 self._vertex.insertProperty('value', self.onsubmit());
