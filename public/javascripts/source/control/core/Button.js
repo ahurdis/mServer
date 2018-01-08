@@ -158,15 +158,6 @@ define(['javascripts/source/control/ControlBase'], function (ControlBase) {
                 ctx.restore();
             };
 
-            /**
-             * Recalculate the outer with and height of the text box.
-             */
-            self._calcWH = function () {
-                // calculate the full width and height with padding, borders and shadows
-                self.outerW = self._width + self._offsetX * 2 + self._borderWidth * 2 + self.shadowW;
-                self.outerH = self._height + self._offsetY * 2 + self._borderWidth * 2 + self.shadowH;
-            };
-
             // setup the inheritance chain
             Button.prototype = ControlBase.prototype;
             Button.prototype.constructor = ControlBase;

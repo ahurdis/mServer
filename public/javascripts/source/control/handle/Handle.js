@@ -103,16 +103,6 @@
                     self._iconRenderer(ctx, self._x, self._y);
                 };
 
-
-                /**
-                 * Recalculate the outer with and height of the text box.
-                 */
-                self._calcWH = function () {
-                    // calculate the full width and height with padding, borders and shadows
-                    self.outerW = self._width + self._offsetX * 2 + self._borderWidth * 2 + self.shadowW;
-                    self.outerH = self._height + self._offsetY * 2 + self._borderWidth * 2 + self.shadowH;
-                };
-
                 /**
                  * Update the width and height of the off-DOM canvas when attributes are changed.
                  */
