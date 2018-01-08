@@ -1,7 +1,10 @@
-﻿'use strict';
+﻿/**
+ * CheckBox.js
+ * @author Andrew
+ */
 
-
-define(["javascripts/source/control/ControlBase"], function (ControlBase) {
+define(['javascripts/source/control/ControlBase'], function (ControlBase) {
+    'use strict';
     try {
         return function CheckBox(options) {
             var self = this;
@@ -11,14 +14,12 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
 
             options = options ? options : {};
 
-
             // CheckBox specific options
             self._boxSize = options.boxSize || 18;
             self._boxPadding = options.boxPadding || 15;
             self._textPadding = options.textPadding || options._fontSize;
             self._checkInset = options.checkInset || 3;
             self._checkWidth = options.checkWidth || 3;
-
 
             // setup the defaults
             self._label = options.label || 'CheckBox Label';
@@ -29,7 +30,6 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
             self._onblur = options.onblur || function () { };
             self._selected = options.selected || false;
 
-
             /**
              * Get/set the width of the text box.
              * @param  {Number} data Width in pixels.
@@ -39,7 +39,7 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
                 if (typeof data !== 'undefined') {
                     self._width = data;
 
-                    return self.render();
+                    //                    return self.render();
                 } else {
                     return self._width;
                 }
@@ -54,7 +54,7 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
                 if (typeof data !== 'undefined') {
                     self._height = data;
 
-                    return self.render();
+                    //                    return self.render();
                 } else {
                     return self._height;
                 }
@@ -70,7 +70,7 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
                 if (typeof data !== 'undefined') {
                     self._selected = data;
 
-                    self.render();
+                    //                    self.render();
 
                     return self;
                 } else {
@@ -81,13 +81,13 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
             /**
              * Fired with the keydown event to draw the typed characters.
              * @param  {Event}       e    The keydown event.
-             * @param  {CheckBox} self
+             * @param  {FormControl} parent
              * @return {CheckBox}
              */
-            self.keydown = function (e, self) {
+            self.keydown = function (e, parent) {
                 var keyCode = e.which,
-                  isShift = e.shiftKey,
-                  key = null;
+                    isShift = e.shiftKey,
+                    key = null;
 
                 // make sure the correct text field is being updated
                 if (!self._hasFocus) {
@@ -105,23 +105,36 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
 
                     isShift ? self._form.rewindFocus(self) : self._form.advanceFocus(self);
                 }
+            };
 
-                return self.render();
+            /**
+            * Checks if a coordinate point is over the input box.
+            * @param  {Number} x x-coordinate position.
+            * @param  {Number} y y-coordinate position.
+            * @return {Boolean}   True if it is over the input box.
+            */
+            self.mouseOverControl = function (x, y) {
+                var xLeft = x >= self._x,
+                    xRight = x <= self._x + self._width,
+                    yTop = y >= self._y,
+                    yBottom = y <= self._y + self._height;
+
+                return xLeft && xRight && yTop && yBottom;
             };
 
             /**
              * Fired with the click event on the canvas, and puts focus on/off
              * based on where the user clicks.
              * @param  {Event}       e    The click event.
-             * @param  {CheckBox} self
+             * @param  {FormControl} parent
              * @return {CheckBox}
              */
-            self.click = function (e, self) {
+            self.click = function (e, parent) {
                 var mouse = self._mousePos(e),
-                  x = mouse.x,
-                  y = mouse.y;
+                    x = mouse.x,
+                    y = mouse.y;
 
-                if (self._canvas && self.mouseOverControl(x, y)) {
+                if (self.mouseOverControl(x, y)) {
                     if (self._mouseDown) {
                         self._mouseDown = false;
                         self._selected = !self._selected;
@@ -135,27 +148,26 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
             /**
              * Fired with the mousemove event to update the default cursor.
              * @param  {Event}       e    The mousemove event.
-             * @param  {CheckBox} self
+             * @param  {FormControl} parent
              * @return {CheckBox}
              */
-            self.mousemove = function (e, self) {
+            self.mousemove = function (e, parent) {
                 var mouse = self._mousePos(e),
-                  x = mouse.x,
-                  y = mouse.y,
-                  isOver = self.mouseOverControl(x, y);
-
+                    x = mouse.x,
+                    y = mouse.y,
+                    isOver = self.mouseOverControl(x, y);
             };
 
             /**
              * Fired with the mousedown event to start a selection drag.
              * @param  {Event} e    The mousedown event.
-             * @param  {CheckBox} self
+             * @param  {FormControl} parent
              */
-            self.mousedown = function (e, self) {
+            self.mousedown = function (e, parent) {
                 var mouse = self._mousePos(e),
-                  x = mouse.x,
-                  y = mouse.y,
-                  isOver = self.mouseOverControl(x, y);
+                    x = mouse.x,
+                    y = mouse.y,
+                    isOver = self.mouseOverControl(x, y);
 
                 // setup the 'click' event
                 self._mouseDown = isOver;
@@ -164,23 +176,14 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
             /**
              * Fired with the mouseup event 
              * @param  {Event} e    The mouseup event.
-             * @param  {CheckBox} self
+             * @param  {FormControl} parent
              */
-            self.mouseup = function (e, self) {
+            self.mouseup = function (e, parent) {
                 var mouse = self._mousePos(e),
-                  x = mouse.x,
-                  y = mouse.y;
-
+                    x = mouse.x,
+                    y = mouse.y;
 
                 self.click(e, self);
-            };
-
-            /**
-             * Helper method to get the off-DOM canvas.
-             * @return {Object} Reference to the canvas.
-             */
-            self.renderCanvas = function () {
-                return this._renderCanvas;
             };
 
             /**
@@ -188,29 +191,14 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
              * and if a main canvas is provided, draws it all onto that.
              * @return {CheckBox}
              */
-            self.render = function () {
-                var ctx = self._ctx;
-
-                // clear the control region
-                ctx.clearRect(self._x, self._y, self._width, self._height);
-
-                self._drawCheckBox();
-            };
-
-
-            /**
-             * Draw the text box area with either an image or background color.
-             * @param  {Function} fn Callback.
-             */
-            self._drawCheckBox = function (fn) {
-                var ctx = self._ctx;
+            self.render = function (ctx) {
+                // ctx.clearRect(self._x, self._y, self._width, self._height);
 
                 ctx.save();
 
                 // draw the text
-                var textX = self._boxPadding + self._boxSize + self._textPadding,
+                var textX = self._x + self._boxPadding + self._boxSize + self._textPadding,
                     textY = self._y + self._height / 2;
-
 
                 if (self._hasFocus) {
                     if (ctx.setLineDash !== undefined) ctx.setLineDash([1, 5]);
@@ -229,17 +217,12 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
 
                 // draw the X if selected
                 if (self._selected) {
-
-//                    ctx.lineWidth = self._checkWidth;
                     ctx.lineCap = 'round';
-
                     ctx.beginPath();
-
                     ctx.moveTo(self._x + self._checkInset, self._y + self._checkInset);
                     ctx.lineTo(self._x + self._boxSize - self._checkInset, self._y + self._boxSize - self._checkInset);
                     ctx.moveTo(self._x + self._boxSize - self._checkInset, self._y + self._checkInset);
                     ctx.lineTo(self._x + self._checkInset, self._y + self._boxSize - self._checkInset);
-
                     ctx.stroke();
                 }
 
@@ -251,22 +234,13 @@ define(["javascripts/source/control/ControlBase"], function (ControlBase) {
                 ctx.fillText(self._label, textX, textY);
 
                 // draw the control outline
-
-
                 ctx.restore();
-
-                return self;
             };
-
 
             // setup the inheritance chain
             CheckBox.prototype = ControlBase.prototype;
             CheckBox.prototype.constructor = ControlBase;
-
-            // draw the check box
-            self.render();
         }
-
     }
     catch (e) {
         alert('CheckBox ctor' + e.message);

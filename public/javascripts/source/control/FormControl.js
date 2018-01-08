@@ -6,11 +6,13 @@
  */
 
 define(['javascripts/source/control/core/Button',
-    'javascripts/source/control/VertexControl',
+    'javascripts/source/control/core/CheckBox',
     'javascripts/source/control/core/DropDown',
     'javascripts/source/control/core/EditBox',
-    'javascripts/source/control/core/Label'],
-    function (Button, VertexControl, DropDown, EditBox, Label) {
+    'javascripts/source/control/core/Label',
+    'javascripts/source/control/core/RadioButton',
+    'javascripts/source/control/VertexControl'],
+    function (Button, CheckBox, DropDown, EditBox, Label, RadioButton, VertexControl) {
         'use strict';
         try {
             return function FormControl(options) {
@@ -77,6 +79,52 @@ define(['javascripts/source/control/core/Button',
                         }
                     });
 
+                    self.addButton({
+                        canvas: self._canvas,
+                        form: self,
+                        id: 'ID_BUTTON',
+                        fontSize: 12,
+                        fontFamily: 'Verdana',
+                        fontColor: '#212121',
+                        fontWeight: 'bold',
+                        width: 80,
+                        height: 40
+                    });
+
+                    self.addCheckBox({
+                        canvas: self._canvas,
+                        form: self,
+                        id: 'ID_CHECKBOX',
+                        label: 'Greenish',
+                        fontSize: 14,
+                        fontStyle: 'oblique',
+                        fontFamily: 'Verdana',
+                        fontColor: '#22FF22',
+                        textPadding: 2,
+                        boxSize: 18
+                    });
+
+                    self.addLabel({
+                        canvas: self._canvas,
+                        form: self,
+                        id: 'ID_NAME_LABEL',
+                        fontSize: 14,
+                        fontFamily: 'Verdana',
+                        fontColor: '#FFFFFF',
+                        value: 'Some Label Text'
+                    });
+
+                    self.addDropDown({
+                        canvas: self._canvas,
+                        form: self,
+                        id: 'ID_DROPDOWN',
+                        fontSize: 12,
+                        fontFamily: 'Verdana',
+                        fontColor: '#FFFFFF',
+                        fontWeight: 'bold',
+                        value: 'DropDown'
+                    });
+
                     // set the width and height of the control
                     self.height(_minHeight);
 
@@ -104,6 +152,10 @@ define(['javascripts/source/control/core/Button',
                         }
                     }
 
+                    self._controls.forEach(function (control) {
+                        control.mousemove(e, self);
+                    }, this);
+
                     return ret;
                 };
 
@@ -123,7 +175,7 @@ define(['javascripts/source/control/core/Button',
                 };
 
                 /**
-                 * Adds an Control to the Form
+                 * Adds an Control to the FormControl
                  * @param  {Object} options The constructor options for the EditBox.
                  * @param  {Function} fn The function that will call the actual controls constructor
                  * @return {VertexControl} The control that has been added
@@ -157,45 +209,63 @@ define(['javascripts/source/control/core/Button',
                 };
 
                 /**
-                 * Adds a button to the Form
+                 * Adds a Button to the FormControl
                  * @param  {Object} options The constructor options for the Button.
-                 * @return {ControlBase} The Button that has been created.
+                 * @return {Button} The Button that has been created.
                  */
                 self.addButton = function (options) {
                     return addControl(options, function (options) { return new Button(options); });
                 };
 
                 /**
-                 * Adds an EditBox to the Form
+                 * Adds a CheckBox to the FormControl
+                 * @param  {Object} options The constructor options for the Button.
+                 * @return {CheckBox} The CheckBox that has been created.
+                 */
+                self.addCheckBox = function (options) {
+                    return addControl(options, function (options) { return new CheckBox(options); });
+                };
+
+                /**
+                 * Adds an DropDown to the FormControl
                  * @param  {Object} options The constructor options for the EditBox.
-                 * @return {ControlBase} The EditBox that has been created.
+                 * @return {DropDown} The DropDown that has been created.
                  */
                 self.addDropDown = function (options) {
                     return addControl(options, function (options) { return new DropDown(options); });
                 };
 
                 /**
-                 * Adds an EditBox to the Form
+                 * Adds an EditBox to the FormControl
                  * @param  {Object} options The constructor options for the EditBox.
-                 * @return {ControlBase} The EditBox that has been created.
+                 * @return {EditBox} The EditBox that has been created.
                  */
                 self.addEditBox = function (options) {
                     return addControl(options, function (options) { return new EditBox(options); });
                 };
 
-
                 /**
-                 * Adds a Label to the Form
+                 * Adds a Label to the FormControl
                  * @param  {Object} options The constructor options for the Label.
-                 * @return {ControlBase} The Label that has been created.
+                 * @return {Label} The Label that has been created.
                  */
                 self.addLabel = function (options) {
                     return addControl(options, function (options) { return new Label(options); });
                 };
+
                 /**
-                 * Adds a submit button to the Form, linking it to the Form's onsubmit function
+                 * Adds a RadioButton to the FormControl
+                 * @param  {Object} options The constructor options for the Label.
+                 * @return {RadioButton} The Label that has been created.
+                 */
+                self.addRadioButton = function (options) {
+                    return addControl(options, function (options) { return new RadioButton(options); });
+                };
+
+                /**
+                 * Adds a submit button to the FormControl, linking it to the FormControl's onsubmit function
                  * @param  {Object} options The constructor options for the Button.
-                 * @return {ControlBase} The submit Button.
+                 * @return {Button} The submit Button.
                  */
                 self.addSubmitButton = function (options) {
                     options.onsubmit = self.onsubmit;
@@ -203,7 +273,7 @@ define(['javascripts/source/control/core/Button',
                 };
 
                 /**
-                 * Removes the focus from all of the the Forms controls
+                 * Removes the focus from all of the the FormControl's controls
                  */
                 self.removeFocus = function () {
                     for (var i = 0; i < self._controls.length; i++) {
@@ -238,13 +308,13 @@ define(['javascripts/source/control/core/Button',
                 * @return {ControlBase} The ControlBase object that now has the focus.
                 */
                 var moveFocus = function (control, direction) {
-                    
+
                     var next = 0;
-                    
+
                     if (self._controls.length > 1) {
                         var inputIndex = self._controls.indexOf(control);
 
-                        
+
                         if (self._controls[inputIndex + direction]) {
                             next = inputIndex + direction;
                         }
@@ -351,7 +421,7 @@ define(['javascripts/source/control/core/Button',
                     for (var i = 0; i < self._controls.length; i++) {
                         var control = self._controls[i];
 
-                        if (typeof control !== 'undefined') {
+                        if (typeof control !== 'undefined' && typeof ctx !== 'undefined') {
                             control.render(ctx);
                         }
                     }

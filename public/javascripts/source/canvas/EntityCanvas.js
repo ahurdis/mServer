@@ -218,6 +218,7 @@ define(['javascripts/source/control/handle/AddHandle',
                     try {
                         control = new app.lib[ctrlOptions.type].ctor(ctrlOptions);
                     } catch (e) {
+                        console.dir(e);
                         alert('Control type ' + ctrlOptions.type + ' not in ControlLibrary');
                     }
 

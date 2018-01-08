@@ -1,14 +1,10 @@
-﻿// JavaScript source code
-
-/**
+﻿/**
  * DropDown.js
  * @author Andrew
  */
 
-'use strict';
-
-
 define(['javascripts/source/control/ControlBase'], function (ControlBase) {
+    'use strict';
     try {
         return function DropDown(options) {
             var self = this;
@@ -23,7 +19,7 @@ define(['javascripts/source/control/ControlBase'], function (ControlBase) {
             self._borderRadius = options.borderRadius || 2;
             self._value = 'default';
 
-            self._borderColor = options.borderColor || 'rgba(79, 212, 253, 1.0)';
+            self._borderColor = options.borderColor || 'rgba(212, 212, 253, 1.0)';
             self._selectionColor = options.selectionColor || 'rgba(179, 212, 253, 0.6)';
 
             self._onsubmit = options.onsubmit || function () { };
@@ -63,9 +59,7 @@ define(['javascripts/source/control/ControlBase'], function (ControlBase) {
                         self._expanded = true;
                         clearTimeout(self._expansionTimer);
                     }
-                }
-
-                if (self._expanded === true) {
+                } else {
                     if (self._contractionHeight < self._height) {
                         self._height -= self._expansionCellSize / 2;
                     }
@@ -73,25 +67,29 @@ define(['javascripts/source/control/ControlBase'], function (ControlBase) {
                         self._expanded = false;
                         self._height = self._contractionHeight;
                         clearTimeout(self._expansionTimer);
-                        self._form.render();
                     }
                 }
-                self.render();
+                self._ctx.clearRect(self._offsetX + self._x - 1,
+                    self._offsetY + self._y,
+                    self._width + 5,
+                    self._height + self._offsetY + (self._values.length * self._expansionCellSize));
+                self._form.render(self._ctx);
+//                self.render(self._ctx);
             };
 
             /**
              * Fired with the click event on the canvas, and puts focus on/off
              * based on where the user clicks.
              * @param  {Event}       e    The click event.
-             * @param  {CheckBox} self
-             * @return {CheckBox}
+             * @param  {FormControl} parent
+             * @return {DropDown}
              */
-            self.click = function (e, self) {
+            self.click = function (e, parent) {
                 var mouse = self._mousePos(e),
                     x = mouse.x,
                     y = mouse.y;
 
-                if (self._canvas && self.mouseOverControl(x, y)) {
+                if (self.mouseOverControl(x, y)) {
                     if (self._mouseDown) {
                         self._mouseDown = false;
 
@@ -108,25 +106,39 @@ define(['javascripts/source/control/ControlBase'], function (ControlBase) {
             };
 
             /**
+            * Checks if a coordinate point is over the input box.
+            * @param  {Number} x x-coordinate position.
+            * @param  {Number} y y-coordinate position.
+            * @return {Boolean}   True if it is over the input box.
+            */
+            self.mouseOverControl = function (x, y) {
+                var xLeft = x >= self._x,
+                    xRight = x <= self._x + self._width,
+                    yTop = y >= self._y,
+                    yBottom = y <= self._y + self._height;
+
+                return xLeft && xRight && yTop && yBottom;
+            };
+
+            /**
              * Fired with the mousemove event to update the default cursor.
              * @param  {Event}       e    The mousemove event.
-             * @param  {CheckBox} self
-             * @return {CheckBox}
+             * @param  {FormControl} parent
+             * @return {DropDown}
              */
-            self.mousemove = function (e, self) {
+            self.mousemove = function (e, parent) {
                 var mouse = self._mousePos(e),
                     x = mouse.x,
                     y = mouse.y,
                     isOver = self.mouseOverControl(x, y);
 
-                if (isOver === true && self._expanded === true) {
+                if (isOver && self._expanded) {
                     // determine which cell is highlighted
                     self._highLightedCell = Math.floor((y - self._y) / self._expansionCellSize);
 
                     if (self._highLightedCell > self._values.length - 1) {
                         self._highLightedCell = self._values.length - 1;
                     }
-                    self.render();
                 }
                 else {
                     self._highLightedCell = 0;
@@ -134,11 +146,11 @@ define(['javascripts/source/control/ControlBase'], function (ControlBase) {
             };
 
             /**
-             * Fired with the mousedown event to start a selection drag.
+             * Fired with the mousedown event
              * @param  {Event} e    The mousedown event.
-             * @param  {CheckBox} self
+             * @param  {FormControl} parent
              */
-            self.mousedown = function (e, self) {
+            self.mousedown = function (e, parent) {
                 var mouse = self._mousePos(e),
                     x = mouse.x,
                     y = mouse.y,
@@ -147,48 +159,43 @@ define(['javascripts/source/control/ControlBase'], function (ControlBase) {
                 // setup the 'click' event
                 self._mouseDown = isOver;
 
-
-                self.render();
+                if (self._expanded) {
+                    self._value = self._values[self._highLightedCell];
+                }
             };
 
             /**
              * Fired with the mouseup event 
              * @param  {Event} e    The mouseup event.
-             * @param  {CheckBox} self
+             * @param  {FormControl} parent
              */
-            self.mouseup = function (e, self) {
+            self.mouseup = function (e, parent) {
                 var mouse = self._mousePos(e),
                     x = mouse.x,
                     y = mouse.y;
 
-                self.click(e, self);
+//                self.click(e, parent);
 
-                if (self._expanded === true) {
-                    self._value = self._values[self._highLightedCell];
-                }
 
-                self._highLightedCell = 0;
-
+//                self._highLightedCell = 0;
             };
-
-
 
             /**
              * Clears and redraws the CanvasInput on an off-DOM canvas,
              * and if a main canvas is provided, draws it all onto that.
              * @return {CanvasInput}
              */
-            self.render = function () {
-                var ctx = self._ctx;
+            self.render = function (ctx) {
+
+                self._ctx = ctx;
 
                 ctx.save();
-
+/*
                 ctx.clearRect(self._offsetX + self._x - 1,
                     self._offsetY + self._y,
                     self._width + 5,
                     self._height + self._offsetY + (self._values.length * self._expansionCellSize));
-
-
+*/
                 self._roundedRect(ctx,
                     self._offsetX + self._x,
                     self._offsetY + self._y,
@@ -238,8 +245,6 @@ define(['javascripts/source/control/ControlBase'], function (ControlBase) {
                 if (typeof data !== 'undefined') {
                     self._value = data + '';
 
-                    self.render();
-
                     return self;
                 } else {
                     return (self._value === self._placeHolderText) ? '' : self._value;
@@ -254,35 +259,6 @@ define(['javascripts/source/control/ControlBase'], function (ControlBase) {
                 self.outerW = self._width + self._offsetX * 2 + self._borderWidth * 2 + self.shadowW;
                 self.outerH = self._height + self._offsetY * 2 + self._borderWidth * 2 + self.shadowH;
             };
-
-            /**
-             * Update the width and height of the off-DOM canvas when attributes are changed.
-             */
-            self._updateCanvasWH = function () {
-                var oldW = self._renderCanvas.width,
-                    oldH = self._renderCanvas.height;
-
-                // update off-DOM canvas
-                self._renderCanvas.setAttribute('width', self.outerW);
-                self._renderCanvas.setAttribute('height', self.outerH);
-                self._shadowCanvas.setAttribute('width', self._width + self._padding * 2);
-                self._shadowCanvas.setAttribute('height', self._height + self._padding * 2);
-
-                // clear the main canvas
-                if (self._ctx) {
-                    self._ctx.clearRect(self._x, self._y, oldW, oldH);
-                }
-            };
-
-
-            // setup the off-DOM canvas
-            self._renderCanvas = document.createElement('canvas');
-            self._renderCanvas.setAttribute('width', self.outerW);
-            self._renderCanvas.setAttribute('height', self.outerH);
-            self._renderCtx = self._renderCanvas.getContext('2d');
-
-            // draw the text box
-            self.render();
 
             // setup the inheritance chain
             DropDown.prototype = ControlBase.prototype;

@@ -167,7 +167,7 @@ define([],
 
 					var selector = document.getElementById(property);
 
-					console.log(property);
+//					console.log(property);
 
 					if (control && selector) {
 
