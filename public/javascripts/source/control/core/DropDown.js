@@ -41,14 +41,6 @@ define(['javascripts/source/control/ControlBase'], function (ControlBase) {
             self._triangleWidth = self._triangleHeight;
             self._triangleInset = 5;
 
-            /**
-             * Helper method to get the off-DOM canvas.
-             * @return {Object} Reference to the canvas.
-             */
-            self.renderCanvas = function () {
-                return self._renderCanvas;
-            };
-
             function myTimer() {
 
                 if (self._expanded === false) {
