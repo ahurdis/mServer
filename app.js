@@ -9,19 +9,10 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var graphRoute = require('./routes/graphRoute');
 var mysql = require('./routes/mysql');
-var fileUpload = require('./routes/fileUpload');
+var csvFileUpload = require('./routes/csvFileUpload');
 var sourceMetadata = require('./routes/sourceMetadata');
 
 var app = express();
-
-/*
-var Graph = require('./lib/graph/Graph.js');
-
-var graph = new Graph();
-
-var jsonGraph = JSON.stringify(graph);
-//console.log(jsonGraph);
-*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -59,10 +50,9 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/graphRoute', graphRoute);
 app.use('/mysql', mysql);
-app.use('/fileUpload', fileUpload);
+app.use('/csvFileUpload', csvFileUpload);
 app.use('/sourceMetadata', sourceMetadata);
  
-
 app.post('/mysqlconnection', function (req, res) {
     console.log(req.body.host + ' and ' + req.body.password);
     res.render('mysql', { title: 'Bitforge - Contact', msg: 'Message sent! Thank you, ' + req.body.user, err: false, page: 'contact' });

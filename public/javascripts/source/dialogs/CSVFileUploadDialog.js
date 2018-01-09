@@ -8,28 +8,28 @@ define(['javascripts/source/utility/RestHelper',
     function (RestHelper, TextFileReader, TreeManager) {
         'use strict';
         try {
-            return function FileUploadDialog(options) {
+            return function CSVFileUploadDialog(options) {
                 var self = this;
 
                 self.options = options || {};
 
                 self.create = function () {
 
-                    $('body').append('<div id="FileUploadDialogDIV"/>');
+                    $('body').append('<div id="CSVFileUploadDialogDIV"/>');
 
-                    $('#FileUploadDialogDIV').load('./html/dialogs/fileUploadDialog.html',
+                    $('#CSVFileUploadDialogDIV').load('./html/dialogs/csvFileUploadDialog.html',
 
                         function () {
 
                             // open the dialog and load the HTML
-                            $('#FileUploadDialogDIV').dialog({
+                            $('#CSVFileUploadDialogDIV').dialog({
                                 modal: true,
                                 open: function () {
                                     initDialog();
                                 },
                                 height: 'auto',
                                 width: '500',
-                                title: 'Add a File Source',
+                                title: 'Add a CSV File Source',
                                 buttons: [
                                     {
                                         text: 'Cancel',
@@ -102,12 +102,12 @@ define(['javascripts/source/utility/RestHelper',
 
                 self.destroy = function () {
                     // remove the html element from the document    
-                    $('#FileUploadDialogDIV').remove();
+                    $('#CSVFileUploadDialogDIV').remove();
                 };
             }
         }
         catch (e) {
-            alert('FileUploadDialog.js ' + e.name + ' ' + e.message);
+            alert('CSVFileUploadDialog.js ' + e.name + ' ' + e.message);
         }
 
     });

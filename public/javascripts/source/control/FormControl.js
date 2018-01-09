@@ -48,18 +48,6 @@ define(['javascripts/source/control/core/Button',
 
                     self.setMouseEventHandler();
 
-                    /*
-                    self.addLabel({
-                        canvas: self._canvas,
-                        form: self,
-                        id: 'ID_NAME_LABEL',
-                        fontSize: 10,
-                        fontFamily: 'Verdana',
-                        fontColor: '#FFFFFF',
-                        value: 'Name:'
-                    });
-                    */
-
                     self.addEditBox({
                         canvas: self._canvas,
                         form: self,

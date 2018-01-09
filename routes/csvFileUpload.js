@@ -35,7 +35,7 @@ var upload = multer({ storage: storage });
 /* GET users listing. */
 router.post('/', upload.any(), function (req, res) {
   try {
-    
+
     var options = {
       userName: req.body.userName,
       sourceName: req.body.sourceName,
@@ -47,7 +47,7 @@ router.post('/', upload.any(), function (req, res) {
 
     MongoHelper.insertOne('FileSchema', options);
 
-    res.end('fileDialogCallback(' + JSON.stringify(options) +')');
+    res.end('fileDialogCallback(' + JSON.stringify(options) + ')');
   } catch (e) {
     console.log(e);
   }

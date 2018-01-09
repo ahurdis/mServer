@@ -3,7 +3,6 @@ define([
     'javascripts/source/accordion/AccordionManager',
     'javascripts/source/app/ControlLibrary',
     'javascripts/source/canvas/EntityCanvas',
-    'javascripts/source/utility/FileUploader',
     'javascripts/source/graph/Graph',
     'javascripts/source/graph/GraphData',
     'javascripts/source/graph/GraphFactory',
@@ -13,7 +12,7 @@ define([
     'javascripts/source/utility/TextFileReader',
     'javascripts/source/utility/TreeManager',
     'javascripts/source/app/UserDocument'],
-    function (AccordionManager, ControlLibrary, EntityCanvas, FileUploader,
+    function (AccordionManager, ControlLibrary, EntityCanvas,
         Graph, GraphData, GraphFactory, GraphStorage,
         ObjectProperties, RestHelper, TextFileReader, TreeManager, UserDocument) {
 
@@ -302,9 +301,6 @@ define([
                  * @param  {String} file    The file path to be uploaded
                  */
                 self.getHeader = function (file) {
-
-                    // FileUploader.uploadFile(file);
-
                     TextFileReader.getHeader(file);
                     console.log(self.headerArray);
                 };
@@ -403,15 +399,28 @@ define([
                         });
                 };
 
-                self.openFileUploadDialog = function () {
-                    require(['javascripts/source/dialogs/FileUploadDialog.js'],
-                        function (FileUploadDialog) {
+                self.openCSVFileUploadDialog = function () {
+                    require(['javascripts/source/dialogs/CSVFileUploadDialog.js'],
+                        function (CSVFileUploadDialog) {
                             try {
-                                var view = new FileUploadDialog();
+                                var view = new CSVFileUploadDialog();
                                 view.create();
                             }
                             catch (e) {
-                                alert('index.html: FileUploadDialog create ' + e.name + ' ' + e.message);
+                                alert('index.html: CSVFileUploadDialog create ' + e.name + ' ' + e.message);
+                            }
+                        });
+                };
+
+                self.openXMLFileUploadDialog = function () {
+                    require(['javascripts/source/dialogs/XMLFileUploadDialog.js'],
+                        function (XMLFileUploadDialog) {
+                            try {
+                                var view = new XMLFileUploadDialog();
+                                view.create();
+                            }
+                            catch (e) {
+                                alert('index.html: XMLFileUploadDialog create ' + e.name + ' ' + e.message);
                             }
                         });
                 };
