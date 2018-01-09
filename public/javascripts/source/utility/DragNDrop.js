@@ -45,18 +45,27 @@ function handleTreeDragStop(node, event) {
     var parentNode = node.parent.name;
 
     // depending on whether this is a file source or... other for now 
-    if (parentNode === 'File') {
-        options = _.clone(app.lib.FileControl.gd);
+    if (parentNode === 'CSV File') {
+        options = _.clone(app.lib.CSVFileControl.gd);
         options.displayKeys = [];
 
         options.sourceName = sourceSchema.sourceName;
-        options.header = sourceSchema.header
+        options.attributes = sourceSchema.attributes;
         options.hasHeader = sourceSchema.hasHeader;
         options.delimiter = sourceSchema.delimiter;
         options.path = sourceSchema.path;
         
-        var headerArray = options.header.split(options.delimiter + ' ');
-        options.displayKeys.push.apply(options.displayKeys, headerArray);
+        var attributeArray = options.attributes.split(options.delimiter + ' ');
+        options.displayKeys.push.apply(options.displayKeys, attributeArray);
+    } else if (parentNode === 'JSON File') {
+        options = _.clone(app.lib.JSONFileControl.gd);
+        options.displayKeys = [];
+
+        options.sourceName = sourceSchema.sourceName;
+        options.attributes = sourceSchema.attributes;
+        options.path = sourceSchema.path;
+        var attributeArray = options.attributes.split(',');
+        options.displayKeys.push.apply(options.displayKeys, attributeArray);
     } else {
         options = _.clone(app.lib.PhysicalEntityControl.gd);
         options.displayKeys = [];

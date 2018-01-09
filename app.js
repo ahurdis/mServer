@@ -9,7 +9,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var graphRoute = require('./routes/graphRoute');
 var mysql = require('./routes/mysql');
-var csvFileUpload = require('./routes/csvFileUpload');
+var fileUpload = require('./routes/fileUpload');
 var sourceMetadata = require('./routes/sourceMetadata');
 
 var app = express();
@@ -50,7 +50,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/graphRoute', graphRoute);
 app.use('/mysql', mysql);
-app.use('/csvFileUpload', csvFileUpload);
+app.use('/fileUpload', fileUpload);
 app.use('/sourceMetadata', sourceMetadata);
  
 app.post('/mysqlconnection', function (req, res) {

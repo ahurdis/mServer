@@ -8,28 +8,28 @@ define(['javascripts/source/utility/RestHelper',
     function (RestHelper, TextFileReader, TreeManager) {
         'use strict';
         try {
-            return function CSVFileUploadDialog(options) {
+            return function JSONFileUploadDialog(options) {
                 var self = this;
 
                 self.options = options || {};
 
                 self.create = function () {
 
-                    $('body').append('<div id="CSVFileUploadDialogDIV"/>');
+                    $('body').append('<div id="JSONFileUploadDialogDIV"/>');
 
-                    $('#CSVFileUploadDialogDIV').load('./html/dialogs/csvFileUploadDialog.html',
+                    $('#JSONFileUploadDialogDIV').load('./html/dialogs/jsonFileUploadDialog.html',
 
                         function () {
 
                             // open the dialog and load the HTML
-                            $('#CSVFileUploadDialogDIV').dialog({
+                            $('#JSONFileUploadDialogDIV').dialog({
                                 modal: true,
                                 open: function () {
                                     initDialog();
                                 },
                                 height: 'auto',
                                 width: '500',
-                                title: 'Add a CSV File Source',
+                                title: 'Add a JSON File Source',
                                 buttons: [
                                     {
                                         text: 'Cancel',
@@ -45,22 +45,18 @@ define(['javascripts/source/utility/RestHelper',
                                             // get the header information from the file prior to uploading
                                             var sourceFile = document.getElementById('sourceFileID').files[0];
                                             var sourceName = $('#sourceNameID').val();
-                                            var delimiter = $('#delimiterID').val();
-                                            var hasHeader = $('#hasHeaderID').prop('checked');
 
                                             var myFormData = new FormData();
                                             myFormData.append('userName', app.userName);
                                             myFormData.append('sourceFile', sourceFile);
                                             myFormData.append('sourceName', sourceName);
-                                            myFormData.append('delimiter', delimiter);
-                                            myFormData.append('hasHeader', hasHeader);
 
                                             // the attributeArray is captured on the onchange event of the file input
                                             // and is saved into an application variable
                                             myFormData.append('attributes', app.attributeArray);
 
                                             $.ajax({
-                                                url: AppConfig.Ajax.serverURL + 'fileUpload/csv',
+                                                url: AppConfig.Ajax.serverURL + 'fileUpload/json',
                                                 //             jsonpCallback: 'fileDialogCallback',
                                                 type: 'POST',
                                                 processData: false, // important
@@ -85,7 +81,7 @@ define(['javascripts/source/utility/RestHelper',
                                             TreeManager.addFileSource({
                                                 sourceName: sourceName,
                                                 attributes: app.attributeArray.toString()
-                                            }, 'CSV File');
+                                            }, 'JSON File');
 
                                             $(this).dialog('close');
                                             self.destroy();

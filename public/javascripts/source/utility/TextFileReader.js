@@ -1,6 +1,3 @@
-
-// JavaScript source code
-
 /**
  * TextFileReader.js
  * @author Andrew
@@ -35,7 +32,7 @@ define([], function () {
                 // Handle errors load
                 reader.onload = function (event) {
                     var csv = event.target.result;
-                    app.headerArray = TextFileReader.processHeader(csv);
+                    app.attributeArray = TextFileReader.processHeader(csv);
                 };
 
                 reader.onerror = TextFileReader.errorHandler;

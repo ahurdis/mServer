@@ -3,29 +3,34 @@
 define(['javascripts/source/control/Connector',
     'javascripts/source/model/Contracts',
     'javascripts/source/accordion/ControlBasePane',
-    'javascripts/source/control/FileControl',
+    'javascripts/source/control/CSVFileControl',
     'javascripts/source/control/FormControl',
     'javascripts/source/control/FunctionControl',
     'javascripts/source/graph/Graph',
+    'javascripts/source/control/JSONFileControl',
     'javascripts/source/control/LogicalEntityControl',
     'javascripts/source/control/OutputControl',
     'javascripts/source/accordion/OutputControlPane',
     'javascripts/source/control/PhysicalEntityControl',
     'javascripts/source/control/SplitterControl',
-    'javascripts/source/accordion/VertexControlPane'],
+    'javascripts/source/accordion/VertexControlPane',
+    'javascripts/source/control/XMLFileControl',
+    ],
     function (Connector,
         Contracts,
         ControlBasePane,
-        FileControl,
+        CSVFileControl,
         FormControl,
         FunctionControl,
         Graph,
+        JSONFileControl,
         LogicalEntityControl,
         OutputControl,
         OutputControlPane,
         PhysicalEntityControl,
         SplitterControl,
-        VertexControlPane) {
+        VertexControlPane,
+        XMLFileControl) {
 
         'use strict';
 
@@ -446,14 +451,44 @@ define(['javascripts/source/control/Connector',
                 }
             };
 
-            self.FileControl = {
-                contracts: Contracts.FileControl,
-                ctor: FileControl,
+            self.CSVFileControl = {
+                contracts: Contracts.CSVFileControl,
+                ctor: CSVFileControl,
                 inheritancePath: [],
                 typeSpecificPanes: [],
                 allAccordionPanes: [],
                 gd: {
-                    type: 'FileControl',
+                    type: 'CSVFileControl',
+                    parent: 'EntityControl',
+                    sourceName: '',
+                    inboundType: 'void',
+                    outboundType: 'aro'
+                }
+            };
+
+            self.JSONFileControl = {
+                contracts: Contracts.JSONFileControl,
+                ctor: JSONFileControl,
+                inheritancePath: [],
+                typeSpecificPanes: [],
+                allAccordionPanes: [],
+                gd: {
+                    type: 'JSONFileControl',
+                    parent: 'EntityControl',
+                    sourceName: '',
+                    inboundType: 'void',
+                    outboundType: 'aro'
+                }
+            };
+
+            self.XMLFileControl = {
+                contracts: Contracts.XMLFileControl,
+                ctor: XMLFileControl,
+                inheritancePath: [],
+                typeSpecificPanes: [],
+                allAccordionPanes: [],
+                gd: {
+                    type: 'XMLFileControl',
                     parent: 'EntityControl',
                     sourceName: '',
                     inboundType: 'void',

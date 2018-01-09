@@ -22,17 +22,7 @@ define(['javascripts/source/control/EntityControl'],
                 self.render = function (ctx, mouseDownPos) {
 
                     _parentRender(ctx, mouseDownPos);
-
-           //         ctx.save();
-
-
-
-
-          //          ctx.restore();
                 };
-
-
-                // self.create();
 
                 // setup the inheritance chain
                 PhysicalEntityControl.prototype = EntityControl.prototype;

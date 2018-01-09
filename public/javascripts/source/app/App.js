@@ -61,8 +61,22 @@ define([
                     },
                         function (result) {
 
+                            var nodeName = '';
                             for (var i = 0, len = result.length; i < len; i++) {
-                                TreeManager.addFileSource(result[i]);
+
+                                switch (result[i].type) {
+                                    case 'csv':
+                                        nodeName = 'CSV File';
+                                        break;
+                                    case 'json':
+                                        nodeName = 'JSON File';
+                                        break;
+                                    case 'xml':
+                                        nodeName = 'XML File';
+                                        break;
+                                }
+                                
+                                TreeManager.addFileSource(result[i], nodeName);
                                 self.sourceSchema[result[i].sourceName] = result[i];
                             }
 
@@ -295,14 +309,22 @@ define([
                     TextFileReader.handleFiles(files);
                 };
 
-                self.headerArray = [];
+                self.attributeArray = [];
                 /**
                  * Reads in a CSV source file.
                  * @param  {String} file    The file path to be uploaded
                  */
                 self.getHeader = function (file) {
                     TextFileReader.getHeader(file);
-                    console.log(self.headerArray);
+                    console.log(self.attributeArray);
+                };
+
+                self.getJSONKeys = function (files) {
+                    require(['javascripts/source/utility/JSONFileReader'],
+                        function (JSONFileReader) {
+                            JSONFileReader.handleFiles(files);
+                            console.log(self.attributeArray);
+                        });
                 };
 
                 self.saveUserDocument = function (userDocument) {
@@ -387,7 +409,7 @@ define([
                 };
 
                 self.openLocalStorageDialog = function () {
-                    require(['javascripts/source/dialogs/OpenLocalStorage.js'],
+                    require(['javascripts/source/dialogs/OpenLocalStorage'],
                         function (OpenLocalStorage) {
                             try {
                                 var view = new OpenLocalStorage();
@@ -400,7 +422,7 @@ define([
                 };
 
                 self.openCSVFileUploadDialog = function () {
-                    require(['javascripts/source/dialogs/CSVFileUploadDialog.js'],
+                    require(['javascripts/source/dialogs/CSVFileUploadDialog'],
                         function (CSVFileUploadDialog) {
                             try {
                                 var view = new CSVFileUploadDialog();
@@ -412,8 +434,21 @@ define([
                         });
                 };
 
+                self.openJSONFileUploadDialog = function () {
+                    require(['javascripts/source/dialogs/JSONFileUploadDialog'],
+                        function (JSONFileUploadDialog) {
+                            try {
+                                var view = new JSONFileUploadDialog();
+                                view.create();
+                            }
+                            catch (e) {
+                                alert('index.html: JSONFileUploadDialog create ' + e.name + ' ' + e.message);
+                            }
+                        });
+                };
+
                 self.openXMLFileUploadDialog = function () {
-                    require(['javascripts/source/dialogs/XMLFileUploadDialog.js'],
+                    require(['javascripts/source/dialogs/XMLFileUploadDialog'],
                         function (XMLFileUploadDialog) {
                             try {
                                 var view = new XMLFileUploadDialog();
@@ -426,7 +461,7 @@ define([
                 };
 
                 self.saveLocalStorageDialog = function () {
-                    require(['javascripts/source/dialogs/SaveLocalStorage.js'],
+                    require(['javascripts/source/dialogs/SaveLocalStorage'],
                         function (SaveLocalStorage) {
                             try {
                                 var view = new SaveLocalStorage();
@@ -505,7 +540,7 @@ define([
                     }
                 };
 
-                 // now create the app                
+                // now create the app                
                 self.create();
             }
             catch (e) {

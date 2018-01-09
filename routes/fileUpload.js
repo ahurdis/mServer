@@ -29,20 +29,40 @@ var storage = multer.diskStorage({
   }
 });
 
-
 var upload = multer({ storage: storage });
 
 /* GET users listing. */
-router.post('/', upload.any(), function (req, res) {
+router.post('/csv', upload.any(), function (req, res) {
   try {
 
     var options = {
       userName: req.body.userName,
       sourceName: req.body.sourceName,
+      type: 'csv',
       path: req.files[0].path,
       delimiter: req.body.delimiter,
       hasHeader: req.body.hasHeader,
-      header: req.body.header
+      attributes: req.body.attributes
+    };
+
+    MongoHelper.insertOne('FileSchema', options);
+
+    res.end('fileDialogCallback(' + JSON.stringify(options) + ')');
+  } catch (e) {
+    console.log(e);
+  }
+
+});
+
+router.post('/json', upload.any(), function (req, res) {
+  try {
+
+    var options = {
+      userName: req.body.userName,
+      sourceName: req.body.sourceName,
+      type: 'json',
+      path: req.files[0].path,
+      attributes: req.body.attributes
     };
 
     MongoHelper.insertOne('FileSchema', options);

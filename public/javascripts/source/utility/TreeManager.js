@@ -15,14 +15,14 @@ define([], function () {
         var TreeManager = function TreeManager()
         { };
 
-        TreeManager.addFileSource = function (fileSource) {
+        TreeManager.addFileSource = function (fileSource, nodeName) {
 
             var treeNodeID = 10;
 
             var t = $('#TreeDIV');
 
             // then add in the database
-            var node = t.tree('getNodeByName', 'File');
+            var node = t.tree('getNodeByName', nodeName);
 
             var fileNode = t.tree(
                 'appendNode',
@@ -33,13 +33,14 @@ define([], function () {
                 node
             );
 
-            var headerArray = fileSource.header.split(',');
+            
+            var attributeArray = fileSource.attributes.split(',');
 
-            for (var i = 0; i < headerArray.length; i++) {
+            for (var i = 0; i < attributeArray.length; i++) {
                 t.tree(
                     'appendNode',
                     {
-                        label: headerArray[i],
+                        label: attributeArray[i],
                         id: treeNodeID + i + 1
                     },
                     fileNode
@@ -86,7 +87,6 @@ define([], function () {
                 },
                 node
             );
-
 
             var unique = {};
             var distinct = [];

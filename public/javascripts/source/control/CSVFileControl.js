@@ -8,7 +8,7 @@ define(['javascripts/source/control/EntityControl'],
     function (EntityControl) {
         'use strict';
         try {
-            return function FileControl(options) {
+            return function CSVFileControl(options) {
 
                 var self = this;
                 // call parent constructor
@@ -20,18 +20,16 @@ define(['javascripts/source/control/EntityControl'],
                 var _edgeHitPos = null;
 
                 self.render = function (ctx, mouseDownPos) {
-
                     _parentRender(ctx, mouseDownPos);
-
                 };
 
                 // setup the inheritance chain
-                FileControl.prototype = EntityControl.prototype;
-                FileControl.prototype.constructor = EntityControl;
+                CSVFileControl.prototype = EntityControl.prototype;
+                CSVFileControl.prototype.constructor = EntityControl;
             };
         }
         catch (e) {
-            alert('FileControl ctor' + e.message);
+            alert('CSVFileControl ctor' + e.message);
         }
     });
 

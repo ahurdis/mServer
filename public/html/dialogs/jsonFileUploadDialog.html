@@ -1,0 +1,21 @@
+<style>
+
+</style>
+
+
+    <fieldset>
+        <legend>Add JSON File Source</legend>
+
+        <p>
+            <label for="sourceFileID">JSON:</label>
+            <br/>
+            <input type="file" id="sourceFileID" name="sourceFile" onchange="app.getJSONKeys(this.files);" accept=".json">
+        </p>
+
+        <p>
+            <label for="sourceNameID">Source Name:</label>
+            <br/>
+            <input id="sourceNameID" type="text" value="" />
+        </p>
+        
+    </fieldset>
