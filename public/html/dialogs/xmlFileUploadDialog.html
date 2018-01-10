@@ -1,0 +1,27 @@
+<style>
+
+</style>
+
+
+    <fieldset>
+        <legend>Add XML File Source</legend>
+
+        <p>
+            <label for="sourceFileID">XML:</label>
+            <br/>
+            <input type="file" id="sourceFileID" name="sourceFile" onchange="app.getXMLFragment(this.files);" accept=".xml">
+        </p>
+
+        <p>
+            <label for="sourceNameID">Source Name:</label>
+            <br/>
+            <input id="sourceNameID" type="text" value="" />
+        </p>
+
+        <p>
+            <label for="rootPathID">Path to XML Row Root:</label>
+            <br/>
+            <input id="rootPathID" type="text" value="" />
+        </p>
+
+    </fieldset>

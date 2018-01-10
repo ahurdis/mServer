@@ -74,4 +74,25 @@ router.post('/json', upload.any(), function (req, res) {
 
 });
 
+router.post('/xml', upload.any(), function (req, res) {
+  try {
+
+    var options = {
+      userName: req.body.userName,
+      sourceName: req.body.sourceName,
+      type: 'xml',
+      path: req.files[0].path,
+      attributes: req.body.attributes,
+      rootPath: req.body.rootPath
+    };
+
+    MongoHelper.insertOne('FileSchema', options);
+
+    res.end('fileDialogCallback(' + JSON.stringify(options) + ')');
+  } catch (e) {
+    console.log(e);
+  }
+
+});
+
 module.exports = router;

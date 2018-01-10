@@ -38,7 +38,7 @@ function handleTreeDragStop(node, event) {
 
     var canvasID = event.target.id;
 
-    var options = null; 
+    var options = null;
 
     var sourceSchema = app.sourceSchema[node.name];
 
@@ -48,29 +48,39 @@ function handleTreeDragStop(node, event) {
     if (parentNode === 'CSV File') {
         options = _.clone(app.lib.CSVFileControl.gd);
         options.displayKeys = [];
-
         options.sourceName = sourceSchema.sourceName;
         options.attributes = sourceSchema.attributes;
         options.hasHeader = sourceSchema.hasHeader;
         options.delimiter = sourceSchema.delimiter;
         options.path = sourceSchema.path;
-        
+
         var attributeArray = options.attributes.split(options.delimiter + ' ');
         options.displayKeys.push.apply(options.displayKeys, attributeArray);
     } else if (parentNode === 'JSON File') {
         options = _.clone(app.lib.JSONFileControl.gd);
         options.displayKeys = [];
-
         options.sourceName = sourceSchema.sourceName;
         options.attributes = sourceSchema.attributes;
         options.path = sourceSchema.path;
+
+        var attributeArray = options.attributes.split(',');
+        options.displayKeys.push.apply(options.displayKeys, attributeArray);
+    }
+    else if (parentNode === 'XML File') {
+        options = _.clone(app.lib.XMLFileControl.gd);
+        options.displayKeys = [];
+        options.sourceName = sourceSchema.sourceName;
+        options.attributes = sourceSchema.attributes;
+        options.path = sourceSchema.path;
+        options.rootPath = sourceSchema.rootPath;
+
         var attributeArray = options.attributes.split(',');
         options.displayKeys.push.apply(options.displayKeys, attributeArray);
     } else {
         options = _.clone(app.lib.PhysicalEntityControl.gd);
         options.displayKeys = [];
         options.database = parentNode;
-        
+
         var rows = app.sourceSchema[parentNode].rows;
         for (var i = 0; i < rows.length; i++) {
             if (rows[i].table_name === node.name) {

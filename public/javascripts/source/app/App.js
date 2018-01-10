@@ -316,16 +316,24 @@ define([
                  */
                 self.getHeader = function (file) {
                     TextFileReader.getHeader(file);
-                    console.log(self.attributeArray);
                 };
 
                 self.getJSONKeys = function (files) {
                     require(['javascripts/source/utility/JSONFileReader'],
                         function (JSONFileReader) {
                             JSONFileReader.handleFiles(files);
-                            console.log(self.attributeArray);
                         });
                 };
+
+                self.getXMLFragment = function (files) {
+                    require(['javascripts/source/utility/XMLFileReader'],
+                        function (XMLFileReader) {
+                            var xmlFileReader = new XMLFileReader({ childrenAsArray: false });
+                            xmlFileReader.handleFiles(files);
+                        });
+                };
+
+                self.xmlFragment = '';
 
                 self.saveUserDocument = function (userDocument) {
 
