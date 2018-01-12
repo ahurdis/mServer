@@ -1,15 +1,17 @@
 var express = require('express');
 
 var router = express.Router();
-var GraphURLParser = require('../lib/utility/GraphURLParser');
+var GraphUtilities = require('../lib/utility/GraphUtilities');
 var CodeGenerator = require('../lib/algorithm/CodeGenerator');
 
 /* generate code from graph */
 router.get('/spark', function (req, res, next) {
 
-  let graph = GraphURLParser.getGraph(req, res);
+  let graph = GraphUtilities.getGraph(req, res);
 
-  let codeGenerator = new CodeGenerator( graph );
+  GraphUtilities.inflate(graph);
+
+  let codeGenerator = new CodeGenerator( { graph : graph } );
 
   let strCode = codeGenerator.generateCode();
 
