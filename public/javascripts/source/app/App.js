@@ -562,7 +562,7 @@ define([
 
                             
 
-                            $('#jsGrid').jsGrid('render');
+                            $('#jsGrid').jsGrid('refresh');
                         }
                     }
                 };

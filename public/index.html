@@ -165,13 +165,21 @@
 			pageLayout = $("body").layout({ // DO NOT use "var pageLayout" here
 				west__size: .15
 				, east__size: .25
+				, south__size: .10
 				, north__initClosed: false
 				, east__initClosed: false
-				, south__initClosed: true
+				, south__initClosed: false
 				, west__initClosed: true
 				, west__onresize: $.layout.callbacks.resizePaneAccordions // west accordion a child of pane
 				, east__onresize: $.layout.callbacks.resizePaneAccordions // east accordion nested inside a tab-panel
 			});
+
+			/*
+							, south__onresize: () => { 	app.gridWidth = pageLayout.state.south.innerWidth;
+											app.gridHeight = pageLayout.state.south.size; 
+											$('#jsGrid').jsGrid('refresh');
+										 }
+			*/
 
 			// TABS IN CENTER-PANE
 			// create tabs before wrapper-layout so elems are correct size before creating layout
