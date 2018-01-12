@@ -300,6 +300,22 @@ define([
                     }
                 };
 
+                self.generateCode = function () {
+
+                    // get the active User document
+                    var userDocument = self.getActiveDocument();
+
+                    // determine if it is a workflow
+                    if (userDocument && userDocument.type === 'Workflow') {
+                        RestHelper.postJSON('generateCodeCallback', { method: 'generateCode/spark', timeout: 15000, data: userDocument.canvas.graph() },
+                            function (data) {
+                                alert(data);
+                            });
+                    } else {
+                        alert('Please select a valid workflow.');
+                    }
+                };
+
                 /**
                  * Reads in a CSV source file.
                  * @param  {String []} files    The file array returned from the HTML input open file dialog.

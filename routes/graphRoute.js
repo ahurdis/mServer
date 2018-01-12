@@ -1,19 +1,20 @@
 var express = require('express');
 var router = express.Router();
-
+/*
 var url = require('url');
 var queryString = require('querystring');
-var Graph = require('../lib/graph/Graph.js');
-
-var GraphData = require('../lib/graph/GraphData.js');
 var Serialization = require('../lib/utility/Serialization.js');
+*/
+
+var GraphURLParser = require('../lib/utility/GraphURLParser');
+
 var KnexHelper = require('../lib/utility/KnexHelper.js');
 var WorkflowEngine = require('../lib/algorithm/WorkflowEngine.js');
 
 // A list of constructors the smart reviver should know about  
-Serialization.Reviver.constructors = { 'GraphData': GraphData, 'Graph': Graph };
+//Serialization.Reviver.constructors = { 'GraphData': GraphData, 'Graph': Graph };
 
-
+/*
 var parseGraph = function (req) {
     // parses the request url
     var theUrl = url.parse(req.url);
@@ -32,7 +33,7 @@ var parseGraph = function (req) {
     // and jsonData will be a property of it
     return o;
 };
-
+*/
 var parseJSONObject = function (req) {
     // parses the request url
     var theUrl = url.parse(req.url);
@@ -63,19 +64,19 @@ var addVertex = function (req, res) {
 
     res.end('_testcb(' + 3 + ')');
 };
-
+/*
 var getGraph = function (req, res) {
 
     return parseGraph(req);
 };
-
+*/
 router.get('/', function (req, res, next) {
     addVertex(req, res);
 });
 
 router.get('/getgraph', function (req, res, next) {
 
-    var graph = getGraph(req, res);
+    var graph = GraphURLParser.getGraph(req, res);
 
     var v = graph.getVertices();
 
@@ -162,7 +163,7 @@ var inflate = function (graph) {
 
 router.get('/runWorkflow', async function (req, res, next) {
 
-    var graph = getGraph(req, res);
+    var graph = GraphURLParser.getGraph(req, res);
 
     //   graph.printStats(graph);
     inflate(graph);
@@ -189,9 +190,6 @@ router.get('/runWorkflow', async function (req, res, next) {
     } catch (e) {
         console.log(e);
     }
-
-
-    // res.end('_testcb()');
 
 });
 
