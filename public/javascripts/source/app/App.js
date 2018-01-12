@@ -528,12 +528,13 @@ define([
                                 var field = {
                                     name: key,
                                     type: fieldType,
-                                    width: 50
+                                    width: 100
                                 };
 
                                 fields.push(field);
                             });
 
+                            $('#jsGrid').jsGrid('destroy');
 
                             $('#jsGrid').jsGrid({
                                 width: '100%',
@@ -548,16 +549,18 @@ define([
                                 loadIndicationDelay: 500,
                                 loadMessage: 'Please, wait...',
                                 loadShading: true,
-                                noDataContent: "Not found",
+                                noDataContent: 'Not found',
                                 updateOnResize: true,
-
                                 fields: fields
-
                             });
+
+//                            $('#jsGrid').bind('onresize', function() { $('#jsGrid').jsGrid('reset'); });
 
                             for (var i = 0; i < rowData.length; i++) {
                                 $('#jsGrid').jsGrid('insertItem', rowData[i]);
                             }
+
+                            
 
                             $('#jsGrid').jsGrid('render');
                         }
