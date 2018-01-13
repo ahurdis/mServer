@@ -554,13 +554,9 @@ define([
                                 fields: fields
                             });
 
-//                            $('#jsGrid').bind('onresize', function() { $('#jsGrid').jsGrid('reset'); });
-
                             for (var i = 0; i < rowData.length; i++) {
                                 $('#jsGrid').jsGrid('insertItem', rowData[i]);
                             }
-
-                            
 
                             $('#jsGrid').jsGrid('refresh');
                         }
