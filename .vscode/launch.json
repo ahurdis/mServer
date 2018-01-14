@@ -31,7 +31,7 @@
 			"name": "LaunchTest",
 			"type": "node",
 			"request": "launch",
-			"program": "${workspaceRoot}/lib/test/TestAroMerge.js",
+			"program": "${workspaceRoot}/lib/test/spark/TestExecSpark.js",
 			"stopOnEntry": false,
 			"args": [],
 			"cwd": "${workspaceRoot}/",
