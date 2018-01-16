@@ -11,7 +11,7 @@ router.get('/spark', function (req, res, next) {
 
   GraphUtilities.inflate(graph);
 
-  let codeGenerator = new CodeGenerator( { graph : graph } );
+  let codeGenerator = new CodeGenerator( { graph } );
 
   let strCode = codeGenerator.generateCode();
 

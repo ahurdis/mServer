@@ -149,24 +149,24 @@ define(['javascripts/source/control/VertexControl'],
                         x = mouse.x,
                         y = mouse.y;
 
-
                     var entityProperty = self.getEntityPropertyAtMouse(e);
 
                     if (entityProperty) {
 
                         // if the shift key is down, we're doing a multi-select
                         // else we are just adding this property
-                        if (!e.shiftKey) {
+                        if (e.shiftKey) {
+                            if (self._selectedProperties.includes(entityProperty)) {
+                                self._selectedProperties = self._selectedProperties.filter(item => item !== entityProperty);
+                            } else {
+                                self._selectedProperties.push(entityProperty);
+                            }
+                        } else {
                             self._selectedProperties = [];
-                        }
-
-                        if (!self._selectedProperties.includes(entityProperty)) {
                             self._selectedProperties.push(entityProperty);
                         }
-
-                        // self.render();
+                        self._parent.render();
                     }
-
 
                     if (self._canvas && self.mouseOverControl(x, y)) {
                         if (self._mouseDown) {
