@@ -123,7 +123,7 @@ define(['javascripts/source/control/handle/AddHandle',
                     // now loop through all the vertices again 
                     // and for all the edges, create a Connector
                     for (i = 0; i < vertices.length; i++) {
-                        var edges = _graph.getEdges(vertices[i]);
+                        var edges = _graph.getEdgesFrom(vertices[i]);
                         for (var edge in edges) {
                             for (var iTarget = 0; iTarget < edges[edge].length; iTarget++) {
                                 if (edges[edge][iTarget]) {
@@ -481,7 +481,7 @@ const getScrollPosition = (el = window) => ({
                         }
 
                         // get the edges from each vertex
-                        var edges = _graph.getEdges(vertices[i]);
+                        var edges = _graph.getEdgesFrom(vertices[i]);
 
                         // for each edge, draw a curve between the source and the target
                         for (var edge in edges) {
@@ -675,7 +675,7 @@ const getScrollPosition = (el = window) => ({
 
                         if (delta && delta.dragging) {
                             // get the adjacency list for this vertex
-                            var edges = _graph.getEdges(element.vertex());
+                            var edges = _graph.getEdgesFrom(element.vertex());
                             for (var edge in edges) {
                                 for (var iTarget = 0; iTarget < edges[edge].length; iTarget++) {
                                     if (edges[edge][iTarget]) {

@@ -106,7 +106,7 @@ define(['javascripts/source/control/Connector',
 
                 var Recurse = function (vertex) {
 
-                    var edges = graph.getEdges(vertex);
+                    var edges = graph.getEdgesFrom(vertex);
 
                     for (var i in edges) {
 
@@ -376,7 +376,7 @@ define(['javascripts/source/control/Connector',
                 gd: {
                     type: 'FunctionControl',
                     instance: 'ToLowerCase', 
-                    func: (aro) => {
+                    func: function (aro) {
                         return aro.map((x) => {
                             let obj = {};
                             obj[Object.keys(x)[0]] = Object.values(x)[0].toLowerCase();
@@ -397,7 +397,7 @@ define(['javascripts/source/control/Connector',
                 gd: {
                     type: 'FunctionControl',
                     instance: 'ToUpperCase', 
-                    func: (aro) => {
+                    func: function (aro) {
                         return aro.map((x) => {
                             let obj = {};
                             obj[Object.keys(x)[0]] = Object.values(x)[0].toUpperCase();

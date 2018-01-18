@@ -150,7 +150,7 @@ define(['javascripts/source/graph/GraphData',
             };
 
             // find all edges from a given vertex 
-            self.getEdges = function (vertex) {
+            self.getEdgesFrom = function (vertex) {
                 if (vertex.id in self.adjacency) {
                     return self.adjacency[vertex.id];
                 }
