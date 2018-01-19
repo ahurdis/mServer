@@ -345,7 +345,7 @@ define(['javascripts/source/control/Connector',
                 }
             };
 
-            self.Join = {
+            self.Merge = {
                 contracts: Contracts.FunctionControl,
                 ctor: FunctionControl,
                 inheritancePath: [],
@@ -361,13 +361,13 @@ define(['javascripts/source/control/Connector',
                         return ret;
                     },
                     type: 'FunctionControl',
-                    instance: 'Join',
+                    instance: 'Merge',
                     inboundType: 'aro',
                     outboundType: 'aro'
                 }
             };
 
-            self.ToLowerCase = {
+            self.ToLower = {
                 contracts: Contracts.FunctionControl,
                 ctor: FunctionControl,
                 inheritancePath: [],
@@ -375,7 +375,7 @@ define(['javascripts/source/control/Connector',
                 allAccordionPanes: [],
                 gd: {
                     type: 'FunctionControl',
-                    instance: 'ToLowerCase', 
+                    instance: 'ToLower', 
                     func: function (aro) {
                         return aro.map((x) => {
                             let obj = {};
@@ -388,7 +388,7 @@ define(['javascripts/source/control/Connector',
                 }
             };
 
-            self.ToUpperCase = {
+            self.ToUpper = {
                 contracts: Contracts.FunctionControl,
                 ctor: FunctionControl,
                 inheritancePath: [],
@@ -396,7 +396,7 @@ define(['javascripts/source/control/Connector',
                 allAccordionPanes: [],
                 gd: {
                     type: 'FunctionControl',
-                    instance: 'ToUpperCase', 
+                    instance: 'ToUpper', 
                     func: function (aro) {
                         return aro.map((x) => {
                             let obj = {};
