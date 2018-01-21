@@ -2,20 +2,19 @@
 
 </style>
 
-
     <fieldset>
         <legend>Add CSV File Source</legend>
 
         <p>
             <label for="sourceFileID">CSV:</label>
             <br/>
-            <input type="file" id="sourceFileID" name="sourceFile" onchange="app.getHeader(this.files[0]);" accept=".csv">
+            <input type="file" id="sourceFileID" name="sourceFile" onchange="app.getHeader(this.files[0]);" accept=".csv" required>
         </p>
 
         <p>
             <label for="sourceNameID">Source Name:</label>
             <br/>
-            <input id="sourceNameID" type="text" value="" />
+            <input id="sourceNameID" type="text" value=""/>
         </p>
 
         <p>

@@ -24,6 +24,10 @@ define([],
 				self.canvasID = options.canvasID || '';
 				// the CanvasBase object that this document represents
 				self.canvas = options.canvas || null;
+
+				self.updateDocumentColors = function () {
+					self.canvas.updateControlColors();
+				};
 			}
 			catch (e) {
 				alert('UserDocument.js ctor: ' + e.name + ' ' + e.message);

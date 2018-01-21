@@ -1,6 +1,7 @@
 
 define([
     'javascripts/source/accordion/AccordionManager',
+    'javascripts/source/utility/ColorUtil',
     'javascripts/source/app/ControlLibrary',
     'javascripts/source/canvas/EntityCanvas',
     'javascripts/source/graph/Graph',
@@ -12,7 +13,7 @@ define([
     'javascripts/source/utility/TextFileReader',
     'javascripts/source/utility/TreeManager',
     'javascripts/source/app/UserDocument'],
-    function (AccordionManager, ControlLibrary, EntityCanvas,
+    function (AccordionManager, ColorUtil, ControlLibrary, EntityCanvas,
         Graph, GraphData, GraphFactory, GraphStorage,
         ObjectProperties, RestHelper, TextFileReader, TreeManager, UserDocument) {
 
@@ -48,8 +49,24 @@ define([
 
                     self.activeDocuments = [];
 
+                    self.setDefaultColors();
+
                     // populate the source tree with the user's schema data
                     self.updateSourceTree();
+                };
+
+                self.setDefaultColors = function () {
+
+                    self.borderColor = ColorUtil.color.powderblue;
+                    self.fontColor = ColorUtil.color.ivory;
+                    self.selectionColor = ColorUtil.color.blanchedalmond;
+                    self.fillStyle = ColorUtil.color.powderblue + '1F';
+
+                    /*
+                    self.borderColor = document.getComputedStyle('ui-state-active').style.color;
+                    self.fontColor = ColorUtil.rgbToHex($('.ui-widget-content').css('color'));
+                    self.selectionColor = ColorUtil.rgbToHex($('.ui-widget-header').css('color'));
+                    */
                 };
 
                 self.updateSourceTree = function () {
@@ -126,9 +143,7 @@ define([
                         })
                     };
 
-                    var activeDocument = new UserDocument(options);
-
-                    self.activeDocuments.push(activeDocument);
+                    self.activeDocuments.push(new UserDocument(options));
                 };
 
                 var addExistingUserDocument = function (userDocument, graph) {
@@ -144,8 +159,7 @@ define([
                         userDocument: userDocument
                     });
 
-
-                    self.activeDocuments.push(userDocument);
+                    self.activeDocuments.push(new UserDocument(userDocument));
                 };
 
                 self.getUserDocumentFromCanvasID = function (canvasID) {
@@ -169,6 +183,15 @@ define([
 
                 self.setActiveTabID = function (tabID) {
                     activeTabID = tabID;
+                };
+
+                self.updateColors = function (theme) {
+
+                    self.setDefaultColors(theme);
+
+                    for (var activeDocument of self.activeDocuments) {
+                        activeDocument.updateDocumentColors();
+                    }
                 };
 
                 self.menuSelect = function (menuItemText) {
@@ -207,7 +230,7 @@ define([
 
                             break;
 
-                        case 'SaveAll', 'Blurb':
+                        case 'SaveAll':
 
                             alert('To be implemented.');
 
@@ -217,6 +240,12 @@ define([
 
                             window.close();
 
+                            break;
+
+                        case 'Stuff':
+                            
+ //                           alert(".ui-widget-content" + $(".ui-widget-content").css("color"));
+                            
                             break;
 
                         default:

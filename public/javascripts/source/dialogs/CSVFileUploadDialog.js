@@ -89,6 +89,7 @@ define(['javascripts/source/utility/RestHelper',
 
                                             $(this).dialog('close');
                                             self.destroy();
+
                                         }
                                     }
                                 ]

@@ -109,7 +109,7 @@
 	<script src="javascripts/lib/jquery/jquery-ui.js"></script>
 	<script src="javascripts/lib/jquery.layout/jquery.layout.js"></script>
 
-	<link rel="stylesheet" href="javascripts/lib/css/themes/vader/jquery-ui.css" />
+	<link id="themeSelectionID" rel="stylesheet" href="javascripts/lib/css/themes/vader/jquery-ui.css" />
 
 	<!-- load the jsgrid component -->
 	<link type="text/css" rel="stylesheet" href="javascripts/lib/jsgrid/jsgrid.min.css" />
@@ -472,8 +472,18 @@
 			<div id="tab-panel-east-3" class="full-height no-padding add-scrollbar">
 				<div class="ui-tabs-panel outline">
 					<div id="east-toolbar" class="ui-state-highlight ui-widget-content no-scrollbar add-padding" style="position: relative; margin: 0 1px;">
-						<button onClick="pageLayout.resizeAll()" title="Resize All Layouts (after theme change)">Resize</button>
-						<button onClick="removeUITheme(); pageLayout.resizeAll()" title="Remove Custom Theme">Revert</button>
+						<button onClick="pageLayout.resizeAll();" title="Resize All Layouts (after theme change)">Resize</button>
+						<button onClick="removeUITheme(); pageLayout.resizeAll();" title="Remove Custom Theme">Revert</button>
+						<select onchange="
+										  var theme = this.options[this.selectedIndex].text;
+										  var themeURL = 'javascripts/lib/css/themes/' + theme + '/jquery-ui.css';
+										  document.getElementById('themeSelectionID').href = themeURL;
+										  pageLayout.resizeAll();
+										  app.updateColors(theme);">
+							<option value="vader" selected >Vader</option> 
+							<option value="sunny">Sunny</option>
+							<option value="redmond">Redmond</option>
+						</select>
 					</div>
 				</div>
 			</div>

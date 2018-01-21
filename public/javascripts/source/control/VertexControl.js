@@ -17,8 +17,6 @@ define(['javascripts/source/accordion/AccordionManager',
 
                 options = options ? options : {};
 
-
-
                 // the vertex for which this EntityControl is the shape
                 self._vertex = options.vertex || {};
                 // the name of this entity control
@@ -26,9 +24,9 @@ define(['javascripts/source/accordion/AccordionManager',
                 // the radius of the rounded rectangles corders
                 self._borderRadius = options.borderRadius || 10;
                 // the color of the entity control's border
-                self._borderColor = options.borderColor || '#3974B1';
+                self._borderColor = options.borderColor || app.borderColor || '#3974B1';
                 // the color of the hashed selection border 
-                self._selectionColor = options.selectionColor || '#b3d4fd';
+                self._selectionColor = options.selectionColor || app.selectionColor || '#b3d4fd';
                 // the width of the selection border stroke
                 self._selectionWidth = options.selectionWidth || 3;
 
@@ -590,9 +588,15 @@ define(['javascripts/source/accordion/AccordionManager',
                     ctx.save();
 
                     ctx.strokeStyle = self._borderColor;
+//                    ctx.lineWidth = 2;
 
                     ctx.beginPath();
-
+/*
+                    ctx.shadowOffsetX = 3;
+                    ctx.shadowOffsetY = 3;
+                    ctx.shadowBlur = 5;
+                    ctx.shadowColor = "blue";
+*/
                     self._roundedRect(ctx,
                         self._x,
                         self._y,
@@ -600,7 +604,12 @@ define(['javascripts/source/accordion/AccordionManager',
                         self._height,
                         self._borderRadius);
 
+                    ctx.fillStyle = app.fillStyle;
+                    ctx.fill();
+
                     ctx.stroke();
+
+                    
 
                     ctx.closePath();
 

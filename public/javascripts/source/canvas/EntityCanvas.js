@@ -111,6 +111,17 @@ define(['javascripts/source/control/handle/AddHandle',
                     }
                 };
 
+                self.updateControlColors = function () {
+
+                    for (var control of _controls) {
+                        control._borderColor = app.borderColor;
+                        control._fontColor = app.fontColor;
+                        control._selectionColor = app.selectionColor;
+                    }
+
+                    self.render();
+                };
+
                 var createControls = function () {
 
                     // for all of the vertices, create a EntityControl

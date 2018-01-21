@@ -25,12 +25,14 @@ define([],
                                 open: function () {
                                     populateItems();
                                     $('#localStorageTabs').tabs();
+//                                    $('#btnOKID').button('disable');
                                 },
                                 height: 'auto',
                                 width: '700',
                                 title: 'Open from Local Storage',
                                 buttons: [
                                     {
+                                        id: 'btnCancelID',
                                         text: 'Cancel',
                                         click: function () {
                                             $(this).dialog('close');
@@ -38,7 +40,9 @@ define([],
                                         }
                                     },
                                     {
+                                        id: 'btnOKID',
                                         text: 'OK',
+                                        disabled: true,
                                         click: function () {
 
                                             var userDocumentName = $('#localStorageModelID option:selected').html();
@@ -62,7 +66,7 @@ define([],
 
                     if (typeof (Storage) !== 'undefined') {
 
-                        for (var key in localStorage) {
+                        for (var key of Object.getOwnPropertyNames(localStorage)) {
 
                             var index = key.indexOf('Graph');
 

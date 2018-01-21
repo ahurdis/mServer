@@ -30,7 +30,7 @@ define(function () {
 
             self._fontSize = options.fontSize || 14;
             self._fontFamily = options.fontFamily || 'Arial, Helvetica, sans-serif';
-            self._fontColor = options.fontColor || '#FFFFFF';
+            self._fontColor = options.fontColor || app.fontColor || '#FFFFFF';
             self._fontWeight = options.fontWeight || 'normal';
             self._fontStyle = options.fontStyle || 'normal';
 
