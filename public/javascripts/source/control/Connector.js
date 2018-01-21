@@ -40,7 +40,7 @@ define([], function () {
 
             var _fontSize = options.fontSize || 11;
             var _fontFamily = options.fontFamily || 'Arial';
-            var _fontColor = options.fontColor || '#FFF';
+            var _fontColor = options.fontColor || app.fontColor;
             var _fontWeight = options.fontWeight || 'normal';
             var _fontStyle = options.fontStyle || 'normal';
 
@@ -111,19 +111,25 @@ define([], function () {
 
                 ctx.font = _fontStyle + ' ' + _fontWeight + ' ' + _fontSize + 'px ' + _fontFamily;
 
-                ctx.fillStyle = _fontColor;
+                ctx.fillStyle = app.fontColor;
 /*
                 ctx.fillText(_sourceControl._vertex.outboundType,
                     _controlPointOneX,
                     _controlPointOneY);
 */
+ 
+/*
                 ctx.fillText(_edge.argumentName,
                     (_controlPointTwoX + _controlPointOneX) / 2, 
                     (_controlPointTwoY + _controlPointOneY) / 2 - 20);
+*/
+                
+                if (_edge.filterProperties) {
+                    ctx.fillText(_edge.filterProperties,
+                        (_controlPointTwoX + _controlPointOneX) / 2, 
+                        (_controlPointTwoY + _controlPointOneY) / 2 + 20);    
+                }
 
-                ctx.fillText(_edge.filterProperties,
-                    (_controlPointTwoX + _controlPointOneX) / 2, 
-                    (_controlPointTwoY + _controlPointOneY) / 2 + 20);
 /*
                 ctx.fillText(_targetControl._vertex.inboundType,
                     _controlPointTwoX,

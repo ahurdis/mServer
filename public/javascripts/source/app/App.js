@@ -49,18 +49,57 @@ define([
 
                     self.activeDocuments = [];
 
-                    self.setDefaultColors();
+                    self.setDefaultColors('vader');
 
                     // populate the source tree with the user's schema data
                     self.updateSourceTree();
                 };
 
-                self.setDefaultColors = function () {
+                self.setDefaultColors = function (theme) {
 
-                    self.borderColor = ColorUtil.color.powderblue;
-                    self.fontColor = ColorUtil.color.ivory;
-                    self.selectionColor = ColorUtil.color.blanchedalmond;
-                    self.fillStyle = ColorUtil.color.powderblue + '1F';
+                    var redmondTheme = function () {
+                        self.borderColor = ColorUtil.color.darkslateblue;
+                        self.fontColor = ColorUtil.color.slateblue;
+                        self.selectionColor = ColorUtil.color.lightslategray;
+                        self.fillStyle = ColorUtil.color.powderblue + '1F';
+                        self.iconFillStyle = self.borderColor;
+                    };
+
+                    var sunnyTheme = function () {
+                        self.borderColor = ColorUtil.color.darkseagreen;
+                        self.fontColor = ColorUtil.color.seagreen;
+                        self.selectionColor = ColorUtil.color.lightseagreen;
+                        self.fillStyle = ColorUtil.color.powderblue + '1F';
+                        self.iconFillStyle = self.borderColor;
+                    };
+
+                    var vaderTheme = function () {
+                        self.borderColor = ColorUtil.color.powderblue;
+                        self.fontColor = ColorUtil.color.ivory;
+                        self.selectionColor = ColorUtil.color.blanchedalmond;
+                        self.fillStyle = ColorUtil.color.powderblue + '1F';
+                        self.iconFillStyle = self.borderColor;
+                    };
+
+                    switch (theme) {
+
+                        case 'Redmond':
+                            redmondTheme();
+                            break;
+
+                        case 'Sunny':
+                            sunnyTheme();
+                            break;
+
+                        case 'Vader':
+                            vaderTheme();
+                            break;
+
+                        default:
+                            vaderTheme();
+                            break;
+                    }
+
 
                     /*
                     self.borderColor = document.getComputedStyle('ui-state-active').style.color;
@@ -92,7 +131,7 @@ define([
                                         nodeName = 'XML File';
                                         break;
                                 }
-                                
+
                                 TreeManager.addFileSource(result[i], nodeName);
                                 self.sourceSchema[result[i].sourceName] = result[i];
                             }
@@ -243,9 +282,9 @@ define([
                             break;
 
                         case 'Stuff':
-                            
- //                           alert(".ui-widget-content" + $(".ui-widget-content").css("color"));
-                            
+
+                            //                           alert(".ui-widget-content" + $(".ui-widget-content").css("color"));
+
                             break;
 
                         default:

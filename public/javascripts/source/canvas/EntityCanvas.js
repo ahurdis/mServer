@@ -201,7 +201,7 @@ define(['javascripts/source/control/handle/AddHandle',
                         // else add some default parameters
                         ctrlOptions.fontSize = 14;
                         ctrlOptions.fontFamily = 'Verdana, Geneva, sans-serif';
-                        ctrlOptions.fontColor = '#EEEEEE';
+                        ctrlOptions.fontColor = app.fontColor;
                         ctrlOptions.textPadding = 2;
                     }
 

@@ -41,7 +41,7 @@ define(function () {
             ctx.lineJoin = 'miter';
             ctx.miterLimit = 4;
             ctx.save();
-            ctx.fillStyle = "#FFFFFF";
+            ctx.fillStyle = app.iconFillStyle;
             ctx.beginPath();
             ctx.moveTo(76.83, 32.561);
             ctx.lineTo(59.392, 50);
@@ -88,7 +88,7 @@ define(function () {
             ctx.lineJoin = 'miter';
             ctx.miterLimit = 4;
             ctx.save();
-            ctx.fillStyle = "#FFFFFF";
+            ctx.fillStyle = app.iconFillStyle;
             ctx.beginPath();
             ctx.moveTo(50, 11.126);
             ctx.bezierCurveTo(29.129, 11.126, 12.209000000000003, 28.046, 12.209000000000003, 48.916999999999994);
@@ -139,7 +139,7 @@ define(function () {
             ctx.lineJoin = 'miter';
             ctx.miterLimit = 4;
             ctx.save();
-            ctx.fillStyle = "#FFFFFF";
+            ctx.fillStyle = app.iconFillStyle;
             ctx.beginPath();
             ctx.moveTo(53.426, 83.59);
             ctx.lineTo(53.426, 84.59);

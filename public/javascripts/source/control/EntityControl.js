@@ -107,8 +107,7 @@ define(['javascripts/source/control/VertexControl'],
                     ctx.fillStyle = self._fontColor;
 
                     // draw the name of the control
-                    ctx.fillStyle = self._fontColor;
-                    ctx.font = self._fontStyle + ' ' + self._fontWeight + ' ' + 2 * self._fontSize + 'px ' + self._fontFamily;
+                    ctx.font = self._fontStyle + ' ' + self._fontWeight + ' ' + (self._fontSize + 2) + 'px ' + self._fontFamily;
                     ctx.fillText(self._instance,
                         self._x + ((self._width - ctx.measureText(self._instance).width) / 2),
                         self._y + self._textCellSize);
