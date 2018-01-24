@@ -373,9 +373,14 @@ define([
                     // get the active User document
                     var userDocument = self.getActiveDocument();
 
+                    var requestData = {
+                        documentName: userDocument.name,
+                        graph: userDocument.canvas.graph()
+                    };
+
                     // determine if it is a workflow
                     if (userDocument && userDocument.type === 'Workflow') {
-                        RestHelper.postJSON('generateCodeCallback', { method: 'generateCode/spark', timeout: 15000, data: userDocument.canvas.graph() },
+                        RestHelper.postJSON('generateCodeCallback', { method: 'generateCode/spark', timeout: 15000, data: requestData },
                             function (data) {
                                 alert(data);
                             });

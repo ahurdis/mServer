@@ -18,7 +18,9 @@ let writeFile = (filename, data) => {
 /* generate code from graph */
 router.get('/spark', function (req, res, next) {
 
-  let graph = GraphUtilities.getGraph(req, res);
+  let options = GraphUtilities.getCodeGenerationInput(req, res);
+
+  let graph = options.graph;
 
   GraphUtilities.inflate(graph);
 
@@ -26,8 +28,8 @@ router.get('/spark', function (req, res, next) {
 
   let strCode = codeGenerator.generateCode();
 
-  // write this to a file
-  writeFile(`myscript.py`, strCode);
+  // write the code to a file
+  writeFile(`${options.documentName.replace(' ', '')}.py`, strCode);
 
   res.end('generateCodeCallback(' + JSON.stringify(strCode) + ')');
 });
