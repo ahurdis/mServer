@@ -21,15 +21,16 @@ router.get('/spark', function (req, res, next) {
   let options = GraphUtilities.getCodeGenerationInput(req, res);
 
   let graph = options.graph;
+  let documentName = options.documentName;
 
   GraphUtilities.inflate(graph);
 
-  let codeGenerator = new CodeGenerator({ graph });
+  let codeGenerator = new CodeGenerator({ graph, documentName });
 
   let strCode = codeGenerator.generateCode();
 
   // write the code to a file
-  writeFile(`${options.documentName.replace(' ', '')}.py`, strCode);
+  writeFile(`${documentName.replace(' ', '')}.py`, strCode);
 
   res.end('generateCodeCallback(' + JSON.stringify(strCode) + ')');
 });
