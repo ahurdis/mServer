@@ -45,24 +45,24 @@ define([],
                                         disabled: true,
                                         click: function () {
 
-                                            var select;
-                                            
-                                            var selected = $("#localStorageTabs").tabs( "option", "active" );
-                                            var selectedTabTitle = $($("#localStorageTabs li")[selected]).text();
+                                            var selectedTabID;
+
+                                            var selected = $("#localStorageTabs").tabs("option", "active");
+                                            // var selectedTabTitle = $($("#localStorageTabs li")[selected]).text();
 
                                             switch (selected) {
                                                 case 0:
-                                                    select = '#localStorageWorkflowID';
+                                                    selectedTabID = '#localStorageWorkflowID';
                                                     break;
                                                 case 1:
-                                                    select = '#localStorageUDFID';
+                                                    selectedTabID = '#localStorageUDFID';
                                                     break;
                                                 case 2:
-                                                    select = '#localStorageModelID';
+                                                    selectedTabID = '#localStorageModelID';
                                                     break;
                                             }
 
-                                            var userDocumentName = $(select + ' option:selected').html();
+                                            var userDocumentName = $(selectedTabID + ' option:selected').html();
 
                                             if (userDocumentName !== null) {
                                                 app.openUserDocument(userDocumentName);
@@ -79,7 +79,7 @@ define([],
                         });
                 };
 
-                var populateItems = function () {                 
+                var populateItems = function () {
 
                     if (typeof (Storage) !== 'undefined') {
 
