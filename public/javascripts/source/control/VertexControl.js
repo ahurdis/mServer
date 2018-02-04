@@ -425,6 +425,9 @@ define(['javascripts/source/control/Connector',
 
                     if (!self._isSelected) {
                         self._isSelected = true;
+
+                        // updated the object properties pane
+                        app.am.updateAccordion(self);
                     }
 
                     // app.showObjectProperties(self._vertex);
@@ -432,9 +435,6 @@ define(['javascripts/source/control/Connector',
                     if (self._isSelected) {
                         // save the control in the app as the selected control
                         app.selectedControl = self;
-
-                        // updated the object properties pane
-                        app.am.updateAccordion(self);
 
                         app.updateMenu(self);
                     }

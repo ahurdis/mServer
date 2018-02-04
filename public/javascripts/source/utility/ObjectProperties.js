@@ -24,13 +24,14 @@ define([],
                         parent.removeChild(parent.lastChild);
                     }
 
-                    createButtons(parent);
-
                     createTable(parent);
+
+                    createButtons(parent);
                 };
 
                 var updateControl = function () {
-                    _vertex.displayKeys = getOutputArray();;
+
+                    _vertex.displayKeys = getOutputArray();
 
                     _vertex.shape._values = _vertex.displayKeys;
 
@@ -50,17 +51,20 @@ define([],
                         for (var i = 0; i < _displayKeys.length; i++) {
                             insertRow(_displayKeys[i]);
                         }
-                        parent.appendChild(_table);
+                    } else {
+                        insertRow('');
                     }
+                    parent.appendChild(_table);
                 };
 
                 var createButtons = function (parent) {
+
                     var control = createButton('Add');
                     control.onclick = function (e) { insertRow(""); };
                     parent.appendChild(control);
 
                     control = createButton('Delete');
-                    control.onclick = function (e) { deleteRow(); };
+                    control.onclick = function (e) { deleteRow();  updateControl(); };
                     parent.appendChild(control);
 
                     control = createButton('Update');
@@ -85,33 +89,10 @@ define([],
                     }
                 };
 
-                var createButtonRow = function () {
-
-                    var tr = _table.insertRow(0);
-
-                    var td = tr.insertCell();
-
-                    var control = createButton('Add');
-                    control.onclick = function (e) { insertRow(""); };
-                    td.appendChild(control);
-
-                    td = tr.insertCell();
-
-                    control = createButton('Delete');
-                    control.onclick = function (e) { deleteRow(); };
-                    td.appendChild(control);
-
-                    td = tr.insertCell();
-
-                    control = createButton('Update');
-                    control.onclick = function (e) { updateControl(); };
-                    td.appendChild(control);
-                };
-
                 var insertRow = function (property) {
 
                     // insert at the end of the table
-                    var tr = _table.insertRow(-1);
+                    var tr = _table.insertRow(0);
 
                     for (var column = 0; column < 3; column++) {
 
@@ -169,12 +150,6 @@ define([],
                             var checkbox = row.cells[0].childNodes[0];
 
                             if (checkbox !== null && checkbox.checked === true) {
-
-                                if (rowCount <= 1) {
-                                    alert('Cannot delete all the rows.');
-                                    break;
-                                }
-
                                 _table.deleteRow(i);
                                 rowCount--;
                                 i--;
@@ -223,7 +198,10 @@ define([],
                             var propertyName = getElementValue(row.cells[1].childNodes[0]);
                             var propertyType = getElementValue(row.cells[2].childNodes[0]);
 
-                            arRet[iRow] = propertyName;
+                            // only return non-empty property names
+                            if (propertyName) {
+                                arRet.push(propertyName);
+                            }
                         }
 
                         return arRet;
