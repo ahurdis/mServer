@@ -11,44 +11,36 @@
                         <div id="localStorageTabs">
                             <ul>
                                 <li>
-                                    <a href="#tabs-1">Model</a>
+                                    <a href="#tabs-1">Workflow</a>
                                 </li>
                                 <li>
-                                    <a href="#tabs-2">Integrate</a>
+                                    <a href="#tabs-2">User Define</a>
                                 </li>
                                 <li>
-                                    <a href="#tabs-3">Explore</a>
+                                    <a href="#tabs-3">Model</a>
                                 </li>
                             </ul>
-
                             <div id="tabs-1">
+                                <label for="localStorageWorkflow">Select An Item:</label>
+                                <br/>
+                                <select id="localStorageWorkflowID" size="6" name="localStorageWorkflow" width="350" style="width: 350px" onchange="$('#btnOKID').button('enable');">
+                                </select>
+                            </div>
+                            <div id="tabs-2">
+                                <label for="localStorageUDF">Select An Item:</label>
+                                <br/>
+                                <select size="6" id="localStorageUDFID" name="localStorageUDF" width="350" style="width: 350px" onchange="$('#btnOKID').button('enable');">
+                                </select>
+                            </div>
+                            <div id="tabs-3">
                                 <label for="localStorageModels">Select An Item:</label>
                                 <br/>
                                 <select id="localStorageModelID" size="6" name="localStorageModels" width="350" style="width: 350px" onchange="$('#btnOKID').button('enable');">
-                                    <!-- <option selected>Model 1</option> -->
+                                    <option selected>Model 1</option>
+                                    <option>Model 2</option>
+                                    <option>Model 3</option>
                                 </select>
                             </div>
-
-                            <div id="tabs-2">
-                                <label for="localStorageIntegrate">Select An Item:</label>
-                                <br/>
-                                <select size="6" id="localStorageIntegrateID" name="localStorageIntegrate" width="350" style="width: 350px" onchange="$('#btnOKID').button('enable');">
-                                    <option selected>Integrate 1</option>
-                                    <option>Integrate 2</option>
-                                    <option>Integrate 3</option>
-                                </select>
-                            </div>
-
-                            <div id="tabs-3">
-                                <label for="localStorageExplore">Select An Item:</label>
-                                <br/>
-                                <select size="6" id="localStorageExploreID" name="localStorageExplore" width="350" style="width: 350px" onchange="$('#btnOKID').button('enable');">
-                                    <option selected>Explore 1</option>
-                                    <option>Explore 2</option>
-                                    <option>Explore 3</option>
-                                </select>
-                            </div>
-
                         </div>
                     </td>
                 </tr>

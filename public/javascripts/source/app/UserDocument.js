@@ -28,6 +28,15 @@ define([],
 				self.updateDocumentColors = function () {
 					self.canvas.updateControlColors();
 				};
+
+				self.toJSON = function () {
+					return {
+						createdDate: self.createdDate,
+						creator: self.creator,
+						type: self.type,
+						name: self.name
+					}
+				};
 			}
 			catch (e) {
 				alert('UserDocument.js ctor: ' + e.name + ' ' + e.message);

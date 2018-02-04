@@ -25,7 +25,7 @@ define([],
                                 open: function () {
                                     populateItems();
                                     $('#localStorageTabs').tabs();
-//                                    $('#btnOKID').button('disable');
+                                    //                                    $('#btnOKID').button('disable');
                                 },
                                 height: 'auto',
                                 width: '700',
@@ -45,7 +45,24 @@ define([],
                                         disabled: true,
                                         click: function () {
 
-                                            var userDocumentName = $('#localStorageModelID option:selected').html();
+                                            var select;
+                                            
+                                            var selected = $("#localStorageTabs").tabs( "option", "active" );
+                                            var selectedTabTitle = $($("#localStorageTabs li")[selected]).text();
+
+                                            switch (selected) {
+                                                case 0:
+                                                    select = '#localStorageWorkflowID';
+                                                    break;
+                                                case 1:
+                                                    select = '#localStorageUDFID';
+                                                    break;
+                                                case 2:
+                                                    select = '#localStorageModelID';
+                                                    break;
+                                            }
+
+                                            var userDocumentName = $(select + ' option:selected').html();
 
                                             if (userDocumentName !== null) {
                                                 app.openUserDocument(userDocumentName);
@@ -62,16 +79,39 @@ define([],
                         });
                 };
 
-                var populateItems = function () {
+                var populateItems = function () {                 
 
                     if (typeof (Storage) !== 'undefined') {
+
+                        var userDocument;
 
                         for (var key of Object.getOwnPropertyNames(localStorage)) {
 
                             var index = key.indexOf('Graph');
 
                             if (index === -1) {
-                                $('<option>' + key + '</option>').appendTo('#localStorageModelID');
+
+                                var strJSON = localStorage.getItem(key);
+
+                                if (strJSON !== null) {
+                                    userDocument = JSON.parse(strJSON);
+
+                                    var select;
+
+                                    switch (userDocument.type) {
+                                        case 'Workflow':
+                                            select = '#localStorageWorkflowID';
+                                            break;
+                                        case 'UDF':
+                                            select = '#localStorageUDFID';
+                                            break;
+                                        case 'Model':
+                                            select = '#localStorageModelID';
+                                            break;
+                                    }
+
+                                    $('<option>' + key + '</option>').appendTo(select);
+                                }
                             }
                         }
                     }

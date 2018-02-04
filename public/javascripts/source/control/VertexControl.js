@@ -3,10 +3,9 @@
  * @author Andrew
  */
 
-define(['javascripts/source/accordion/AccordionManager',
-    'javascripts/source/control/Connector',
-    'javascripts/source/control/ControlBase'],
-    function (AccordionManager, Connector, ControlBase) {
+define(['javascripts/source/control/Connector',
+        'javascripts/source/control/ControlBase'],
+    function (Connector, ControlBase) {
         'use strict';
         try {
             return function VertexControl(options) {

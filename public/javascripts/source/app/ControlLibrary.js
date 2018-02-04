@@ -4,6 +4,7 @@ define(['javascripts/source/control/Connector',
     'javascripts/source/model/Contracts',
     'javascripts/source/accordion/ControlBasePane',
     'javascripts/source/control/CSVFileControl',
+    'javascripts/source/accordion/EntityControlPane',
     'javascripts/source/control/FormControl',
     'javascripts/source/control/FunctionControl',
     'javascripts/source/graph/Graph',
@@ -13,13 +14,17 @@ define(['javascripts/source/control/Connector',
     'javascripts/source/accordion/OutputControlPane',
     'javascripts/source/control/PhysicalEntityControl',
     'javascripts/source/control/SplitterControl',
+    'javascripts/source/control/user/UDFControl',
+    'javascripts/source/control/user/UDFInControl',
+    'javascripts/source/control/user/UDFOutControl',
     'javascripts/source/accordion/VertexControlPane',
-    'javascripts/source/control/XMLFileControl',
+    'javascripts/source/control/XMLFileControl'
     ],
     function (Connector,
         Contracts,
         ControlBasePane,
         CSVFileControl,
+        EntityControlPane,
         FormControl,
         FunctionControl,
         Graph,
@@ -29,6 +34,9 @@ define(['javascripts/source/control/Connector',
         OutputControlPane,
         PhysicalEntityControl,
         SplitterControl,
+        UDFControl,
+        UDFInControl,
+        UDFOutControl,
         VertexControlPane,
         XMLFileControl) {
 
@@ -142,11 +150,48 @@ define(['javascripts/source/control/Connector',
 
             self.EntityControl = {
                 inheritancePath: [],
-                typeSpecificPanes: [],
+                typeSpecificPanes: [EntityControlPane],
                 allAccordionPanes: [],
                 gd: {
                     type: 'EntityControl',
                     parent: 'VertexControl'
+                }
+            };
+
+            self.UDFControl = {
+                contracts: Contracts.UDFControl,
+                ctor: UDFControl,
+                inheritancePath: [],
+                typeSpecificPanes: [],
+                allAccordionPanes: [],
+                gd: {
+                    type: 'UDFControl',
+                    parent: 'EntityControl',
+                    displayKeys: []
+                }
+            };
+
+            self.UDFInControl = {
+                contracts: Contracts.UDFControl,
+                ctor: UDFInControl,
+                inheritancePath: [],
+                typeSpecificPanes: [],
+                allAccordionPanes: [],
+                gd: {
+                    type: 'UDFInControl',
+                    parent: 'EntityControl'
+                }
+            };
+
+            self.UDFOutControl = {
+                contracts: Contracts.UDFControl,
+                ctor: UDFOutControl,
+                inheritancePath: [],
+                typeSpecificPanes: [],
+                allAccordionPanes: [],
+                gd: {
+                    type: 'UDFInControl',
+                    parent: 'EntityControl'
                 }
             };
 

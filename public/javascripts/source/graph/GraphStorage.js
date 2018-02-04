@@ -3,9 +3,8 @@
  */
 
 define(['javascripts/source/graph/Graph',
-    'javascripts/source/graph/GraphData',
     'javascripts/source/graph/GraphSerialization'],
-    function (Graph, GraphData, GraphSerialization) {
+    function (Graph, GraphSerialization) {
 
         'use strict';
 

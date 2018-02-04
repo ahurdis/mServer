@@ -36,6 +36,9 @@ define(['javascripts/source/utility/Contract'], function (Contract) {
            Contract.expectString(options.imageName, 'OutputControl.imageName must be a string.');
         };
 
+        Contracts.UDFControl = function (options) {
+        };
+
         Contracts.FormControl = function (options) {
         };
 

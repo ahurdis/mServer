@@ -168,7 +168,7 @@ define([
                     */
                 };
 
-                var addNewUserDocument = function (graph, type) {
+                self.addNewUserDocument = function (graph, type) {
 
                     var tab = self.addTab('New Document');
 
@@ -238,13 +238,13 @@ define([
                     switch (menuItemText) {
                         case 'New Model':
 
-                            addNewUserDocument(GraphFactory.createSimpleEntityGraph(), 'Model');
+                            self.addNewUserDocument(GraphFactory.createSimpleEntityGraph(), 'Model');
 
                             break;
 
                         case 'New Workflow':
 
-                            addNewUserDocument(new Graph(), 'Workflow');
+                            self.addNewUserDocument(new Graph(), 'Workflow');
 
                             break;
 
@@ -394,7 +394,6 @@ define([
                  * @param  {String []} files    The file array returned from the HTML input open file dialog.
                  */
                 self.handleFiles = function (files) {
-
                     TextFileReader.handleFiles(files);
                 };
 
@@ -471,25 +470,6 @@ define([
                  */
                 self.loadObject = function (key) {
                     return GraphStorage.loadObject(key);
-                };
-
-                /**
-                 * Sets the object properties panel with the user interface for the object
-                 */
-                self.showObjectProperties = function (obj) {
-
-                    self._obj = obj;
-                    var options = { vertex: obj };
-                    self._op = new ObjectProperties(options);
-                    self._op.create();
-                };
-
-                self._obj = null;
-                self._op = null;
-
-                self.hideObjectProperties = function () {
-
-                    self._op.close();
                 };
 
                 self.openMySQLConnectionDialog = function () {

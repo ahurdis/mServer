@@ -64,6 +64,34 @@ define(['javascripts/source/graph/Graph'],
                 return ret;
             };
 
+            GraphFactory.createWorkflowControlGraph = function () {
+
+                var ret = new Graph();
+
+                var vertex1 = ret.addVertex({
+                    type: 'UDFInControl',
+                    displayKeys: ['ID', 'Name'],
+                    x: 50,
+                    y: 100,
+                    inboundType: 'aro',
+                    outboundType: 'aro'
+                });
+
+                var vertex2 = ret.addVertex({
+                    type: 'UDFOutControl',
+                    x: 50,
+                    y: 350,
+                    inboundType: 'aro',
+                    outboundType: 'aro'
+                });
+                
+                ret.addEdge(vertex1, vertex2, {
+                    type: 'DataFlow'
+                });
+
+                return ret;
+            };
+
             GraphFactory.createSimpleIntegrateGraph = function () {
 
                 var ret = new Graph();

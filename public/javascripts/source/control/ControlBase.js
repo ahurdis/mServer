@@ -422,7 +422,7 @@ define(function () {
                     y = mouse.y;
 
                 if (self._canvas && self.mouseOverControl(x, y)) {
-                    // alert('hi');
+                    alert('hi');
                     return self.focus();
                 }
             };

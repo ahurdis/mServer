@@ -17,7 +17,7 @@ define([],
 
                 self.create = function () {
 
-                    var parent = document.getElementById('ObjectPropertiesDIV');
+                    var parent = document.getElementById('EntityControlPaneDIV');
 
                     // remove all prior controls
                     while (parent.hasChildNodes()) {
@@ -27,17 +27,14 @@ define([],
                     createButtons(parent);
 
                     createTable(parent);
-                    // createButtonRow();
                 };
 
-                self.close = function () {
-                    // find the values that are different in the in object as passed in and the output 
-
-                    var outputArray = getOutputArray();
-
-                    _vertex.displayKeys = outputArray;
+                var updateControl = function () {
+                    _vertex.displayKeys = getOutputArray();;
 
                     _vertex.shape._values = _vertex.displayKeys;
+
+                    _vertex.shape.setControlSize();
 
                     _vertex.shape._parent.render();
                 };
@@ -52,16 +49,6 @@ define([],
                         // loop over the proper
                         for (var i = 0; i < _displayKeys.length; i++) {
                             insertRow(_displayKeys[i]);
-                            /*
-                                    if (_typeInfo[property]) {
-                                        var propertyType = _typeInfo[property].type || 'text';
-                                        insertRow(property, propertyType);
-                                    }
-                                    else {
-                                        insertRow(property, 'text');
-                                    }
-                                }
-                            */
                         }
                         parent.appendChild(_table);
                     }
@@ -76,8 +63,8 @@ define([],
                     control.onclick = function (e) { deleteRow(); };
                     parent.appendChild(control);
 
-                    control = createButton('Get');
-                    control.onclick = function (e) { alert(JSON.stringify(getOutputArray())); };
+                    control = createButton('Update');
+                    control.onclick = function (e) { updateControl(); };
                     parent.appendChild(control);
                 };
 
@@ -102,8 +89,6 @@ define([],
 
                     var tr = _table.insertRow(0);
 
-                    //                 for (var column = 0; column < 3; column++) {
-
                     var td = tr.insertCell();
 
                     var control = createButton('Add');
@@ -118,11 +103,9 @@ define([],
 
                     td = tr.insertCell();
 
-                    control = createButton('Get');
-                    control.onclick = function (e) { alert(JSON.stringify(getOutputArray())); };
+                    control = createButton('Update');
+                    control.onclick = function (e) { updateControl(); };
                     td.appendChild(control);
-                    //                }
-
                 };
 
                 var insertRow = function (property) {
@@ -254,5 +237,4 @@ define([],
         catch (e) {
             alert('ObjectProperties.js ' + e.name + " " + e.message);
         }
-
     });
