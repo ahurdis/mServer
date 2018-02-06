@@ -19,11 +19,16 @@ define(['javascripts/source/control/EntityControl',
                 var _parentRender = self.render;
 
                 self.graph = new Graph();
+                var inputControl, outputControl;
 
                 var _edgeHitPos = null;
 
                 self.render = function (ctx, mouseDownPos) {
                     _parentRender(ctx, mouseDownPos);
+                };
+
+                self.updateControl = function () {
+                    inputControl.setDisplayKeys(self._values);
                 };
 
                 /**
@@ -36,27 +41,38 @@ define(['javascripts/source/control/EntityControl',
                         x = mouse.x,
                         y = mouse.y;
 
+                    // the document for this control can be new
+                    // the document can exist but not be opened
+                    // the document can be opened, but the tab isn't active
+                    var userDocument = app.getUserDocumentFromName(self._instance);
+
                     if (self.graph.count() === 0) {
 
-                        var vertex1 = self.graph.addVertex({
+                        inputControl = self.graph.addVertex({
                             type: 'UDFInControl',
                             displayKeys: self._vertex.displayKeys,
+                            udfControl: self,
                             x: 50,
                             y: 100,
                             inboundType: 'aro',
                             outboundType: 'aro'
                         });
 
-                        var vertex2 = self.graph.addVertex({
+                        outputControl = self.graph.addVertex({
                             type: 'UDFOutControl',
                             x: 250,
                             y: 100,
                             inboundType: 'aro',
                             outboundType: 'aro'
                         });
-                    }
 
-                    app.addNewUserDocument(self.graph, 'UDF');
+                        app.addNewUserDocument(self.graph, 'UDF');
+                    } else if (!userDocument) {
+                        // opening the user document
+                        app.openUserDocument(self._instance);
+                    } else if (userDocument) {
+                        app.setActiveTab(userDocument.tabID);
+                    }
 
                     return self.focus();
                 };

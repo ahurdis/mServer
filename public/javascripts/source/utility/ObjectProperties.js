@@ -33,11 +33,9 @@ define([],
 
                     _vertex.displayKeys = getOutputArray();
 
-                    _vertex.shape._values = _vertex.displayKeys;
+                    _vertex.shape.setDisplayKeys(_vertex.displayKeys);
 
-                    _vertex.shape.setControlSize();
-
-                    _vertex.shape._parent.render();
+                    _vertex.shape.updateControl();
                 };
 
                 var createTable = function (parent) {

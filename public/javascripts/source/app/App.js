@@ -12,7 +12,7 @@ define([
     'javascripts/source/utility/RestHelper',
     'javascripts/source/utility/TextFileReader',
     'javascripts/source/utility/TreeManager',
-    'javascripts/source/app/UserDocument'],
+    'javascripts/source/document/UserDocument'],
     function (AccordionManager, ColorUtil, ControlLibrary, EntityCanvas,
         Graph, GraphData, GraphFactory, GraphStorage,
         ObjectProperties, RestHelper, TextFileReader, TreeManager, UserDocument) {
@@ -211,6 +211,13 @@ define([
                 self.getUserDocumentFromTabID = function (tabID) {
 
                     var index = _.findIndex(self.activeDocuments, { tabID: tabID });
+
+                    return self.activeDocuments[index];
+                };
+
+                self.getUserDocumentFromName = function (name) {
+
+                    var index = _.findIndex(self.activeDocuments, { name: name });
 
                     return self.activeDocuments[index];
                 };
@@ -425,13 +432,66 @@ define([
 
                 self.saveUserDocument = function (userDocument) {
 
-                    var strJSON = JSON.stringify(userDocument);
+                    if (userDocument) {
+                        // if this is a UDF, add an icon and add it to control library 
+                        if (userDocument.type === 'UDF') {
 
-                    if (typeof (Storage) !== 'undefined') {
-                        localStorage.setItem(userDocument.name, strJSON);
+                            var userDocumentName = userDocument.name.replace(' ', '') + 'Control';
+
+                            addControlIcon(userDocumentName);
+
+                            addControlToLibrary(userDocumentName);
+                        }
+
+                        var strJSON = JSON.stringify(userDocument);
+
+                        if (typeof (Storage) !== 'undefined') {
+                            localStorage.setItem(userDocument.name, strJSON);
+                        }
+
+                        GraphStorage.saveObject(userDocument.name, userDocument.canvas.graph());
                     }
+                };
 
-                    GraphStorage.saveObject(userDocument.name, userDocument.canvas.graph());
+                var addControlToLibrary = function (userDocumentName) {
+
+                    require(['javascripts/source/model/Contracts'],
+                        function (Contracts) {
+
+                            // self.lib.addControlToLibrary();
+                            self.lib[userDocumentName] = {
+                                contracts: Contracts.UDFControl,
+                                ctor: UDFControl,
+                                inheritancePath: [],
+                                typeSpecificPanes: [],
+                                allAccordionPanes: [],
+                                gd: {
+                                    type: 'UDFControl',
+                                    parent: 'EntityControl',
+                                    displayKeys: []
+                                }
+                            }
+                        });
+                }
+
+                var addControlIcon = function (userDocumentName) {
+
+                    var userFunctionDIV = document.getElementById('UserFunctionID');
+                    var figure = document.createElement('figure');
+
+                    var img = document.createElement('img');
+                    img.setAttribute('id', userDocumentName);
+                    img.setAttribute('src', 'images/AddNode.png');
+                    img.setAttribute('draggable', 'true');
+                    img.setAttribute('ondragstart', 'drag(event);');
+
+                    var figcaption = document.createElement('figcaption');
+                    figcaption.innerHTML = userDocumentName;
+
+                    figure.appendChild(img);
+                    figure.appendChild(figcaption);
+
+                    userFunctionDIV.appendChild(figure);
                 };
 
                 self.openUserDocument = function (key) {
@@ -445,12 +505,11 @@ define([
 
                         if (strJSON !== null) {
                             userDocument = JSON.parse(strJSON);
+                            // now we get the graph
+                            var graph = GraphStorage.loadObject(key + ' Graph');
+
+                            addExistingUserDocument(userDocument, graph);
                         }
-
-                        // now we get the graph
-                        var graph = GraphStorage.loadObject(key + ' Graph');
-
-                        addExistingUserDocument(userDocument, graph);
                     }
                 };
 
@@ -552,15 +611,15 @@ define([
 
                 self.populateGrid = function (data) {
                     require(['javascripts/source/utility/GridManager'],
-                    function (GridManager) {
-                        try {
-                            GridManager.populateGrid(data);
-                        }
-                        catch (e) {
-                            alert('index.html: Populate Grid create ' + e.name + ' ' + e.message);
-                            console.dir(e);
-                        }
-                    });
+                        function (GridManager) {
+                            try {
+                                GridManager.populateGrid(data);
+                            }
+                            catch (e) {
+                                alert('index.html: Populate Grid create ' + e.name + ' ' + e.message);
+                                console.dir(e);
+                            }
+                        });
                 };
 
                 // now create the app                

@@ -28,22 +28,6 @@ define(['javascripts/source/control/EntityControl'],
                     _parentRender(ctx, mouseDownPos);
                 };
 
-                /**
-                 * Fired with the double click event
-                 * @param  {Event} e    The double click event
-                 */
-                self.dblclick = function (e) {
-
-                    var mouse = self._parent.mousePos(e),
-                        x = mouse.x,
-                        y = mouse.y;
-
-                    if (self.mouseOverControl(x, y)) {
-                        app.addNewUserDocument(self.graph, 'Workflow');
-                        return self.focus();
-                    }
-                };
-
                 // setup the inheritance chain
                 UDFOutControl.prototype = EntityControl.prototype;
                 UDFOutControl.prototype.constructor = EntityControl;

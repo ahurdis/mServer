@@ -380,7 +380,6 @@ define(['javascripts/source/control/Connector',
                                 splitterProperties = [];
                                 recurseTree(targetControl._vertex);
                                 targetControl._values = splitterProperties;
-                                // targetControl._vertex.displayKeys = splitterProperties;
                             }
                         });
                     }

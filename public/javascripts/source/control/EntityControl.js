@@ -48,6 +48,16 @@ define(['javascripts/source/control/VertexControl'],
                     return ret;
                 };
 
+                self.setDisplayKeys = function (displayKeys) {
+
+                    self._values = displayKeys;
+
+                    self.setControlSize();
+
+                    self._parent.render();
+                };
+
+                self.updateControl = function () {};
 
                 self.setControlSize = function () {
 
@@ -191,30 +201,8 @@ define(['javascripts/source/control/VertexControl'],
                         y = mouse.y;
 
                     if (self.mouseOverControl(x, y)) {
-                        // openDialog();
-                        return self.focus();
+                         return self.focus();
                     }
-                };
-
-                var openDialog = function () {
-                    require(["javascripts/source/utility/ObjectForm"],
-                        function (ObjectForm) {
-                            try {
-                                var options = {};
-                                options.vertex = self._vertex;
-
-                                options.table = document.getElementById('myTable');
-                                options.onClose = function () {
-                                    self._values = self._vertex.displayKeys;
-                                };
-
-                                self.objectFormDialog = new ObjectForm(options);
-                                self.objectFormDialog.create();
-                            }
-                            catch (e) {
-                                alert("EntityControl: openDialog " + e.name + " " + e.message);
-                            }
-                        });
                 };
 
                 self.toJSON = function () {
