@@ -14,13 +14,6 @@ define(['javascripts/source/control/EntityControl'],
                 // call parent constructor
                 EntityControl.call(self, options); 
 
-                // save the Entity Control render function
-                var _parentRender = self.render;
-
-                self.render = function (ctx, mouseDownPos) {
-                    _parentRender(ctx, mouseDownPos);
-                };
-
                 // setup the inheritance chain
                 SplitterControl.prototype = EntityControl.prototype;
                 SplitterControl.prototype.constructor = EntityControl;

@@ -12,10 +12,11 @@ define([
     'javascripts/source/utility/RestHelper',
     'javascripts/source/utility/TextFileReader',
     'javascripts/source/utility/TreeManager',
+    'javascripts/source/document/UDFDocument',
     'javascripts/source/document/UserDocument'],
     function (AccordionManager, ColorUtil, ControlLibrary, EntityCanvas,
         Graph, GraphData, GraphFactory, GraphStorage,
-        ObjectProperties, RestHelper, TextFileReader, TreeManager, UserDocument) {
+        ObjectProperties, RestHelper, TextFileReader, TreeManager, UDFDocument, UserDocument) {
 
         'use strict';
 
@@ -168,8 +169,9 @@ define([
                     */
                 };
 
-                self.addNewUserDocument = function (graph, type) {
+                self.addNewUserDocument = function (graph, type, udfControl) {
 
+                    var doc;
                     var tab = self.addTab('New Document');
 
                     var options = {
@@ -182,11 +184,23 @@ define([
                         })
                     };
 
-                    self.activeDocuments.push(new UserDocument(options));
+                    switch (type) {
+                        case 'UDF':
+                            options['udfControl'] = udfControl;
+                            doc = new UDFDocument(options);
+                            break;
+                        default:
+                            doc = new UserDocument(options);
+                            break;
+                    }
+                    self.activeDocuments.push(doc);
+
+                    return doc;
                 };
 
                 var addExistingUserDocument = function (userDocument, graph) {
 
+                    var doc;
                     var tab = self.addTab(userDocument.name);
 
                     userDocument.tabID = tab.tabID;
@@ -198,7 +212,15 @@ define([
                         userDocument: userDocument
                     });
 
-                    self.activeDocuments.push(new UserDocument(userDocument));
+                    switch (userDocument.type) {
+                        case 'UDF':
+                            doc = new UDFDocument(userDocument);
+                            break;
+                        default:
+                            doc = new UserDocument(userDocument);
+                            break;
+                    }
+                    self.activeDocuments.push(doc);
                 };
 
                 self.getUserDocumentFromCanvasID = function (canvasID) {
@@ -220,6 +242,10 @@ define([
                     var index = _.findIndex(self.activeDocuments, { name: name });
 
                     return self.activeDocuments[index];
+                };
+
+                self.getTabIDFromUserDocument = function (userDocument) {
+                    return userDocument.tabID;
                 };
 
                 self.getActiveDocument = function () {
@@ -322,10 +348,10 @@ define([
 
                     numberOfTabsLeft === 1 ? activeIndex = 0 : activeIndex = index;
 
-                    setActiveTab(activeIndex);
+                    self.setActiveTab(activeIndex);
                 };
 
-                var setActiveTab = function (activeIndex) {
+                self.setActiveTab = function (activeIndex) {
 
                     $('#tabs-center').tabs('refresh');
 
@@ -334,6 +360,21 @@ define([
                     pageLayout.resizeAll();
                 };
 
+                self.setActiveTabByID = function (tabID) {
+
+                    var index = $('#tabs-center a[href="' + tabID + '"]').parent().index();
+
+                    $('#tabs-center').tabs('option', 'active', index);
+                };
+
+                /*
+                self.selectTab = function (tabID) {
+
+                    $("#tabs").tabs("option", "active", tabID);
+
+                    self.setActiveTab = tabID;
+                };
+*/
                 self.addTab = function (tabName) {
 
                     // we always add tabs to the end of the list
@@ -354,7 +395,7 @@ define([
                         canvasID + '" draggable="false" ondrop="drop(event, \'' + canvasID + '\')" ondragover="allowDrop(event)" width="1200" height="1200" tabindex="999"></canvas></div>').appendTo('#tabs-panel-center');
 
                     // set the active tab
-                    setActiveTab(iLastTab);
+                    self.setActiveTab(iLastTab);
 
                     return { tabID: tabID, canvasID: canvasID };
                 };
@@ -433,14 +474,23 @@ define([
                 self.saveUserDocument = function (userDocument) {
 
                     if (userDocument) {
-                        // if this is a UDF, add an icon and add it to control library 
+                        // if this is a UDF 
                         if (userDocument.type === 'UDF') {
+                            // add an icon 
+                            var userDocumentName = userDocument.name.replace(' ', '');
 
-                            var userDocumentName = userDocument.name.replace(' ', '') + 'Control';
-
-                            addControlIcon(userDocumentName);
-
-                            addControlToLibrary(userDocumentName);
+                            if (self.lib[userDocumentName] === undefined) {
+                                // add it to control library 
+                                addControlIcon(userDocumentName);
+                                // now update the name of the control should it exist
+                                if (userDocument.udfControl) {
+                                    userDocument.udfControl._instance = userDocumentName;
+                                    userDocument.canvas.render();
+                                }
+                            } else {
+                                delete self.lib[userDocumentName];
+                            }
+                            addControlToLibrary(userDocumentName, userDocument);
                         }
 
                         var strJSON = JSON.stringify(userDocument);
@@ -453,10 +503,16 @@ define([
                     }
                 };
 
-                var addControlToLibrary = function (userDocumentName) {
+                var addControlToLibrary = function (userDocumentName, userDocument) {
 
                     require(['javascripts/source/model/Contracts'],
                         function (Contracts) {
+
+                            var displayKeys = [];
+
+                            if (userDocument.udfControl && userDocument.udfControl.inputControl) {
+                                displayKeys = userDocument.udfControl.inputControl.displayKeys;
+                            }
 
                             // self.lib.addControlToLibrary();
                             self.lib[userDocumentName] = {
@@ -467,8 +523,9 @@ define([
                                 allAccordionPanes: [],
                                 gd: {
                                     type: 'UDFControl',
+                                    instance: userDocumentName,
                                     parent: 'EntityControl',
-                                    displayKeys: []
+                                    displayKeys: displayKeys
                                 }
                             }
                         });
@@ -511,6 +568,7 @@ define([
                             addExistingUserDocument(userDocument, graph);
                         }
                     }
+                    return userDocument;
                 };
 
                 /**

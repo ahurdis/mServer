@@ -14,10 +14,6 @@ define(['javascripts/source/control/EntityControl'],
                 // call parent constructor
                 EntityControl.call(self, options);
 
-                var _parentRender = self.render;
-
-                var _edgeHitPos = null;
-
                 var getFunctionArguments = function (func) {
                     return (func + '')
                         .replace(/[/][/].*$/mg, '') // strip single-line comments
@@ -26,10 +22,6 @@ define(['javascripts/source/control/EntityControl'],
                         .split('){', 1)[0].replace(/^[^(]*[(]/, '') // extract the parameters  
                         .replace(/=[^,]+/g, '') // strip any ES6 defaults  
                         .split(',').filter(Boolean); // split & filter [""]
-                };
-
-                self.render = function (ctx, mouseDownPos) {
-                    _parentRender(ctx, mouseDownPos);
                 };
 
                 self.create = function () {

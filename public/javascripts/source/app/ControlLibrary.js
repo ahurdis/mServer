@@ -179,6 +179,7 @@ define(['javascripts/source/control/Connector',
                 allAccordionPanes: [],
                 gd: {
                     type: 'UDFInControl',
+ //                   instance: 'In',
                     parent: 'EntityControl'
                 }
             };
@@ -190,7 +191,8 @@ define(['javascripts/source/control/Connector',
                 typeSpecificPanes: [],
                 allAccordionPanes: [],
                 gd: {
-                    type: 'UDFInControl',
+                    type: 'UDFOutControl',
+ //                   instance: 'Out',
                     parent: 'EntityControl'
                 }
             };

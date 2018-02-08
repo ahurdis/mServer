@@ -39,6 +39,10 @@ define(['javascripts/source/graph/Graph',
                 }
             };
 
+            GraphStorage.getGraph = function (key) {
+                return GraphStorage.loadObject(key + ' Graph');
+            };
+
             GraphStorage.loadObject = function (key) {
 
                 var graph = null;

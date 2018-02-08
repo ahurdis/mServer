@@ -14,20 +14,6 @@ define(['javascripts/source/control/EntityControl'],
                 // call parent constructor
                 EntityControl.call(self, options); 
 
-                // save the Entity Control render function
-                var _parentRender = self.render;
-
-                var _edgeHitPos = null;
-
-                require(['javascripts/source/graph/GraphFactory'],
-                    function (GraphFactory) {
-                        self.graph = GraphFactory.createSimpleIntegrateGraph();
-                    });
-
-                self.render = function (ctx, mouseDownPos) {
-                    _parentRender(ctx, mouseDownPos);
-                };
-
                 // setup the inheritance chain
                 UDFOutControl.prototype = EntityControl.prototype;
                 UDFOutControl.prototype.constructor = EntityControl;

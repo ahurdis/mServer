@@ -1,13 +1,15 @@
 // @author Andrew
 
-define([],
-	function () {
+define(['javascripts/source/document/UserDocument'],
+	function (UserDocument) {
 		'use strict';
 
 		var ret = function UDFDocument(options) {
 			try {
 
 				var self = this;
+                // call parent constructor
+                UserDocument.call(self, options);
 
 				self.udfControl = options.udfControl;
                 // setup the inheritance chain

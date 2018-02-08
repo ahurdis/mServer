@@ -14,16 +14,6 @@ define(['javascripts/source/control/EntityControl'],
                 // call parent constructor
                 EntityControl.call(self, options); 
 
-                // save the Entity Control render function
-                var _parentRender = self.render;
-
-                var _edgeHitPos = null;
-
-                self.render = function (ctx, mouseDownPos) {
-
-                    _parentRender(ctx, mouseDownPos);
-                };
-
                 // setup the inheritance chain
                 PhysicalEntityControl.prototype = EntityControl.prototype;
                 PhysicalEntityControl.prototype.constructor = EntityControl;

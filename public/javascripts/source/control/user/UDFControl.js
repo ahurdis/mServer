@@ -5,8 +5,9 @@
  * @author Andrew
  */
 define(['javascripts/source/control/EntityControl',
-    'javascripts/source/graph/Graph'],
-    function (EntityControl, Graph) {
+    'javascripts/source/graph/Graph',
+    'javascripts/source/graph/GraphStorage'],
+    function (EntityControl, Graph, GraphStorage) {
         'use strict';
         try {
             return function UDFControl(options) {
@@ -15,17 +16,11 @@ define(['javascripts/source/control/EntityControl',
                 // call parent constructor
                 EntityControl.call(self, options);
 
-                // save the Entity Control render function
-                var _parentRender = self.render;
+                self.graph = null;
+                self.inputControl = null;
+                self.outputControl = null;
 
-                self.graph = new Graph();
-                var inputControl, outputControl;
-
-                var _edgeHitPos = null;
-
-                self.render = function (ctx, mouseDownPos) {
-                    _parentRender(ctx, mouseDownPos);
-                };
+                self.userDocument = null;
 
                 self.updateControl = function () {
                     inputControl.setDisplayKeys(self._values);
@@ -44,37 +39,52 @@ define(['javascripts/source/control/EntityControl',
                     // the document for this control can be new
                     // the document can exist but not be opened
                     // the document can be opened, but the tab isn't active
-                    var userDocument = app.getUserDocumentFromName(self._instance);
 
-                    if (self.graph.count() === 0) {
+                    var activeUserDocument = app.getUserDocumentFromName(self._instance);
 
-                        inputControl = self.graph.addVertex({
-                            type: 'UDFInControl',
-                            displayKeys: self._vertex.displayKeys,
-                            udfControl: self,
-                            x: 50,
-                            y: 100,
-                            inboundType: 'aro',
-                            outboundType: 'aro'
-                        });
+                    var graphInStorage = GraphStorage.getGraph(self._instance);
 
-                        outputControl = self.graph.addVertex({
-                            type: 'UDFOutControl',
-                            x: 250,
-                            y: 100,
-                            inboundType: 'aro',
-                            outboundType: 'aro'
-                        });
+  
 
-                        app.addNewUserDocument(self.graph, 'UDF');
-                    } else if (!userDocument) {
-                        // opening the user document
-                        app.openUserDocument(self._instance);
-                    } else if (userDocument) {
-                        app.setActiveTab(userDocument.tabID);
-                    }
 
-                    return self.focus();
+                    if (activeUserDocument) {
+                        app.setActiveTabByID(activeUserDocument.tabID);
+                    } else {
+
+                        if (graphInStorage) {
+                            // open the user document
+                            var userDocument = app.openUserDocument(self._instance);
+                            if (userDocument) {
+                                self.graph = userDocument.canvas.graph(); // getGraph();
+                            }
+                                                    }
+                        else {  // !graphInStorage && !activeUserDocument
+                            self.graph = new Graph();
+
+                            self.inputControl = self.graph.addVertex({
+                                type: 'UDFInControl',
+                                instance: 'In',
+                                displayKeys: self._vertex.displayKeys,
+                                udfControl: self,
+                                x: 50,
+                                y: 100,
+                                inboundType: 'aro',
+                                outboundType: 'aro'
+                            });
+
+                            self.outputControl = self.graph.addVertex({
+                                type: 'UDFOutControl',
+                                instance: 'Out',
+                                displayKeys: ['ret'],
+                                x: 250,
+                                y: 100,
+                                inboundType: 'aro',
+                                outboundType: 'aro'
+                            });
+
+                            self.userDocument = app.addNewUserDocument(self.graph, 'UDF', self);
+                        }
+                    };
                 };
 
                 // setup the inheritance chain

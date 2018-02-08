@@ -29,6 +29,16 @@ define([],
 					self.canvas.updateControlColors();
 				};
 
+				self.getGraph = function () {
+					var ret = null;
+
+					if (self.canvas) {
+						ret = self.canvas.graph();
+					}
+					
+					return ret;
+				};
+
 				self.toJSON = function () {
 					return {
 						createdDate: self.createdDate,

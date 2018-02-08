@@ -67,9 +67,6 @@ define(['javascripts/source/control/Connector',
                 var _maxDragY = self._canvas.height - self._height - self._dashPadding;
                 // the bounding rect of the canvas to help with getting mouse position
                 var _boundingClientRect = self._canvas.getBoundingClientRect();
-                // the object form for this object
-                // TODO: remove this
-                self.objectFormDialog = null;
                 // is this control selected?
                 self._isSelected = false;
                 // the array of Handle objects that this control

@@ -14,17 +14,8 @@ define(['javascripts/source/control/EntityControl'],
                 // call parent constructor
                 EntityControl.call(self, options);
 
-                var _parentRender = self.render;
-
-                var _edgeHitPos = null;
-
                 // get the keys to display, passing in the vertex's keys to exclude
                 self._values = Object.keys(self._vertex.getDisplayKeys(['x', 'y', 'instance', 'id', 'type', 'imageName', 'shape', 'displayKeys']));
-
-                self.render = function (ctx, mouseDownPos) {
-
-                    _parentRender(ctx, mouseDownPos);
-                };
 
                 // setup the inheritance chain
                 LogicalEntityControl.prototype = EntityControl.prototype;
