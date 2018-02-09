@@ -56,6 +56,14 @@ define([
                     self.updateSourceTree();
                 };
 
+                self.populateModelWithUserControls = function () {
+                    GraphStorage.forAllDocuments((userDocument) => {
+                        if (userDocument.type === 'UDF') {
+                            new UDFDocument(userDocument).publishControl();
+                        }
+                    });
+                };
+
                 self.setDefaultColors = function (theme) {
 
                     var redmondTheme = function () {
@@ -367,14 +375,6 @@ define([
                     $('#tabs-center').tabs('option', 'active', index);
                 };
 
-                /*
-                self.selectTab = function (tabID) {
-
-                    $("#tabs").tabs("option", "active", tabID);
-
-                    self.setActiveTab = tabID;
-                };
-*/
                 self.addTab = function (tabName) {
 
                     // we always add tabs to the end of the list
@@ -474,24 +474,9 @@ define([
                 self.saveUserDocument = function (userDocument) {
 
                     if (userDocument) {
-                        // if this is a UDF 
-                        if (userDocument.type === 'UDF') {
-                            // add an icon 
-                            var userDocumentName = userDocument.name.replace(' ', '');
 
-                            if (self.lib[userDocumentName] === undefined) {
-                                // add it to control library 
-                                addControlIcon(userDocumentName);
-                                // now update the name of the control should it exist
-                                if (userDocument.udfControl) {
-                                    userDocument.udfControl._instance = userDocumentName;
-                                    userDocument.canvas.render();
-                                }
-                            } else {
-                                delete self.lib[userDocumentName];
-                            }
-                            addControlToLibrary(userDocumentName, userDocument);
-                        }
+                        // do user document save activities e.g. UDFDocument
+                        userDocument.onSave();
 
                         var strJSON = JSON.stringify(userDocument);
 
@@ -503,18 +488,30 @@ define([
                     }
                 };
 
-                var addControlToLibrary = function (userDocumentName, userDocument) {
+                self.addControlToLibrary = function (udfDocument) {
 
                     require(['javascripts/source/model/Contracts'],
                         function (Contracts) {
 
                             var displayKeys = [];
 
-                            if (userDocument.udfControl && userDocument.udfControl.inputControl) {
-                                displayKeys = userDocument.udfControl.inputControl.displayKeys;
+                            var userDocumentName = udfDocument.getControlName();
+
+                            // get the displayKeys from the InputControl or from LocalStorage
+                            if (udfDocument.udfControl && udfDocument.udfControl.inputControl) {
+                                displayKeys = udfDocument.udfControl.inputControl.displayKeys;
+                            } else {
+                                var graph = GraphStorage.getGraph(userDocumentName);
+                                if (graph) {
+                                    var vertices = graph.getVertices();
+                                    for (var i = 0; i < vertices.length; i++) {
+                                        if (vertices[i].instance === 'In') {
+                                            displayKeys = vertices[i].displayKeys;
+                                        }
+                                    }
+                                }
                             }
 
-                            // self.lib.addControlToLibrary();
                             self.lib[userDocumentName] = {
                                 contracts: Contracts.UDFControl,
                                 ctor: UDFControl,
@@ -529,9 +526,9 @@ define([
                                 }
                             }
                         });
-                }
+                };
 
-                var addControlIcon = function (userDocumentName) {
+                self.addControlIcon = function (userDocumentName) {
 
                     var userFunctionDIV = document.getElementById('UserFunctionID');
                     var figure = document.createElement('figure');

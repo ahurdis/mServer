@@ -247,6 +247,7 @@
 				function (App) {
 					try {
 						app = new App();
+						app.populateModelWithUserControls();
 					}
 					catch (e) {
 						alert('index.html: app initialize ' + e.name + ' ' + e.message);

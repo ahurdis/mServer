@@ -18,6 +18,7 @@ define(['javascripts/source/control/EntityControl'],
 
                 self.updateControl = function () {
                     udfControl.setDisplayKeys(self._values);
+                    udfControl._vertex.insertProperty('displayKeys', self._values);
                 };
 
                 // setup the inheritance chain

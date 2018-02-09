@@ -29,6 +29,10 @@ define([],
 					self.canvas.updateControlColors();
 				};
 
+				self.onSave = function () {
+					return;
+				};
+
 				self.getGraph = function () {
 					var ret = null;
 

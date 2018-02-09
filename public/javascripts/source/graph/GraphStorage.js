@@ -39,6 +39,30 @@ define(['javascripts/source/graph/Graph',
                 }
             };
 
+            GraphStorage.forAllDocuments = function (callback) {
+
+                if (typeof (Storage) !== 'undefined') {
+
+                    var userDocument;
+
+                    for (var key of Object.getOwnPropertyNames(localStorage)) {
+
+                        var index = key.indexOf('Graph');
+
+                        if (index === -1) {
+
+                            var strJSON = localStorage.getItem(key);
+
+                            if (strJSON && callback) {
+                                userDocument = JSON.parse(strJSON);
+
+                                callback(userDocument);
+                            }
+                        }
+                    }
+                }
+            };
+
             GraphStorage.getGraph = function (key) {
                 return GraphStorage.loadObject(key + ' Graph');
             };

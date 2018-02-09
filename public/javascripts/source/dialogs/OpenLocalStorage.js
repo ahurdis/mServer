@@ -2,8 +2,8 @@
  * @author Andrew
  */
 
-define([],
-    function () {
+define(['javascripts/source/graph/GraphStorage'],
+    function (GraphStorage) {
         'use strict';
         try {
             return function OpenLocalStorage(options) {
@@ -74,11 +74,31 @@ define([],
                                         }
                                     }
                                 ]
-
                             });
                         });
                 };
 
+                var populateItems = function () {
+                
+                    GraphStorage.forAllDocuments((userDocument) => {
+                        var select;
+
+                        switch (userDocument.type) {
+                            case 'Workflow':
+                                select = '#localStorageWorkflowID';
+                                break;
+                            case 'UDF':
+                                select = '#localStorageUDFID';
+                                break;
+                            case 'Model':
+                                select = '#localStorageModelID';
+                                break;
+                        }
+                        $('<option>' + userDocument.name + '</option>').appendTo(select);
+                    });
+                };
+
+                /*
                 var populateItems = function () {
 
                     if (typeof (Storage) !== 'undefined') {
@@ -116,7 +136,7 @@ define([],
                         }
                     }
                 };
-
+*/
                 self.destroy = function () {
                     // remove the html element from the document    
                     $('#OpenLocalStorageDIV').remove();
