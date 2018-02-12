@@ -13,9 +13,11 @@ define(['javascripts/source/graph/GraphData',
 
             self.vertices = [];
             self.adjacency = {};
-
+            
             self.nextNodeId = 1;
             self.nextEdgeId = 1;
+
+//            Math.random().toString(36).substr(2, 16);
 
             self.addVertex = function (options) {
 
@@ -304,6 +306,10 @@ define(['javascripts/source/graph/GraphData',
                 };
 
                 return GraphSerialization.toJSON(rv.ctor, rv.data);
+            };
+
+            self.clone = function () {
+                return JSON.parse(JSON.stringify(self), GraphSerialization.Reviver);
             };
         }
 

@@ -38,6 +38,7 @@ define([
                  */
                 self.create = function () {
 
+                    // alert(guid());
                     // initialize the control library
                     self.lib = new ControlLibrary();
                     // initialize the accordion manager
@@ -180,6 +181,7 @@ define([
                 self.addNewUserDocument = function (graph, type, udfControl) {
 
                     var doc;
+
                     var tab = self.addTab('New Document');
 
                     var options = {
@@ -405,9 +407,12 @@ define([
                     // get the active User document
                     var userDocument = self.getActiveDocument();
 
+                    // self.flattenGraph();
+
+                    var graph = userDocument.getGraph();
                     // determine if it is a workflow
                     if (userDocument && userDocument.type === 'Workflow') {
-                        RestHelper.postJSON('runWorkflowCallback', { method: 'graphRoute/runWorkflow', timeout: 15000, data: userDocument.canvas.graph() },
+                        RestHelper.postJSON('runWorkflowCallback', { method: 'graphRoute/runWorkflow', timeout: 15000, data: graph },
                             function (data) {
                                 self.populateGrid(data);
                             });
@@ -423,7 +428,7 @@ define([
 
                     var requestData = {
                         documentName: userDocument.name,
-                        graph: userDocument.canvas.graph()
+                        graph: userDocument.getGraph()
                     };
 
                     // determine if it is a workflow
