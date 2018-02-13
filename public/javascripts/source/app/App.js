@@ -402,19 +402,125 @@ define([
                     return { tabID: tabID, canvasID: canvasID };
                 };
 
+                const clone = function (obj) {
+                    return JSON.parse(JSON.stringify(obj));
+                };
+                
+                const meld = function (parent, child, udfControl) {
+                    var nodeMap = {};
+                
+                    var udfInputControl, udfOutputControl;
+                
+                    for (let vertex of child.getVertices()) {
+                
+                        let state = clone(vertex.getState());
+                
+                        nodeMap[state.id] = parent.nextNodeId;
+                
+                        delete state.id;
+                
+                        var newVertex = parent.addVertex(state);
+                
+                        switch (newVertex.type) {
+                            case 'UDFInControl':
+                                udfInputControl = newVertex;
+                                break;
+                            case 'UDFOutControl':
+                                udfOutputControl = newVertex;
+                                break;
+                        }
+                    }
+                
+                    for (let edge of child.getAllEdges()) {
+                
+                        let state = clone(edge.getState());
+                
+                        delete state.id;
+                
+                        var sourceId = state.sourceId;
+                        var targetId = state.targetId;
+                
+                        state.sourceId = nodeMap[sourceId];
+                        state.targetId = nodeMap[targetId];
+                
+                        parent.addEdge(parent.getVertexById(nodeMap[sourceId]),
+                            parent.getVertexById(nodeMap[targetId]),
+                            state);
+                    }
+                
+                    for (let edgeTo of parent.getEdgesTo(udfControl)) {
+                
+                        let state = clone(edgeTo.getState());
+                
+                        // get the vertex upstream from the udfControl
+                        var upstreamVertex = parent.getVertexById(state.sourceId);
+                
+                        delete state.id;
+                        delete state.sourceId;
+                        delete state.targetId;
+                
+                        parent.addEdge(upstreamVertex, udfInputControl, state);
+                    }
+                
+                    var edgesFrom = parent.getEdgesFrom(udfControl);
+                
+                    for (let i in edgesFrom) {
+                
+                        for (let edge of edgesFrom[i]) {
+                
+                            let state = clone(edge.getState());
+                
+                            // get the vertex downstream from the udfControl
+                            var downstreamVertex = parent.getVertexById(state.targetId);
+                
+                            delete state.id;
+                            delete state.sourceId;
+                            delete state.targetId;
+                
+                            parent.addEdge(udfOutputControl, downstreamVertex, state);
+                        }
+                    }
+                
+                    parent.removeVertex(udfControl);
+                };
+
+                var getGraphByName = function (name) {
+
+                    var ret = GraphStorage.getGraph(name);
+    
+                    // if not in storage, get it from active documents
+                    if (!ret) {
+                        var userDocument = app.getUserDocumentFromName(name);
+                        ret = userDocument.getGraph();
+                    }
+                    return ret;
+                };
+
+                self.flattenGraph = function (graph) {
+                    var vertices = graph.getVertices();
+
+                    for (var vertex of vertices) {
+                        if (vertex.type === 'UDFControl') {
+                            var child = getGraphByName(vertex.instance);
+
+                            meld(graph, child, vertex);
+                        }
+                    }
+                    return graph;
+                };
+
                 self.runWorkflow = function () {
 
                     // get the active User document
                     var userDocument = self.getActiveDocument();
 
-
                     var graph = userDocument.getGraph();
 
-                //  var flattenedGraph = self.flattenGraph(graph);
+                    var flattenedGraph = self.flattenGraph(graph.clone());
 
                     // determine if it is a workflow
                     if (userDocument && userDocument.type === 'Workflow') {
-                        RestHelper.postJSON('runWorkflowCallback', { method: 'graphRoute/runWorkflow', timeout: 15000, data: graph },
+                        RestHelper.postJSON('runWorkflowCallback', { method: 'graphRoute/runWorkflow', timeout: 15000, data: flattenedGraph },
                             function (data) {
                                 self.populateGrid(data);
                             });
@@ -529,7 +635,9 @@ define([
                                     type: 'UDFControl',
                                     instance: userDocumentName,
                                     parent: 'EntityControl',
-                                    displayKeys: displayKeys
+                                    displayKeys: displayKeys,
+                                    outboundType: 'aro',
+                                    inboundType: 'aro'
                                 }
                             }
                         });

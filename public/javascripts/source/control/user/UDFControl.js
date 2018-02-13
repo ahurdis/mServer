@@ -72,7 +72,7 @@ define(['javascripts/source/control/EntityControl',
                             self.outputControl = self.graph.addVertex({
                                 type: 'UDFOutControl',
                                 instance: 'Out',
-                                displayKeys: ['ret'],
+                                displayKeys: ['aro'],
                                 x: 250,
                                 y: 100,
                                 inboundType: 'aro',

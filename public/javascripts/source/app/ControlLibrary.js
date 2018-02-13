@@ -167,7 +167,9 @@ define(['javascripts/source/control/Connector',
                 gd: {
                     type: 'UDFControl',
                     parent: 'EntityControl',
-                    displayKeys: []
+                    displayKeys: [],
+                    inboundType: 'aro',
+                    outboundType: 'aro'
                 }
             };
 
@@ -180,7 +182,9 @@ define(['javascripts/source/control/Connector',
                 gd: {
                     type: 'UDFInControl',
  //                   instance: 'In',
-                    parent: 'EntityControl'
+                    parent: 'EntityControl',
+                    inboundType: 'aro',
+                    outboundType: 'aro'
                 }
             };
 
@@ -193,7 +197,9 @@ define(['javascripts/source/control/Connector',
                 gd: {
                     type: 'UDFOutControl',
  //                   instance: 'Out',
-                    parent: 'EntityControl'
+                    parent: 'EntityControl',
+                    inboundType: 'aro',
+                    outboundType: 'aro'
                 }
             };
 
