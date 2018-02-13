@@ -407,9 +407,11 @@ define([
                     // get the active User document
                     var userDocument = self.getActiveDocument();
 
-                    // self.flattenGraph();
 
                     var graph = userDocument.getGraph();
+
+                //  var flattenedGraph = self.flattenGraph(graph);
+
                     // determine if it is a workflow
                     if (userDocument && userDocument.type === 'Workflow') {
                         RestHelper.postJSON('runWorkflowCallback', { method: 'graphRoute/runWorkflow', timeout: 15000, data: graph },
