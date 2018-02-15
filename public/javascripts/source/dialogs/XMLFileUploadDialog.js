@@ -4,7 +4,7 @@
 
 define(['javascripts/source/utility/RestHelper',
     'javascripts/source/utility/XMLFileReader',
-    'javascripts/source/utility/TreeManager'],
+    'javascripts/source/app/TreeManager'],
     function (RestHelper, XMLFileReader, TreeManager) {
         'use strict';
         try {

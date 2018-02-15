@@ -10,13 +10,15 @@ define([
     'javascripts/source/graph/GraphStorage',
     'javascripts/source/utility/ObjectProperties',
     'javascripts/source/utility/RestHelper',
+    'javascripts/source/app/TabManager',
     'javascripts/source/utility/TextFileReader',
-    'javascripts/source/utility/TreeManager',
+    'javascripts/source/app/TreeManager',
     'javascripts/source/document/UDFDocument',
     'javascripts/source/document/UserDocument'],
     function (AccordionManager, ColorUtil, ControlLibrary, EntityCanvas,
         Graph, GraphData, GraphFactory, GraphStorage,
-        ObjectProperties, RestHelper, TextFileReader, TreeManager, UDFDocument, UserDocument) {
+        ObjectProperties, RestHelper, TabManager, 
+        TextFileReader, TreeManager, UDFDocument, UserDocument) {
 
         'use strict';
 
@@ -43,6 +45,8 @@ define([
                     self.lib = new ControlLibrary();
                     // initialize the accordion manager
                     self.am = new AccordionManager();
+
+                    self.tm = new TabManager();
 
                     self.constructors = {
                         'Graph': Graph,
@@ -182,7 +186,7 @@ define([
 
                     var doc;
 
-                    var tab = self.addTab('New Document');
+                    var tab = self.tm.addTab('New Document');
 
                     var options = {
                         tabID: tab.tabID,
@@ -211,7 +215,7 @@ define([
                 var addExistingUserDocument = function (userDocument, graph) {
 
                     var doc;
-                    var tab = self.addTab(userDocument.name);
+                    var tab = self.tm.addTab(userDocument.name);
 
                     userDocument.tabID = tab.tabID;
                     userDocument.canvasID = tab.canvasID;
@@ -334,72 +338,6 @@ define([
 
                             break;
                     }
-                };
-
-                self.removeTab = function (tabID) {
-
-                    var index = _.findIndex(self.activeDocuments, { tabID: tabID });
-
-                    // remove the list item that is the actual tab
-                    $('#tabs-center').find('.ui-tabs-nav li:eq(' + index + ')').remove();
-
-                    // remove the div that contains the tab's content div and canvas
-                    $('#' + tabID).remove();
-
-                    // remove the element from the active documents
-                    if (index > -1) {
-                        self.activeDocuments.splice(index, 1);
-                    }
-
-                    // finally, set the active tab depending on which one has been removed
-                    var numberOfTabsLeft = $('#tabs-center >ul >li').length;
-
-                    var activeIndex = 0;
-
-                    numberOfTabsLeft === 1 ? activeIndex = 0 : activeIndex = index;
-
-                    self.setActiveTab(activeIndex);
-                };
-
-                self.setActiveTab = function (activeIndex) {
-
-                    $('#tabs-center').tabs('refresh');
-
-                    $('#tabs-center').tabs({ active: activeIndex });
-
-                    pageLayout.resizeAll();
-                };
-
-                self.setActiveTabByID = function (tabID) {
-
-                    var index = $('#tabs-center a[href="' + tabID + '"]').parent().index();
-
-                    $('#tabs-center').tabs('option', 'active', index);
-                };
-
-                self.addTab = function (tabName) {
-
-                    // we always add tabs to the end of the list
-                    var iLastTab = $('#tabs-center >ul >li').length;
-
-                    // generate a unique ID with which to name the HTML tags
-                    var uniqueId = _.uniqueId();
-
-                    var tabID = 'tab-panel-center-' + uniqueId;
-
-                    var canvasID = 'canvas' + uniqueId;
-
-                    // insert the tab to the list
-                    $('<li><a id="' + tabID + 'anchor' + '"href="#' + tabID + '">' + tabName + '<a href="#" onclick="app.removeTab(\'' + tabID + '\')">x</a></a></li>').appendTo('#tabs-center .ui-tabs-nav');
-
-                    // insert the DIV and CANVAS contennt
-                    $('<div id="' + tabID + '" class="outline ui-tabs-panel ui-widget-content ui-corner-bottom"><canvas id="' +
-                        canvasID + '" draggable="false" ondrop="drop(event, \'' + canvasID + '\')" ondragover="allowDrop(event)" width="1200" height="1200" tabindex="999"></canvas></div>').appendTo('#tabs-panel-center');
-
-                    // set the active tab
-                    self.setActiveTab(iLastTab);
-
-                    return { tabID: tabID, canvasID: canvasID };
                 };
 
                 const clone = function (obj) {
@@ -780,7 +718,7 @@ define([
                 };
 
                 self.populateGrid = function (data) {
-                    require(['javascripts/source/utility/GridManager'],
+                    require(['javascripts/source/app/GridManager'],
                         function (GridManager) {
                             try {
                                 GridManager.populateGrid(data);

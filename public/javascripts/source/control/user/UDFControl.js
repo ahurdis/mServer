@@ -45,7 +45,7 @@ define(['javascripts/source/control/EntityControl',
                     var graphInStorage = GraphStorage.getGraph(self._instance);
 
                     if (activeUserDocument) {
-                        app.setActiveTabByID(activeUserDocument.tabID);
+                        app.tm.setActiveTabByID(activeUserDocument.tabID);
                     } else {
 
                         if (graphInStorage) {

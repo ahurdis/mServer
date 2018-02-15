@@ -3,7 +3,7 @@
  */
 
 define(['javascripts/source/utility/RestHelper',
-    'javascripts/source/utility/TreeManager'],
+    'javascripts/source/app/TreeManager'],
     function (RestHelper, TreeManager) {
         'use strict';
         try {
