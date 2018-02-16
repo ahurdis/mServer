@@ -66,7 +66,7 @@ define(['javascripts/source/control/core/Button',
                             }
                         }
                     });
-
+/*
                     self.addButton({
                         canvas: self._canvas,
                         form: self,
@@ -112,7 +112,7 @@ define(['javascripts/source/control/core/Button',
                         fontWeight: 'bold',
                         value: 'DropDown'
                     });
-
+*/
                     // set the width and height of the control
                     self.height(_minHeight);
 

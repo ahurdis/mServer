@@ -2,9 +2,8 @@
  * @author Andrew
  */
 
-define(['javascripts/source/utility/RestHelper',
-    'javascripts/source/app/TreeManager'],
-    function (RestHelper, TreeManager) {
+define(['javascripts/source/utility/RestHelper'],
+    function (RestHelper) {
         'use strict';
         try {
             return function MySQLConnection(options) {
@@ -71,7 +70,7 @@ define(['javascripts/source/utility/RestHelper',
                                         text: 'OK',
                                         click: function () {
                                             if (_connectionSucceeded) {
-                                                TreeManager.addDatabaseSource(_database, _data);
+                                                app.addDatabaseSource(_database, _data);
                                             }
 
                                             $(this).dialog('close');

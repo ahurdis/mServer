@@ -3,9 +3,8 @@
  */
 
 define(['javascripts/source/utility/RestHelper',
-    'javascripts/source/utility/XMLFileReader',
-    'javascripts/source/app/TreeManager'],
-    function (RestHelper, XMLFileReader, TreeManager) {
+    'javascripts/source/utility/XMLFileReader'],
+    function (RestHelper, XMLFileReader) {
         'use strict';
         try {
             return function XMLFileUploadDialog(options) {
@@ -95,7 +94,7 @@ define(['javascripts/source/utility/RestHelper',
                                             });
 
                                             // finally, update the source tree
-                                            TreeManager.addFileSource({
+                                            app.addFileSource({
                                                 sourceName: sourceName,
                                                 attributes: app.attributeArray.toString()
                                             }, 'XML File');

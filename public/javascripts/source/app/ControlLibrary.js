@@ -270,12 +270,14 @@ define(['javascripts/source/control/Connector',
                 }
             };
 
-
-            var distinct = function (obj, key) {
-                return _.uniq(obj, (o) => {
-
-                    return o[key];
-                });
+            let distinct = function (aro, key) {
+                let ret = [];
+                for (let out of _.uniq(_.pluck(aro, key))) {
+                    let t = {};
+                    t[key] = out;
+                    ret.push(t);
+                }
+                return ret;
             };
 
             self.Distinct = {

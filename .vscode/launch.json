@@ -24,7 +24,7 @@
 			"name": "LaunchTest",
 			"type": "node",
 			"request": "launch",
-			"program": "${workspaceRoot}/lib/test/TestGraphMerging.js",
+			"program": "${workspaceRoot}/lib/test/TestUnderscore.js",
 			"stopOnEntry": false,
 			"args": [],
 			"cwd": "${workspaceRoot}/",

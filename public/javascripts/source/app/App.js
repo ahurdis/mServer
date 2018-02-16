@@ -12,13 +12,12 @@ define([
     'javascripts/source/utility/RestHelper',
     'javascripts/source/app/TabManager',
     'javascripts/source/utility/TextFileReader',
-    'javascripts/source/app/TreeManager',
     'javascripts/source/document/UDFDocument',
     'javascripts/source/document/UserDocument'],
     function (AccordionManager, ColorUtil, ControlLibrary, EntityCanvas,
         Graph, GraphData, GraphFactory, GraphStorage,
-        ObjectProperties, RestHelper, TabManager, 
-        TextFileReader, TreeManager, UDFDocument, UserDocument) {
+        ObjectProperties, RestHelper, TabManager,
+        TextFileReader, UDFDocument, UserDocument) {
 
         'use strict';
 
@@ -60,6 +59,105 @@ define([
                     // populate the source tree with the user's schema data
                     self.updateSourceTree();
                 };
+
+
+                self.addFileSource = function (fileSource, nodeName) {
+
+                    var treeNodeID = 10;
+
+                    var t = $('#TreeDIV');
+
+                    // then add in the database
+                    var node = t.tree('getNodeByName', nodeName);
+
+                    var fileNode = t.tree(
+                        'appendNode',
+                        {
+                            label: fileSource.sourceName,
+                            id: treeNodeID
+                        },
+                        node
+                    );
+
+
+                    var attributeArray = fileSource.attributes.split(',');
+
+                    for (var i = 0; i < attributeArray.length; i++) {
+                        t.tree(
+                            'appendNode',
+                            {
+                                label: attributeArray[i],
+                                id: treeNodeID + i + 1
+                            },
+                            fileNode
+                        );
+                    }
+
+                    // now open the node
+                    // t.tree('openNode', fileNode);
+                };
+
+                self.addDatabaseSource = function (database, schemaData) {
+
+                    var databaseID = 100;
+
+                    var t = $('#TreeDIV');
+
+                    // first check to see if this node is already added
+                    var dbNode = t.tree('getNodeByID', databaseID);
+
+                    // BUG : The removal of nodes isn't working (even if all children are removed first)
+                    // and if so, remove it
+                    if (dbNode) {
+
+                        // first remove all children, if any
+                        if (dbNode.children) {
+                            for (var i = dbNode.children.length - 1; i >= 0; i--) {
+                                var child = dbNode.children[i];
+                                t.tree('removeNode', child);
+                            }
+                        }
+
+                        // then the node itself
+                        t.tree('removeNode', dbNode);
+                    }
+
+                    // then add in the database
+                    var node = t.tree('getNodeByName', 'MySQL');
+
+                    var dataBaseNode = t.tree(
+                        'appendNode',
+                        {
+                            label: database,
+                            id: databaseID
+                        },
+                        node
+                    );
+
+                    var unique = {};
+                    var distinct = [];
+                    for (var i in schemaData.rows) {
+                        if (typeof (unique[schemaData.rows[i].table_name]) == 'undefined') {
+                            distinct.push(schemaData.rows[i].table_name);
+                        }
+                        unique[schemaData.rows[i].table_name] = 0;
+                    }
+
+                    for (var i = 0; i < distinct.length; i++) {
+                        t.tree(
+                            'appendNode',
+                            {
+                                label: distinct[i],
+                                id: databaseID + i + 1
+                            },
+                            dataBaseNode
+                        );
+                    }
+
+                    // now open the node
+                    // t.tree('openNode', dataBaseNode);
+                };
+
 
                 self.populateModelWithUserControls = function () {
                     GraphStorage.forAllDocuments((userDocument) => {
@@ -146,7 +244,7 @@ define([
                                         break;
                                 }
 
-                                TreeManager.addFileSource(result[i], nodeName);
+                                self.addFileSource(result[i], nodeName);
                                 self.sourceSchema[result[i].sourceName] = result[i];
                             }
 
@@ -161,7 +259,7 @@ define([
                         function (result) {
                             // update the tree with the 
                             for (var i = 0, len = result.length; i < len; i++) {
-                                TreeManager.addDatabaseSource(result[i].database, result[i]);
+                                self.addDatabaseSource(result[i].database, result[i]);
                                 self.sourceSchema[result[i].database] = result[i];
                             }
                         });
@@ -343,22 +441,22 @@ define([
                 const clone = function (obj) {
                     return JSON.parse(JSON.stringify(obj));
                 };
-                
+
                 const meld = function (parent, child, udfControl) {
                     var nodeMap = {};
-                
+
                     var udfInputControl, udfOutputControl;
-                
+
                     for (let vertex of child.getVertices()) {
-                
+
                         let state = clone(vertex.getState());
-                
+
                         nodeMap[state.id] = parent.nextNodeId;
-                
+
                         delete state.id;
-                
+
                         var newVertex = parent.addVertex(state);
-                
+
                         switch (newVertex.type) {
                             case 'UDFInControl':
                                 udfInputControl = newVertex;
@@ -368,64 +466,64 @@ define([
                                 break;
                         }
                     }
-                
+
                     for (let edge of child.getAllEdges()) {
-                
+
                         let state = clone(edge.getState());
-                
+
                         delete state.id;
-                
+
                         var sourceId = state.sourceId;
                         var targetId = state.targetId;
-                
+
                         state.sourceId = nodeMap[sourceId];
                         state.targetId = nodeMap[targetId];
-                
+
                         parent.addEdge(parent.getVertexById(nodeMap[sourceId]),
                             parent.getVertexById(nodeMap[targetId]),
                             state);
                     }
-                
+
                     for (let edgeTo of parent.getEdgesTo(udfControl)) {
-                
+
                         let state = clone(edgeTo.getState());
-                
+
                         // get the vertex upstream from the udfControl
                         var upstreamVertex = parent.getVertexById(state.sourceId);
-                
+
                         delete state.id;
                         delete state.sourceId;
                         delete state.targetId;
-                
+
                         parent.addEdge(upstreamVertex, udfInputControl, state);
                     }
-                
+
                     var edgesFrom = parent.getEdgesFrom(udfControl);
-                
+
                     for (let i in edgesFrom) {
-                
+
                         for (let edge of edgesFrom[i]) {
-                
+
                             let state = clone(edge.getState());
-                
+
                             // get the vertex downstream from the udfControl
                             var downstreamVertex = parent.getVertexById(state.targetId);
-                
+
                             delete state.id;
                             delete state.sourceId;
                             delete state.targetId;
-                
+
                             parent.addEdge(udfOutputControl, downstreamVertex, state);
                         }
                     }
-                
+
                     parent.removeVertex(udfControl);
                 };
 
                 var getGraphByName = function (name) {
 
                     var ret = GraphStorage.getGraph(name);
-    
+
                     // if not in storage, get it from active documents
                     if (!ret) {
                         var userDocument = app.getUserDocumentFromName(name);

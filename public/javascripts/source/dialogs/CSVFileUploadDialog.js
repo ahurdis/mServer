@@ -3,9 +3,8 @@
  */
 
 define(['javascripts/source/utility/RestHelper',
-    'javascripts/source/utility/TextFileReader',
-    'javascripts/source/app/TreeManager'],
-    function (RestHelper, TextFileReader, TreeManager) {
+    'javascripts/source/utility/TextFileReader'],
+    function (RestHelper, TextFileReader) {
         'use strict';
         try {
             return function CSVFileUploadDialog(options) {
@@ -82,7 +81,7 @@ define(['javascripts/source/utility/RestHelper',
                                             });
 
                                             // finally, update the source tree
-                                            TreeManager.addFileSource({
+                                            app.addFileSource({
                                                 sourceName: sourceName,
                                                 attributes: app.attributeArray.toString()
                                             }, 'CSV File');
